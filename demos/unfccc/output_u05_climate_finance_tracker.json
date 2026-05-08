@@ -1,0 +1,66 @@
+{
+  "party": "Iraq",
+  "currency": "USD",
+  "data_source": "UNFCCC Climate Finance Data Portal / GEF / GCF",
+  "GEF_projects": [
+    {
+      "id": "GEF-7-IRQ-001",
+      "title": "تعزيز الشفافية المناخية وبناء نظام MRV الوطني",
+      "status": "منفّذ",
+      "amount_usd": 2500000,
+      "cofinancing_usd": 5000000,
+      "focal_area": "تغير المناخ",
+      "implementing_agency": "UNDP",
+      "approval_year": 2021,
+      "sector": "شفافية وقدرات مؤسسية"
+    },
+    {
+      "id": "GEF-7-IRQ-002",
+      "title": "دعم إعداد التقرير الوطني الرابع للاتفاقية",
+      "status": "مكتمل",
+      "amount_usd": 350000,
+      "cofinancing_usd": 0,
+      "focal_area": "تغير المناخ",
+      "implementing_agency": "UNEP",
+      "approval_year": 2020,
+      "sector": "إعداد التقارير"
+    },
+    {
+      "id": "GEF-8-IRQ-001",
+      "title": "إدارة الأراضي المستدامة في المناطق الجافة",
+      "status": "نشط",
+      "amount_usd": 4800000,
+      "cofinancing_usd": 12000000,
+      "focal_area": "تدهور الأراضي",
+      "implementing_agency": "FAO",
+      "approval_year": 2023,
+      "sector": "AFOLU"
+    }
+  ],
+  "GCF_projects": [
+    {
+      "id": "GCF-FP001-IRQ",
+      "title": "تعزيز مرونة المجتمعات الزراعية في جنوب العراق",
+      "status": "قيد المراجعة",
+      "amount_usd": 28000000,
+      "cofinancing_usd": 15000000,
+      "accredited_entity": "UNDP",
+      "submission_year": 2024,
+      "sector": "تكيف زراعي"
+    }
+  ],
+  "Adaptation_Fund_projects": [],
+  "NDC_finance_needs": {
+    "total_usd_million": 88000,
+    "mitigation_usd_million": 52000,
+    "adaptation_usd_million": 36000,
+    "timeframe": "2021-2030"
+  },
+  "analysis": {
+    "gef_total": 7650000,
+    "gcf_total": 28000000,
+    "total_received": 35650000,
+    "gap": 87964350000.0,
+    "coverage_pct": 0.0405
+  }
+}

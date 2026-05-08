@@ -1,0 +1,33 @@
+{
+  "report_type": "Article_6.2_ITMO_Transaction",
+  "reporting_period": "2021-2025",
+  "deal_id": "IRQ-DEU-2025-001",
+  "deal_date": "2025-03-15",
+  "metric": "tCO2eq",
+  "GWP": "AR5",
+  "seller_party": "Iraq",
+  "buyer_party": "Germany",
+  "sector": "قطاع الطاقة - مشاريع الطاقة الشمسية",
+  "activity": "محطة طاقة شمسية بقدرة 500 ميغاواط في البادية العراقية",
+  "ITMOs_quantity": 250000,
+  "vintage_year": 2024,
+  "seller_accounting": {
+    "reported_emissions": 195000000,
+    "ITMO_transferred": 250000,
+    "corresponding_adjustment": 250000,
+    "adjusted_emissions": 195250000,
+    "NDC_target": 190000000,
+    "compliance_margin": -5250000
+  },
+  "buyer_accounting": {
+    "reported_emissions": 700000000,
+    "ITMO_acquired": 250000,
+    "corresponding_adjustment": -250000,
+    "adjusted_emissions": 699750000,
+    "NDC_target": 650000000,
+    "compliance_margin": -49750000
+  },
+  "double_counting_avoided": true,
+  "environmental_integrity": "مُستوفى - التعديلات المقابلة تضمن صحة المحاسبة",
+  "registry_reference": "UNFCCC-A6.2-IRQ-DEU-2025-001"
+}

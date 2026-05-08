@@ -1,0 +1,168 @@
+{
+  "metadata": {
+    "party": "Iraq",
+    "party_code": "IRQ",
+    "report_type": "BTR1",
+    "submission_year": 2024,
+    "base_year": 1990,
+    "reporting_years": [
+      1990,
+      1991,
+      1992,
+      1993,
+      1994,
+      1995,
+      1996,
+      1997,
+      1998,
+      1999,
+      2000,
+      2001,
+      2002,
+      2003,
+      2004,
+      2005,
+      2006,
+      2007,
+      2008,
+      2009,
+      2010,
+      2011,
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021
+    ],
+    "guidelines": "IPCC 2006 Guidelines",
+    "global_warming_potentials": "AR5",
+    "prepared_by": "Ministry of Environment / Climate Policy Division",
+    "submission_date": "2024-12-31"
+  },
+  "national_inventory": {
+    "summary_table": {
+      "sectors": {
+        "1_energy": {
+          "name_ar": "الطاقة",
+          "name_en": "Energy",
+          "emissions_2020": 165430.5,
+          "emissions_2019": 169823.2,
+          "subcategories": {
+            "1A_fuel_combustion": {
+              "name_ar": "احتراق الوقود",
+              "emissions_2020": 158200.0,
+              "fuel_types": {
+                "liquid_fuels": 98500.0,
+                "gaseous_fuels": 52300.0,
+                "solid_fuels": 7400.0
+              }
+            },
+            "1B_fugitive": {
+              "name_ar": "الانبعاثات المتسرّبة",
+              "emissions_2020": 7230.5,
+              "note": "تشمل تسرّب الغاز من حقول النفط والغاز"
+            }
+          }
+        },
+        "2_IPPU": {
+          "name_ar": "العمليات الصناعية واستخدام المنتجات",
+          "name_en": "IPPU",
+          "emissions_2020": 8750.3,
+          "emissions_2019": 9120.1
+        },
+        "3_AFOLU": {
+          "name_ar": "الزراعة والأراضي والغابات",
+          "name_en": "AFOLU",
+          "emissions_2020": 12340.8,
+          "emissions_2019": 12580.4,
+          "removals_2020": -1250.0
+        },
+        "4_waste": {
+          "name_ar": "النفايات",
+          "name_en": "Waste",
+          "emissions_2020": 3820.6,
+          "emissions_2019": 3750.2
+        }
+      },
+      "total_excl_LULUCF": {
+        "2020": 190342.2,
+        "2019": 195273.9,
+        "1990": 82400.0
+      },
+      "total_incl_LULUCF": {
+        "2020": 189092.2,
+        "2019": 193773.9
+      }
+    }
+  },
+  "ndc_progress": {
+    "ndc_target": {
+      "type": "unconditional",
+      "base_year": 2021,
+      "target_year": 2030,
+      "reduction_percentage": 2.5,
+      "conditional_reduction": 15.0,
+      "conditional_on": "دعم مالي وتقني دولي"
+    },
+    "indicators": [
+      {
+        "indicator": "حصة الطاقة المتجددة في مزيج الكهرباء",
+        "baseline_2021": 2.1,
+        "current_2023": 4.8,
+        "target_2030": 12.0,
+        "unit": "النسبة المئوية",
+        "trend": "إيجابي"
+      },
+      {
+        "indicator": "كثافة انبعاثات قطاع الكهرباء",
+        "baseline_2021": 0.68,
+        "current_2023": 0.65,
+        "target_2030": 0.55,
+        "unit": "كغ CO2/كيلوواط ساعة",
+        "trend": "إيجابي"
+      }
+    ]
+  },
+  "policies_measures": [
+    {
+      "id": "PM_001",
+      "name_ar": "استراتيجية الطاقة الوطنية 2030",
+      "sector": "1_energy",
+      "type": "استراتيجية وطنية",
+      "status": "قيد التنفيذ",
+      "expected_reduction_2030": 8500,
+      "unit": "Gg CO2eq"
+    },
+    {
+      "id": "PM_002",
+      "name_ar": "برنامج الطاقة الشمسية الوطني",
+      "sector": "1_energy",
+      "type": "برنامج حكومي",
+      "status": "قيد التنفيذ",
+      "expected_reduction_2030": 12000,
+      "unit": "Gg CO2eq"
+    }
+  ],
+  "support_needs": {
+    "finance": {
+      "total_needed_usd_million": 88000,
+      "received_2023_usd_million": 1200,
+      "gap_usd_million": 86800
+    },
+    "technology_transfer": [
+      "تقنيات الطاقة الشمسية وتخزين الطاقة",
+      "تقنيات احتجاز الكربون وتخزينه",
+      "أنظمة MRV الرقمية المتقدمة"
+    ],
+    "capacity_building": [
+      "تدريب مجمّعي الجرد الوطني على IPCC 2006",
+      "بناء نظام MRV وطني متكامل",
+      "تطوير نماذج تحليل السيناريوهات"
+    ]
+  }
+}
