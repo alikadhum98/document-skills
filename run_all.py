@@ -16,6 +16,7 @@ TOOLS = {
     "nap":      {"الاسم":"الخطة الوطنية للتكيف",      "المسار":"tools/nap_central/nap_central.py",            "الوصف":"مصفوفة NAP وإجراءات التكيف القطاعية"},
     "gcf":      {"الاسم":"وثيقة مفهوم GCF",           "المسار":"tools/gcf_prep/gcf_prep.py",                  "الوصف":"مولّد Concept Note لصندوق المناخ الأخضر"},
     "conf":     {"الاسم":"إدارة وثائق المؤتمرات",     "المسار":"tools/conference_manager/conference_manager.py","الوصف":"ورقة إحاطة الوفد وجدول الجلسات ومتابعة الإجراءات"},
+    "dashboard":{"الاسم":"لوحة التحكم الشاملة",      "المسار":"pipeline/integration_engine.py",               "الوصف":"ربط جميع الأدوات ولوحة المؤشرات المجمّعة"},
 }
 
 def separator(char="=", n=60):
