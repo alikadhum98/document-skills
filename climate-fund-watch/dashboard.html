@@ -1,0 +1,189 @@
+<title>رصد دورات التمويل المناخي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#F1F4F2; --surface:#FFFFFF; --ink:#13201C; --muted:#586862; --line:#D5DEDA;
+  --accent:#0E6B58; --accent-soft:#DCEEE8;
+  --crit:#B42318; --crit-soft:#FBE4E1; --warn:#9A6212; --warn-soft:#FAEFD9; --ok:#2F6B3A; --ok-soft:#E1F0E2;
+  --body:"Simplified Arabic","Noto Naskh Arabic","Traditional Arabic",serif;
+  --ui:"IBM Plex Sans Arabic","Segoe UI",Tahoma,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --ground:#0E1513; --surface:#161F1C; --ink:#E4ECE9; --muted:#9AABA5; --line:#2A3632;
+    --accent:#56B89F; --accent-soft:#17302A;
+    --crit:#F08A7E; --crit-soft:#3A1C18; --warn:#E3B062; --warn-soft:#352914; --ok:#8CCB95; --ok-soft:#1B2F1E;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#0E1513; --surface:#161F1C; --ink:#E4ECE9; --muted:#9AABA5; --line:#2A3632;
+  --accent:#56B89F; --accent-soft:#17302A;
+  --crit:#F08A7E; --crit-soft:#3A1C18; --warn:#E3B062; --warn-soft:#352914; --ok:#8CCB95; --ok-soft:#1B2F1E;
+}
+body{background:var(--ground);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.7;padding-inline:16px;padding-block:24px 48px}
+.wrap{max-width:980px;margin-inline:auto;display:flex;flex-direction:column;gap:22px}
+header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:12px}
+h1{font-size:1.75rem;font-weight:700;margin:0;text-wrap:balance}
+.run{font-family:var(--ui);font-size:.82rem;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.stat{background:var(--surface);padding:14px 16px;display:flex;flex-direction:column;gap:2px}
+.stat b{font-family:var(--ui);font-size:1.7rem;font-weight:600;font-variant-numeric:tabular-nums}
+.stat span{font-family:var(--ui);font-size:.82rem;color:var(--muted)}
+.stat.crit b{color:var(--crit)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-family:var(--ui);font-size:.85rem}
+.filters .lbl{color:var(--muted);margin-inline-end:4px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:5px 12px;border-radius:999px;cursor:pointer;font:inherit}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.chip:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.list{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:92px 1fr auto;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);align-items:start}
+.due{font-family:var(--ui);text-align:center;padding:8px 4px;border-inline-start:4px solid var(--line);background:var(--surface)}
+.due b{display:block;font-size:1.35rem;font-variant-numeric:tabular-nums;line-height:1.2}
+.due small{font-size:.72rem;color:var(--muted)}
+.due.crit{border-color:var(--crit);background:var(--crit-soft)} .due.crit b{color:var(--crit)}
+.due.warn{border-color:var(--warn);background:var(--warn-soft)} .due.warn b{color:var(--warn)}
+.due.ok{border-color:var(--ok);background:var(--ok-soft)}
+.main{display:flex;flex-direction:column;gap:4px;min-width:0}
+.funder{font-family:var(--ui);font-size:.8rem;color:var(--accent);font-weight:600;letter-spacing:.01em}
+.title{font-size:1.1rem;font-weight:700;color:var(--ink);text-decoration:none;overflow-wrap:anywhere}
+.title:hover{text-decoration:underline}
+.summary{margin:0;color:var(--ink);max-width:68ch}
+.tags{display:flex;flex-wrap:wrap;gap:6px;font-family:var(--ui);font-size:.74rem;margin-top:4px}
+.tag{background:var(--accent-soft);color:var(--ink);padding:2px 9px;border-radius:4px}
+.tag.elig-unclear{background:var(--warn-soft)}
+.side{display:flex;flex-direction:column;gap:6px;align-items:stretch;font-family:var(--ui);font-size:.8rem;min-width:130px}
+.side label{color:var(--muted)}
+select{font:inherit;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:4px 6px}
+.new{align-self:flex-start;background:var(--accent);color:var(--surface);font-size:.7rem;padding:1px 8px;border-radius:4px}
+.empty{background:var(--surface);border:1px dashed var(--line);padding:28px 20px;text-align:center;color:var(--muted)}
+.note{font-family:var(--ui);font-size:.78rem;color:var(--muted)}
+@media (max-width:640px){
+  .row{grid-template-columns:72px 1fr}
+  .side{grid-column:1 / -1;flex-direction:row;flex-wrap:wrap;align-items:center}
+}
+@media (prefers-reduced-motion:no-preference){.row{transition:background .15s}.row:hover{background:var(--surface)}}
+</style>
+
+<div class="wrap" dir="rtl" lang="ar">
+  <header>
+    <h1>رصد دورات التمويل المناخي</h1>
+    <div class="run" id="run">بانتظار اول فحص يومي</div>
+  </header>
+
+  <section class="stats" aria-label="ملخص">
+    <div class="stat"><b id="s-open">0</b><span>فرص مفتوحة او قادمة</span></div>
+    <div class="stat crit"><b id="s-soon">0</b><span>تغلق خلال 14 يوما</span></div>
+    <div class="stat"><b id="s-new">0</b><span>جديدة خلال 7 ايام</span></div>
+    <div class="stat"><b id="s-prep">0</b><span>قيد الاعداد او مقدمة</span></div>
+  </section>
+
+  <div class="filters" id="f-group" role="group" aria-label="تصفية حسب الجهة">
+    <span class="lbl">الجهة</span>
+  </div>
+  <div class="filters" id="f-sector" role="group" aria-label="تصفية حسب القطاع">
+    <span class="lbl">القطاع</span>
+  </div>
+
+  <div class="list" id="list"></div>
+  <div class="empty" id="empty" hidden>لا توجد فرص مسجلة بعد. تملأ المهمة اليومية هذه اللوحة بعد كل فحص صباحي.</div>
+  <p class="note" id="note">تحدث هذه اللوحة تلقائيا من المهمة اليومية. حقل (حالتي) يحفظ اختيارك لكل فرصة.</p>
+</div>
+
+<script>
+(function(){
+  const GROUPS={all:"الكل",multilateral:"متعددة الاطراف",accredited:"كيانات معتمدة",bilateral:"ثنائية",carbon:"اسواق الكربون"};
+  const SECTORS={all:"الكل",energy:"الطاقة والكفاءة",waste_industry_transport:"النفايات والصناعة والنقل",readiness:"الجاهزية وبناء القدرات"};
+  const TYPES={call:"نداء مقترحات",cycle:"دورة تمويل",board:"اجتماع مجلس",readiness:"جاهزية",rfp:"طلب عروض",news:"خبر تمهيدي"};
+  const STATUS=[["new","جديدة"],["studying","قيد الدراسة"],["preparing","قيد الاعداد"],["submitted","قدمت"],["skip","غير مناسبة"]];
+  const state={group:"all",sector:"all",items:[],db:null};
+  const $=id=>document.getElementById(id);
+  const toAr=n=>String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
+
+  function chips(el,map,key){
+    Object.entries(map).forEach(([k,v])=>{
+      const b=document.createElement("button");
+      b.type="button";b.className="chip";b.id="chip-"+key+"-"+k;b.textContent=v;
+      b.setAttribute("aria-pressed",String(state[key]===k));
+      b.addEventListener("click",()=>{state[key]=k;el.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",String(c===b)));render();});
+      el.appendChild(b);
+    });
+  }
+  chips($("f-group"),GROUPS,"group");
+  chips($("f-sector"),SECTORS,"sector");
+
+  function daysLeft(d){
+    if(!d) return null;
+    const t=new Date(d+"T23:59:59"); if(isNaN(t)) return null;
+    return Math.ceil((t-Date.now())/86400000);
+  }
+
+  function render(){
+    const list=$("list"); list.textContent="";
+    const now=Date.now();
+    const live=state.items.filter(o=>{const dl=daysLeft(o.deadline);return dl===null||dl>=0;});
+    $("s-open").textContent=toAr(live.filter(o=>o.user_status!=="skip").length);
+    $("s-soon").textContent=toAr(live.filter(o=>{const dl=daysLeft(o.deadline);return dl!==null&&dl<=14&&o.user_status!=="skip";}).length);
+    $("s-new").textContent=toAr(state.items.filter(o=>o.found_at&&now-new Date(o.found_at)<7*86400000).length);
+    $("s-prep").textContent=toAr(state.items.filter(o=>o.user_status==="preparing"||o.user_status==="submitted").length);
+
+    const shown=live.filter(o=>(state.group==="all"||o.group===state.group)&&(state.sector==="all"||(o.sectors||[]).includes(state.sector)))
+      .sort((a,b)=>{const x=daysLeft(a.deadline),y=daysLeft(b.deadline);return (x===null?9999:x)-(y===null?9999:y);});
+    $("empty").hidden=shown.length>0;
+
+    shown.forEach(o=>{
+      const dl=daysLeft(o.deadline);
+      const row=document.createElement("article");row.className="row";
+      const due=document.createElement("div");
+      due.className="due "+(dl===null?"":dl<=14?"crit":dl<=30?"warn":"ok");
+      const b=document.createElement("b");b.textContent=dl===null?"؟":toAr(dl);
+      const s=document.createElement("small");s.textContent=dl===null?"موعد غير معلن":("يوما حتى "+toAr(o.deadline));
+      due.append(b,s);
+
+      const main=document.createElement("div");main.className="main";
+      const f=document.createElement("div");f.className="funder";f.textContent=o.funder||"";
+      const a=document.createElement("a");a.className="title";a.href=o.url||"#";a.target="_blank";a.rel="noopener";a.textContent=o.title||"";
+      const p=document.createElement("p");p.className="summary";p.textContent=o.summary||"";
+      const tags=document.createElement("div");tags.className="tags";
+      const addTag=(t,c)=>{const e=document.createElement("span");e.className="tag"+(c?" "+c:"");e.textContent=t;tags.appendChild(e);};
+      if(o.type&&TYPES[o.type]) addTag(TYPES[o.type]);
+      (o.sectors||[]).forEach(k=>SECTORS[k]&&addTag(SECTORS[k]));
+      if(o.amount) addTag(o.amount);
+      addTag(o.iraq_eligible==="yes"?"العراق مؤهل":"الاهلية تحتاج تحققا",o.iraq_eligible==="yes"?"":"elig-unclear");
+      main.append(f,a,p,tags);
+
+      const side=document.createElement("div");side.className="side";
+      if(o.found_at&&now-new Date(o.found_at)<3*86400000){const n=document.createElement("span");n.className="new";n.textContent="جديد";side.appendChild(n);}
+      const lab=document.createElement("label");lab.htmlFor="st-"+o.id;lab.textContent="حالتي";
+      const sel=document.createElement("select");sel.id="st-"+o.id;
+      STATUS.forEach(([v,t])=>{const op=document.createElement("option");op.value=v;op.textContent=t;sel.appendChild(op);});
+      sel.value=o.user_status||"new";
+      sel.disabled=!state.db;
+      sel.addEventListener("change",async()=>{
+        try{await state.db.doc("opportunities/"+o.id).update({user_status:sel.value});}
+        catch(e){sel.value=o.user_status||"new";sel.disabled=true;$("note").textContent="تعذر حفظ الحالة. هذه النسخة للعرض فقط.";}
+      });
+      side.append(lab,sel);
+      row.append(due,main,side);
+      list.appendChild(row);
+    });
+  }
+  render();
+
+  (async()=>{
+    const db=window.claude&&await window.claude.use("db");
+    if(!db){$("note").textContent="قاعدة البيانات غير متاحة في هذا العرض.";$("empty").hidden=false;return;}
+    state.db=db;
+    db.collection("opportunities").onSnapshot(snap=>{
+      state.items=snap.docs.map(d=>Object.assign({id:d.id},d.data()));render();
+    },()=>{$("note").textContent="انقطع الاتصال بقاعدة البيانات. اعد تحميل الصفحة.";});
+    db.doc("meta/run").onSnapshot(s=>{
+      if(!s.exists) return;
+      const m=s.data();
+      $("run").textContent="اخر فحص "+toAr((m.last_run||"").slice(0,10))+" · "+toAr(m.sources_checked||0)+" مصدرا";
+    },()=>{});
+  })();
+})();
+</script>

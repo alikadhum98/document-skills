@@ -1,0 +1,69 @@
+{
+  "_note": "قائمة المصادر التي تفحصها المهمة اليومية. كل رابط تحقق منه اول تشغيل وتحدث حقل verified. الروابط المعلمة false مبنية على المعرفة العامة ولم تفتح بعد.",
+  "groups": [
+    {
+      "group": "multilateral",
+      "label": "الصناديق المتعددة الاطراف",
+      "sources": [
+        {"id": "gcf-news", "name": "صندوق المناخ الاخضر (اخبار)", "url": "https://www.greenclimate.fund/about/news-and-updates", "verified": true},
+        {"id": "gcf-readiness", "name": "صندوق المناخ الاخضر (برنامج الجاهزية)", "url": "https://www.greenclimate.fund/readiness", "verified": false},
+        {"id": "gcf-board", "name": "صندوق المناخ الاخضر (اجتماعات المجلس ومواعيد تقديم المقترحات)", "url": "https://www.greenclimate.fund/boards", "verified": false},
+        {"id": "gcf-rfp", "name": "صندوق المناخ الاخضر (طلبات المقترحات RFP)", "url": "https://www.greenclimate.fund/about/procurement", "verified": false},
+        {"id": "gef-news", "name": "مرفق البيئة العالمية (اخبار)", "url": "https://www.thegef.org/newsroom", "verified": false},
+        {"id": "gef-council", "name": "مرفق البيئة العالمية (اجتماعات المجلس وبرامج العمل)", "url": "https://www.thegef.org/council-meetings", "verified": false},
+        {"id": "af-apply", "name": "صندوق التكيف (التقديم والنداءات)", "url": "https://www.adaptation-fund.org/apply-funding/", "verified": false},
+        {"id": "cif-news", "name": "صناديق الاستثمار في المناخ", "url": "https://www.cif.org/news", "verified": false},
+        {"id": "ctcn-news", "name": "مركز وشبكة تكنولوجيا المناخ", "url": "https://www.ctc-n.org/whats-happening/news", "verified": false},
+        {"id": "ccac", "name": "تحالف المناخ والهواء النظيف (نداءات الميثان والملوثات قصيرة العمر)", "url": "https://www.ccacoalition.org/news", "verified": false}
+      ]
+    },
+    {
+      "group": "accredited",
+      "label": "الكيانات المعتمدة الدولية",
+      "sources": [
+        {"id": "undp-proc", "name": "برنامج الامم المتحدة الانمائي (اشعارات الشراء والدعوات)", "url": "https://procurement-notices.undp.org/", "verified": false},
+        {"id": "unep-news", "name": "برنامج الامم المتحدة للبيئة (دعوات المقترحات)", "url": "https://www.unep.org/news-and-stories", "verified": false},
+        {"id": "unido", "name": "منظمة الامم المتحدة للتنمية الصناعية", "url": "https://www.unido.org/news", "verified": false},
+        {"id": "fao-gcf", "name": "منظمة الاغذية والزراعة (محفظة GCF وGEF)", "url": "https://www.fao.org/gcf/en/", "verified": false},
+        {"id": "wb-iraq", "name": "البنك الدولي (مشاريع العراق)", "url": "https://projects.worldbank.org/en/projects-operations/projects-home?countrycode_exact=IQ", "verified": false},
+        {"id": "wb-pmi", "name": "البنك الدولي (شراكة تنفيذ الاسواق PMI وSCALE)", "url": "https://www.worldbank.org/en/programs/partnership-for-market-implementation", "verified": false},
+        {"id": "isdb", "name": "البنك الاسلامي للتنمية", "url": "https://www.isdb.org/news", "verified": false},
+        {"id": "ebrd", "name": "البنك الاوروبي لاعادة الاعمار والتنمية", "url": "https://www.ebrd.com/home/news-and-events.html", "verified": false},
+        {"id": "opec-fund", "name": "صندوق اوبك للتنمية الدولية", "url": "https://opecfund.org/news", "verified": false}
+      ]
+    },
+    {
+      "group": "bilateral",
+      "label": "الجهات الثنائية",
+      "sources": [
+        {"id": "iki", "name": "المبادرة الدولية للمناخ الالمانية IKI", "url": "https://www.international-climate-initiative.com/en/funding/", "verified": false},
+        {"id": "maf", "name": "مرفق اجراءات التخفيف (NAMA Facility سابقا)", "url": "https://www.mitigation-action.org/", "verified": false},
+        {"id": "giz-iraq", "name": "الوكالة الالمانية للتعاون الدولي في العراق", "url": "https://www.giz.de/en/worldwide/388.html", "verified": false},
+        {"id": "jica", "name": "الوكالة اليابانية للتعاون الدولي", "url": "https://www.jica.go.jp/english/news/", "verified": false},
+        {"id": "koica", "name": "الوكالة الكورية للتعاون الدولي", "url": "https://www.koica.go.kr/sites/koica_en/index.do", "verified": false},
+        {"id": "afd", "name": "الوكالة الفرنسية للتنمية", "url": "https://www.afd.fr/en/actualites", "verified": false},
+        {"id": "eu-ft", "name": "بوابة التمويل والمناقصات للاتحاد الاوروبي", "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/calls-for-proposals", "verified": false},
+        {"id": "ndcp", "name": "شراكة المساهمات المحددة وطنيا", "url": "https://ndcpartnership.org/news", "verified": false}
+      ]
+    },
+    {
+      "group": "carbon",
+      "label": "اسواق الكربون والمادة السادسة",
+      "sources": [
+        {"id": "a64-sb", "name": "الهيئة الاشرافية لآلية المادة 6.4", "url": "https://unfccc.int/process-and-meetings/bodies/constituted-bodies/article-64-supervisory-body", "verified": false},
+        {"id": "klik", "name": "مؤسسة KliK السويسرية (شراء ITMOs)", "url": "https://www.klik.ch/en/", "verified": false},
+        {"id": "jcm", "name": "آلية الائتمان المشترك اليابانية JCM", "url": "https://www.jcm.go.jp/", "verified": false},
+        {"id": "swe-energy", "name": "الوكالة السويدية للطاقة (برنامج المادة السادسة)", "url": "https://www.energimyndigheten.se/en/cooperation/international-climate-cooperation/", "verified": false},
+        {"id": "a6-pipeline", "name": "خط انابيب المادة السادسة لدى UNEP-CCC", "url": "https://unepccc.org/article-6-pipeline/", "verified": false}
+      ]
+    }
+  ],
+  "searches": [
+    "call for proposals climate mitigation Iraq",
+    "call for proposals MENA climate finance renewable energy",
+    "Green Climate Fund readiness call 2026",
+    "Article 6 ITMO call for proposals buyer program",
+    "methane mitigation grant call Middle East",
+    "climate finance funding window opens waste energy efficiency developing countries"
+  ]
+}

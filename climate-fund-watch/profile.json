@@ -1,0 +1,17 @@
+{
+  "country": "العراق",
+  "recipient_email": "alikadhum98@gmail.com",
+  "timezone": "Asia/Baghdad",
+  "sectors_include": [
+    {"key": "energy", "label": "الطاقة والكفاءة", "keywords": ["renewable", "solar", "energy efficiency", "gas flaring", "methane", "associated gas", "grid", "power"]},
+    {"key": "waste_industry_transport", "label": "النفايات والصناعة والنقل", "keywords": ["waste", "landfill", "wastewater", "cement", "industry", "industrial", "transport", "e-mobility", "circular"]},
+    {"key": "readiness", "label": "الجاهزية وبناء القدرات", "keywords": ["readiness", "capacity building", "technical assistance", "NDC", "MRV", "inventory", "Article 6 readiness", "project preparation"]}
+  ],
+  "sectors_exclude_unless_mitigation": ["water", "agriculture", "adaptation only"],
+  "eligibility_rules": [
+    "العراق مؤهل صراحة او ضمن اقليم الشرق الاوسط وشمال افريقيا او ضمن الدول النامية عموما",
+    "النداءات المقصورة على اقاليم لا تشمل العراق تسجل بمرتبة منخفضة ولا ترسل في البريد",
+    "الموعد النهائي لم ينقض بعد او الدورة لم تفتح بعد"
+  ],
+  "alert_windows_days": [30, 14, 3]
+}
