@@ -1,0 +1,82 @@
+{
+  "status_levels": ["verified_original", "verified_secondary", "supplied_unverified", "memory"],
+  "entries": [
+    {
+      "id": "unfccc-art3-5",
+      "source": "UNFCCC",
+      "symbol": "FCCC/INFORMAL/84",
+      "location": "Article 3, paragraph 5",
+      "year": 1992,
+      "topics": ["ResponseMeasures-Trade", "Core"],
+      "text_en": "The Parties should cooperate to promote a supportive and open international economic system that would lead to sustainable economic growth and development in all Parties, particularly developing country Parties, thus enabling them better to address the problems of climate change. Measures taken to combat climate change, including unilateral ones, should not constitute a means of arbitrary or unjustifiable discrimination or a disguised restriction on international trade.",
+      "status": "memory",
+      "note": "يطابق مع النص الرسمي بعد تنزيله."
+    },
+    {
+      "id": "cp16-para89",
+      "source": "Cancun Agreements",
+      "symbol": "Decision 1/CP.16, FCCC/CP/2010/7/Add.1",
+      "location": "Paragraph 89, section on economic and social consequences of response measures",
+      "year": 2010,
+      "topics": ["ResponseMeasures-Trade"],
+      "text_en": "Also urges developed country Parties to strive to implement policies and measures to respond to climate change in such a way as to avoid negative social and economic consequences for developing country Parties, taking into account Article 3 of the Convention, and to assist these Parties to address such consequences by providing support, including financial resources, transfer of technology and capacity-building, in accordance with Article 4 of the Convention, to build up the resilience of societies and economies negatively affected by response measures;",
+      "status": "verified_secondary",
+      "note": "زودته زميلة، وتأكد جزء من نصه عبر مقتطف بحث. الفقرات التمهيدية المرافقة لم تطابق بعد."
+    },
+    {
+      "id": "cma5-para154",
+      "source": "First global stocktake outcome",
+      "symbol": "Decision 1/CMA.5, FCCC/PA/CMA/2023/16/Add.1",
+      "location": "Paragraph 154",
+      "year": 2023,
+      "topics": ["ResponseMeasures-Trade", "GST-JustTransition"],
+      "text_en": "Recognizes that Parties should cooperate on promoting a supportive and open international economic system aimed at achieving sustainable economic growth and development in all countries and thus enabling them to better to address the problems of climate change, noting that measures taken to combat climate change, including unilateral ones, should not constitute a means of arbitrary or unjustifiable discrimination or a disguised restriction on international trade;",
+      "status": "verified_secondary",
+      "note": "استخرج عبر محرك البحث من الوثيقة الرسمية. عبارة better to address يرجح أنها في الأصل."
+    },
+    {
+      "id": "g20-tfclima-2024-para27",
+      "source": "G20 Task Force on a Global Mobilization against Climate Change, Ministerial Statement",
+      "symbol": "24 October 2024",
+      "location": "Paragraph 27",
+      "year": 2024,
+      "topics": ["External", "ResponseMeasures-Trade"],
+      "text_en": "Parties should cooperate on promoting a supportive and open international economic system aimed at achieving sustainable economic growth and development in all countries and thus enabling them to better address the problems of climate change, noting that measures taken to combat climate change, including unilateral ones, should not constitute a means of arbitrary or unjustifiable discrimination or a disguised restriction on international trade.",
+      "status": "supplied_unverified",
+      "note": "زودته زميلة. يكاد يطابق 1/CMA.5 الفقرة ١٥٤ حرفيا. رقم الفقرة لم يطابق. الصياغة نفسها وردت في إعلان قادة ريو دي جانيرو نوفمبر ٢٠٢٤ بحسب مصادر ثانوية. لا يدرج في متن قرارات الأمم المتحدة، ويستعمل حجة شفهية."
+    },
+    {
+      "id": "cop30-mutirao-para56",
+      "source": "Global Mutirao decision, COP30 Belem",
+      "symbol": "",
+      "location": "Paragraph 56 (as supplied)",
+      "year": 2025,
+      "topics": ["ResponseMeasures-Trade"],
+      "text_ar": "تؤكد من جديد أيضا أن التدابير المتخذة لمكافحة تغير المناخ، بما في ذلك التدابير الأحادية الجانب، لا ينبغي أن تشكل وسيلة للتمييز التعسفي أو غير المبرر أو تقييدا مقنعا للتجارة الدولية",
+      "status": "supplied_unverified",
+      "note": "تأكد ورود الصياغة في القرار وإطلاق حوارات التدابير التجارية في دورات الهيئات الفرعية ٢٠٢٦ و٢٠٢٧ و٢٠٢٨ مع تقرير موجز ٢٠٢٨، من مصادر ثانوية. رقم الفقرة ورمز المقرر لم يطابقا."
+    },
+    {
+      "id": "rio-principle12",
+      "source": "Rio Declaration on Environment and Development",
+      "symbol": "A/CONF.151/26 (Vol. I)",
+      "location": "Principle 12",
+      "year": 1992,
+      "topics": ["Core", "ResponseMeasures-Trade", "External"],
+      "text_en": "States should cooperate to promote a supportive and open international economic system that would lead to economic growth and sustainable development in all countries, to better address the problems of environmental degradation. Trade policy measures for environmental purposes should not constitute a means of arbitrary or unjustifiable discrimination or a disguised restriction on international trade. Unilateral actions to deal with environmental challenges outside the jurisdiction of the importing country should be avoided. Environmental measures addressing transboundary or global environmental problems should, as far as possible, be based on an international consensus.",
+      "status": "verified_secondary",
+      "note": ""
+    },
+    {
+      "id": "agenda2030-para30",
+      "source": "Transforming our world: the 2030 Agenda for Sustainable Development",
+      "symbol": "A/RES/70/1",
+      "location": "Paragraph 30",
+      "year": 2015,
+      "topics": ["External", "ResponseMeasures-Trade"],
+      "text_en": "States are strongly urged to refrain from promulgating and applying any unilateral economic, financial or trade measures not in accordance with international law and the Charter of the United Nations that impede the full achievement of economic and social development, particularly in developing countries.",
+      "status": "verified_secondary",
+      "note": "النص مأخوذ من مقتطف بحث، يطابق حرفيا مع القرار."
+    }
+  ]
+}
