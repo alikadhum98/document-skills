@@ -9,8 +9,8 @@
       "year": 1992,
       "topics": ["ResponseMeasures-Trade", "Core"],
       "text_en": "The Parties should cooperate to promote a supportive and open international economic system that would lead to sustainable economic growth and development in all Parties, particularly developing country Parties, thus enabling them better to address the problems of climate change. Measures taken to combat climate change, including unilateral ones, should not constitute a means of arbitrary or unjustifiable discrimination or a disguised restriction on international trade.",
-      "status": "memory",
-      "note": "يطابق مع النص الرسمي بعد تنزيله."
+      "status": "verified_original",
+      "note": "طوبق حرفيا مع نص الاتفاقية في الوثيقة A/AC.237/18 (Part II)/Add.1 المؤرخة ١٥ أيار ١٩٩٢ عبر documents.un.org. ليست نسخة FCCC/INFORMAL/84 التي تعذر فتحها لأن unfccc.int خلف تحدي حماية آلي. الرمز المسجل أعلاه يبقى رمز نسخة المعاهدة."
     },
     {
       "id": "cp16-para89",
@@ -20,8 +20,8 @@
       "year": 2010,
       "topics": ["ResponseMeasures-Trade"],
       "text_en": "Also urges developed country Parties to strive to implement policies and measures to respond to climate change in such a way as to avoid negative social and economic consequences for developing country Parties, taking into account Article 3 of the Convention, and to assist these Parties to address such consequences by providing support, including financial resources, transfer of technology and capacity-building, in accordance with Article 4 of the Convention, to build up the resilience of societies and economies negatively affected by response measures;",
-      "status": "verified_secondary",
-      "note": "زودته زميلة، وتأكد جزء من نصه عبر مقتطف بحث. الفقرات التمهيدية المرافقة لم تطابق بعد."
+      "status": "verified_original",
+      "note": "طوبقت الفقرة ٨٩ حرفيا مع FCCC/CP/2010/7/Add.1 المفتوحة من documents.un.org. الفقرات التمهيدية الثلاث التي زودتها الزميلة لا يتوفر نصها في الجلسة فلم تطابق، والنص الرسمي لفقرات القسم هاء التمهيدية مسجل في مدخل cp16-section-e-preamble."
     },
     {
       "id": "cma5-para154",
@@ -31,8 +31,8 @@
       "year": 2023,
       "topics": ["ResponseMeasures-Trade", "GST-JustTransition"],
       "text_en": "Recognizes that Parties should cooperate on promoting a supportive and open international economic system aimed at achieving sustainable economic growth and development in all countries and thus enabling them to better to address the problems of climate change, noting that measures taken to combat climate change, including unilateral ones, should not constitute a means of arbitrary or unjustifiable discrimination or a disguised restriction on international trade;",
-      "status": "verified_secondary",
-      "note": "استخرج عبر محرك البحث من الوثيقة الرسمية. عبارة better to address يرجح أنها في الأصل."
+      "status": "verified_original",
+      "note": "طوبقت الفقرة ١٥٤ حرفيا مع FCCC/PA/CMA/2023/16/Add.1 المؤرخة ١٥ آذار ٢٠٢٤ المفتوحة من documents.un.org. عبارة better to address وردت في الأصل."
     },
     {
       "id": "g20-tfclima-2024-para27",
@@ -43,7 +43,7 @@
       "topics": ["External", "ResponseMeasures-Trade"],
       "text_en": "Parties should cooperate on promoting a supportive and open international economic system aimed at achieving sustainable economic growth and development in all countries and thus enabling them to better address the problems of climate change, noting that measures taken to combat climate change, including unilateral ones, should not constitute a means of arbitrary or unjustifiable discrimination or a disguised restriction on international trade.",
       "status": "supplied_unverified",
-      "note": "زودته زميلة. يكاد يطابق 1/CMA.5 الفقرة ١٥٤ حرفيا. رقم الفقرة لم يطابق. الصياغة نفسها وردت في إعلان قادة ريو دي جانيرو نوفمبر ٢٠٢٤ بحسب مصادر ثانوية. لا يدرج في متن قرارات الأمم المتحدة، ويستعمل حجة شفهية."
+      "note": "النص المزود لم يوجد في نصي ٢٤ تشرين الأول ٢٠٢٤ المنشورين في g20.utoronto.ca (بيان رئاسة البرازيل وملف أجندة الطموح المعزز)، فلم يطابق رقم الفقرة ولا نصها، ولم يعثر على نص بيان فريق العمل الوزاري نفسه. وردت الصياغة في إعلان قادة ريو دي جانيرو في مدخل g20-rio-leaders-2024 بصيغة members بدل Parties. لا يقتبس هذا المدخل في وثيقة خارجية."
     },
     {
       "id": "cop30-mutirao-para56",
@@ -54,7 +54,7 @@
       "topics": ["ResponseMeasures-Trade"],
       "text_ar": "تؤكد من جديد أيضا أن التدابير المتخذة لمكافحة تغير المناخ، بما في ذلك التدابير الأحادية الجانب، لا ينبغي أن تشكل وسيلة للتمييز التعسفي أو غير المبرر أو تقييدا مقنعا للتجارة الدولية",
       "status": "supplied_unverified",
-      "note": "تأكد ورود الصياغة في القرار وإطلاق حوارات التدابير التجارية في دورات الهيئات الفرعية ٢٠٢٦ و٢٠٢٧ و٢٠٢٨ مع تقرير موجز ٢٠٢٨، من مصادر ثانوية. رقم الفقرة ورمز المقرر لم يطابقا."
+      "note": "لم تطابق الفقرة ورمز المقرر لأن unfccc.int خلف تحدي حماية آلي ولم تنجح محاولة فتح المقرر من documents.un.org بالرمز المخمن. تأكد من مصادر ثانوية أن المقرر هو 1/CMA.7 وأن الحوارات التجارية أطلقت بلا نتيجة ملزمة. رقم الفقرة ٥٦ لم يتحقق."
     },
     {
       "id": "rio-principle12",
@@ -64,8 +64,8 @@
       "year": 1992,
       "topics": ["Core", "ResponseMeasures-Trade", "External"],
       "text_en": "States should cooperate to promote a supportive and open international economic system that would lead to economic growth and sustainable development in all countries, to better address the problems of environmental degradation. Trade policy measures for environmental purposes should not constitute a means of arbitrary or unjustifiable discrimination or a disguised restriction on international trade. Unilateral actions to deal with environmental challenges outside the jurisdiction of the importing country should be avoided. Environmental measures addressing transboundary or global environmental problems should, as far as possible, be based on an international consensus.",
-      "status": "verified_secondary",
-      "note": ""
+      "status": "verified_original",
+      "note": "طوبق مع النسخة الممسوحة ضوئيا من A/CONF.151/26/Rev.1 (Vol. I) المفتوحة من documents.un.org، بقراءة آلية للنص. الكلمات مطابقة بعد توحيد المسافات."
     },
     {
       "id": "agenda2030-para30",
@@ -75,8 +75,14 @@
       "year": 2015,
       "topics": ["External", "ResponseMeasures-Trade"],
       "text_en": "States are strongly urged to refrain from promulgating and applying any unilateral economic, financial or trade measures not in accordance with international law and the Charter of the United Nations that impede the full achievement of economic and social development, particularly in developing countries.",
-      "status": "verified_secondary",
-      "note": "النص مأخوذ من مقتطف بحث، يطابق حرفيا مع القرار."
-    }
+      "status": "verified_original",
+      "note": "طوبقت الفقرة ٣٠ حرفيا مع A/RES/70/1 المفتوحة من documents.un.org."
+    },
+    {"id": "unfccc-art4-8", "source": "UNFCCC", "symbol": "A/AC.237/18 (Part II)/Add.1", "location": "Article 4, paragraph 8 (chapeau and items (a) to (g))", "year": 1992, "topics": ["ResponseMeasures-Trade", "Core"], "text_en": "In the implementation of the commitments in this Article, the Parties shall give full consideration to what actions are necessary under the Convention, including actions related to funding, insurance and the transfer of technology, to meet the specific needs and concerns of developing country Parties arising from the adverse effects of climate change and/or the impact of the implementation of response measures, especially on:", "status": "verified_original", "note": "طوبق مع نص الاتفاقية المعتمد في الوثيقة A/AC.237/18 (Part II)/Add.1. القراءة الآلية كتبت are على صورة arc وصححت. البندان (h) و(i) لم تنسخا."},
+    {"id": "unfccc-art4-10", "source": "UNFCCC", "symbol": "A/AC.237/18 (Part II)/Add.1", "location": "Article 4, paragraph 10", "year": 1992, "topics": ["ResponseMeasures-Trade", "Core"], "text_en": "The Parties shall, in accordance with Article 10, take into consideration in the implementation of the commitments of the Convention the situation of Parties, particularly developing country Parties, with economies that are vulnerable to the adverse effects of the implementation of measures to respond to climate change. This applies notably to Parties with economies that are highly dependent on income generated from the production, processing and export, and/or consumption of fossil fuels and associated energy-intensive products and/or the use of fossil fuels for which such Parties have serious difficulties in switching to alternatives.", "status": "verified_original", "note": "طوبق مع نص الاتفاقية المعتمد في الوثيقة A/AC.237/18 (Part II)/Add.1، لا مع نسخة FCCC/INFORMAL/84."},
+    {"id": "paris-art4-15", "source": "Paris Agreement", "symbol": "FCCC/CP/2015/10/Add.1", "location": "Article 4, paragraph 15", "year": 2015, "topics": ["ResponseMeasures-Trade", "Mitigation"], "text_en": "Parties shall take into consideration in the implementation of this Agreement the concerns of Parties with economies most affected by the impacts of response measures, particularly developing country Parties.", "status": "verified_original", "note": "طوبق مع مرفق المقرر 1/CP.21 المفتوح من documents.un.org."},
+    {"id": "cp16-section-e-preamble", "source": "Cancun Agreements", "symbol": "Decision 1/CP.16, FCCC/CP/2010/7/Add.1", "location": "Section E, preambular paragraphs preceding paragraph 88", "year": 2010, "topics": ["ResponseMeasures-Trade"], "text_en": "Recognizing that the implementation of response measures to mitigate climate change taken by a Party may result in negative economic and social consequences for other Parties, and the need to take into consideration in the implementation of the commitments of the Convention the situation of Parties, particularly developing country Parties, with economies that are vulnerable to the adverse impact of the implementation of measures to respond to climate change, referred to in Article 4, paragraphs 8, 9 and 10, of the Convention,", "status": "verified_original", "note": "مثبت هنا إحدى الفقرات التمهيدية الأربع للقسم. نصوص الفقرات كلها في ملف المقتطفات بمجلد ResponseMeasures-Trade في Drive. لا يعرف أيها الثلاث التي زودتها الزميلة قبل مطابقة نصها."},
+    {"id": "g20-rio-leaders-2024", "source": "G20 Rio de Janeiro Leaders' Declaration", "symbol": "18-19 November 2024", "location": "Paragraph number not captured", "year": 2024, "topics": ["External", "ResponseMeasures-Trade"], "text_en": "We further recognize, as addressed in GST-1, that members should cooperate on promoting a supportive and open international economic system aimed at achieving sustainable economic growth and development in all countries and thus enabling them to better to address the problems of climate change, noting that measures taken to combat climate change, including unilateral ones, should not constitute a means of arbitrary or unjustifiable discrimination or a disguised restriction on international trade.", "status": "verified_secondary", "note": "من نسخة مركز معلومات مجموعة العشرين في جامعة تورنتو g20.utoronto.ca، لا من موقع الرئاسة. رقم الفقرة لم يلتقط. الصياغة members بدل Parties."},
+    {"id": "rio20-para58h", "source": "The future we want", "symbol": "A/RES/66/288", "location": "Paragraph 58(h)", "year": 2012, "topics": ["External", "ResponseMeasures-Trade"], "text_en": "Not constitute a means of arbitrary or unjustifiable discrimination or a disguised restriction on international trade, avoid unilateral actions to deal with environmental challenges outside the jurisdiction of the importing country and ensure that environmental measures addressing transboundary or global environmental problems, as far as possible, are based on international consensus;", "status": "verified_original", "note": "طوبق مع A/RES/66/288. الفقرة ١٥ تعيد تأكيد جميع مبادئ إعلان ريو دون تسمية المبدأ ١٢. موضع إعادة تأكيد المبدأ ١٢ بالاسم لم يعثر عليه بعد."}
   ]
 }
