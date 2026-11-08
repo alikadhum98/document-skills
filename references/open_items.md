@@ -4,7 +4,7 @@
 
 ## الشبكة
 
-١. إضافة المواقع الرسمية إلى قائمة المواقع المسموحة في إعدادات البيئة السحابية: unfccc.int و un.org و documents.un.org و digitallibrary.un.org و undocs.org و wto.org و docs.wto.org و unctad.org و enb.iisd.org و g20.utoronto.ca. ثم اختبار الوصول في الجلسة.
+١. اختبر الوصول في 8 تشرين الثاني 2026: unfccc.int و documents.un.org يعملان. enb.iisd.org يرد بصفحة تحقق من الروبوتات وليس بحظر من الشبكة، فتحفظ تقاريره يدويا في Drive. بقية المواقع لم تختبر.
 
 ## تنزيلات إلى Drive داخل Negotiation-References
 
