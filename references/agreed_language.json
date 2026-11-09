@@ -1,177 +1,255 @@
 {
-  "status_levels": [
-    "verified_original",
-    "verified_secondary",
-    "supplied_unverified",
-    "memory"
-  ],
-  "entries": [
-    {
-      "id": "unfccc-art3-5",
-      "source": "UNFCCC",
-      "symbol": "FCCC/INFORMAL/84",
-      "location": "Article 3, paragraph 5",
-      "year": 1992,
-      "topics": [
-        "ResponseMeasures-Trade",
-        "Core"
-      ],
-      "text_en": "The Parties should cooperate to promote a supportive and open international economic system that would lead to sustainable economic growth and development in all Parties, particularly developing country Parties, thus enabling them better to address the problems of climate change. Measures taken to combat climate change, including unilateral ones, should not constitute a means of arbitrary or unjustifiable discrimination or a disguised restriction on international trade.",
-      "status": "memory",
-      "note": "يطابق مع النص الرسمي بعد تنزيله."
-    },
-    {
-      "id": "cp16-para89",
-      "source": "Cancun Agreements",
-      "symbol": "Decision 1/CP.16, FCCC/CP/2010/7/Add.1",
-      "location": "Paragraph 89, section on economic and social consequences of response measures",
-      "year": 2010,
-      "topics": [
-        "ResponseMeasures-Trade"
-      ],
-      "text_en": "Also urges developed country Parties to strive to implement policies and measures to respond to climate change in such a way as to avoid negative social and economic consequences for developing country Parties, taking into account Article 3 of the Convention, and to assist these Parties to address such consequences by providing support, including financial resources, transfer of technology and capacity-building, in accordance with Article 4 of the Convention, to build up the resilience of societies and economies negatively affected by response measures;",
-      "status": "verified_secondary",
-      "note": "زودته زميلة، وتأكد جزء من نصه عبر مقتطف بحث. الفقرات التمهيدية المرافقة لم تطابق بعد."
-    },
-    {
-      "id": "cma5-para154",
-      "source": "First global stocktake outcome",
-      "symbol": "Decision 1/CMA.5, FCCC/PA/CMA/2023/16/Add.1",
-      "location": "Paragraph 154",
-      "year": 2023,
-      "topics": [
-        "ResponseMeasures-Trade",
-        "GST-JustTransition"
-      ],
-      "text_en": "Recognizes that Parties should cooperate on promoting a supportive and open international economic system aimed at achieving sustainable economic growth and development in all countries and thus enabling them to better to address the problems of climate change, noting that measures taken to combat climate change, including unilateral ones, should not constitute a means of arbitrary or unjustifiable discrimination or a disguised restriction on international trade;",
-      "status": "verified_secondary",
-      "note": "استخرج عبر محرك البحث من الوثيقة الرسمية. عبارة better to address يرجح أنها في الأصل."
-    },
-    {
-      "id": "g20-tfclima-2024-para27",
-      "source": "G20 Task Force on a Global Mobilization against Climate Change, Ministerial Statement",
-      "symbol": "24 October 2024",
-      "location": "Paragraph 27",
-      "year": 2024,
-      "topics": [
-        "External",
-        "ResponseMeasures-Trade"
-      ],
-      "text_en": "Parties should cooperate on promoting a supportive and open international economic system aimed at achieving sustainable economic growth and development in all countries and thus enabling them to better address the problems of climate change, noting that measures taken to combat climate change, including unilateral ones, should not constitute a means of arbitrary or unjustifiable discrimination or a disguised restriction on international trade.",
-      "status": "supplied_unverified",
-      "note": "زودته زميلة. يكاد يطابق 1/CMA.5 الفقرة ١٥٤ حرفيا. رقم الفقرة لم يطابق. الصياغة نفسها وردت في إعلان قادة ريو دي جانيرو نوفمبر ٢٠٢٤ بحسب مصادر ثانوية. لا يدرج في متن قرارات الأمم المتحدة، ويستعمل حجة شفهية."
-    },
-    {
-      "id": "cop30-mutirao-para56",
-      "source": "Global Mutirao decision, COP30 Belem",
-      "symbol": "",
-      "location": "Paragraph 56 (as supplied)",
-      "year": 2025,
-      "topics": [
-        "ResponseMeasures-Trade"
-      ],
-      "text_ar": "تؤكد من جديد أيضا أن التدابير المتخذة لمكافحة تغير المناخ، بما في ذلك التدابير الأحادية الجانب، لا ينبغي أن تشكل وسيلة للتمييز التعسفي أو غير المبرر أو تقييدا مقنعا للتجارة الدولية",
-      "status": "supplied_unverified",
-      "note": "تأكد ورود الصياغة في القرار وإطلاق حوارات التدابير التجارية في دورات الهيئات الفرعية ٢٠٢٦ و٢٠٢٧ و٢٠٢٨ مع تقرير موجز ٢٠٢٨، من مصادر ثانوية. رقم الفقرة ورمز المقرر لم يطابقا."
-    },
-    {
-      "id": "rio-principle12",
-      "source": "Rio Declaration on Environment and Development",
-      "symbol": "A/CONF.151/26 (Vol. I)",
-      "location": "Principle 12",
-      "year": 1992,
-      "topics": [
-        "Core",
-        "ResponseMeasures-Trade",
-        "External"
-      ],
-      "text_en": "States should cooperate to promote a supportive and open international economic system that would lead to economic growth and sustainable development in all countries, to better address the problems of environmental degradation. Trade policy measures for environmental purposes should not constitute a means of arbitrary or unjustifiable discrimination or a disguised restriction on international trade. Unilateral actions to deal with environmental challenges outside the jurisdiction of the importing country should be avoided. Environmental measures addressing transboundary or global environmental problems should, as far as possible, be based on an international consensus.",
-      "status": "verified_secondary",
-      "note": ""
-    },
-    {
-      "id": "agenda2030-para30",
-      "source": "Transforming our world: the 2030 Agenda for Sustainable Development",
-      "symbol": "A/RES/70/1",
-      "location": "Paragraph 30",
-      "year": 2015,
-      "topics": [
-        "External",
-        "ResponseMeasures-Trade"
-      ],
-      "text_en": "States are strongly urged to refrain from promulgating and applying any unilateral economic, financial or trade measures not in accordance with international law and the Charter of the United Nations that impede the full achievement of economic and social development, particularly in developing countries.",
-      "status": "verified_secondary",
-      "note": "النص مأخوذ من مقتطف بحث، يطابق حرفيا مع القرار."
-    },
-    {
-      "id": "sbi65-a62-infdoc-draft-p1f",
-      "source": "SBI Chair informal document",
-      "symbol": "SBI65/A6.2/InfDoc",
-      "location": "Annex, draft decision -/CMA.8, paragraph 1(f)",
-      "year": 2026,
-      "date": "2026-10-19",
-      "topics": [
-        "Article6"
-      ],
-      "text_en": "Avoiding the creation of barriers to participation in cooperative approaches under Article 6, paragraph 2, by imposing of undue financial burdens on developing country Parties, particularly the least developed countries and small island developing States, that wish to participate;",
-      "status": "verified_original",
-      "note": "نص مقترح في مستند غير رسمي وليس لغة متفقا عليها. طوبق في 8/11/2026."
-    },
-    {
-      "id": "sbi65-a62-infdoc-draft-p1g",
-      "source": "SBI Chair informal document",
-      "symbol": "SBI65/A6.2/InfDoc",
-      "location": "Annex, draft decision -/CMA.8, paragraph 1(g)",
-      "year": 2026,
-      "date": "2026-10-19",
-      "topics": [
-        "Article6"
-      ],
-      "text_en": "Ensuring that the costs of operation and maintenance of the infrastructure and processes are borne only by Parties and entities participating in or benefiting from cooperative approaches under Article 6, paragraph 2 and not by Parties that do not participate in such approaches;",
-      "status": "verified_original",
-      "note": "نص مقترح في مستند غير رسمي. طوبق في 8/11/2026."
-    },
-    {
-      "id": "sbi65-a62-infdoc-draft-waiver",
-      "source": "SBI Chair informal document",
-      "symbol": "SBI65/A6.2/InfDoc",
-      "location": "Annex, draft decision -/CMA.8, paragraphs 10, 18, 25 and 32",
-      "year": 2026,
-      "date": "2026-10-19",
-      "topics": [
-        "Article6",
-        "Finance"
-      ],
-      "text_en": "Decides that the fee referred to in paragraph 6 above shall be waived for [the least developed countries and small island developing States][developing country Parties];",
-      "status": "verified_original",
-      "note": "صيغة الفقرة 10، وتتكرر الأقواس نفسها في الفقرات 18 و25 و32. طوبق في 8/11/2026."
-    },
-    {
-      "id": "cma2026-8-para18o",
-      "source": "Article 6.4 Supervisory Body annual report",
-      "symbol": "FCCC/PA/CMA/2026/8",
-      "location": "paragraph 18(o)",
-      "year": 2026,
-      "date": "2026-10-22",
-      "topics": [
-        "Article6"
-      ],
-      "text_en": "Note that, considering the financial situation of the Article 6.4 mechanism, it could review the application of the exemption of the LDCs and SIDS from the fees pertaining to the share of proceeds for administrative expenses set out in paragraphs 50–55 of the annex to decision 7/CMA.4, as provided for in paragraph 58 thereof, with respect to eligible transitioned CDM activities registered under the Article 6.4 mechanism, while continuing to take into account the special circumstances and needs of the LDCs and SIDS.",
-      "status": "verified_original",
-      "note": "توصية من هيئة الإشراف إلى CMA 8. طوبق في 8/11/2026."
-    },
-    {
-      "id": "4-cma6-p56",
-      "source": "CMA decision",
-      "symbol": "FCCC/PA/CMA/2024/17/Add.1",
-      "location": "Decision 4/CMA.6, paragraph 56",
-      "year": 2024,
-      "topics": [
-        "Article6"
-      ],
-      "text_en": "Also requests the secretariat, as part of the capacity-building programme referred to in decision 2/CMA.3, paragraph 12(b), to organize a dialogue, to be held in conjunction with each session of the Subsidiary Body for Implementation, among interested participating Parties and observers to exchange information on and experience in how cooperative approaches in which they participate support ambition;",
-      "status": "verified_original",
-      "note": "ولاية حوار الطموح للمادة 6.2. طوبق مع الوثيقة الرسمية من documents.un.org في 8/11/2026."
-    }
-  ]
+ "status_levels": [
+  "verified_original",
+  "verified_secondary",
+  "supplied_unverified",
+  "memory"
+ ],
+ "entries": [
+  {
+   "id": "unfccc-art3-5",
+   "source": "UNFCCC",
+   "symbol": "FCCC/INFORMAL/84",
+   "location": "Article 3, paragraph 5",
+   "year": 1992,
+   "topics": [
+    "ResponseMeasures-Trade",
+    "Core"
+   ],
+   "text_en": "The Parties should cooperate to promote a supportive and open international economic system that would lead to sustainable economic growth and development in all Parties, particularly developing country Parties, thus enabling them better to address the problems of climate change. Measures taken to combat climate change, including unilateral ones, should not constitute a means of arbitrary or unjustifiable discrimination or a disguised restriction on international trade.",
+   "status": "memory",
+   "note": "يطابق مع النص الرسمي بعد تنزيله."
+  },
+  {
+   "id": "cp16-para89",
+   "source": "Cancun Agreements",
+   "symbol": "Decision 1/CP.16, FCCC/CP/2010/7/Add.1",
+   "location": "Paragraph 89, section on economic and social consequences of response measures",
+   "year": 2010,
+   "topics": [
+    "ResponseMeasures-Trade"
+   ],
+   "text_en": "Also urges developed country Parties to strive to implement policies and measures to respond to climate change in such a way as to avoid negative social and economic consequences for developing country Parties, taking into account Article 3 of the Convention, and to assist these Parties to address such consequences by providing support, including financial resources, transfer of technology and capacity-building, in accordance with Article 4 of the Convention, to build up the resilience of societies and economies negatively affected by response measures;",
+   "status": "verified_secondary",
+   "note": "زودته زميلة، وتأكد جزء من نصه عبر مقتطف بحث. الفقرات التمهيدية المرافقة لم تطابق بعد."
+  },
+  {
+   "id": "cma5-para154",
+   "source": "First global stocktake outcome",
+   "symbol": "Decision 1/CMA.5, FCCC/PA/CMA/2023/16/Add.1",
+   "location": "Paragraph 154",
+   "year": 2023,
+   "topics": [
+    "ResponseMeasures-Trade",
+    "GST-JustTransition"
+   ],
+   "text_en": "Recognizes that Parties should cooperate on promoting a supportive and open international economic system aimed at achieving sustainable economic growth and development in all countries and thus enabling them to better to address the problems of climate change, noting that measures taken to combat climate change, including unilateral ones, should not constitute a means of arbitrary or unjustifiable discrimination or a disguised restriction on international trade;",
+   "status": "verified_secondary",
+   "note": "استخرج عبر محرك البحث من الوثيقة الرسمية. عبارة better to address يرجح أنها في الأصل."
+  },
+  {
+   "id": "g20-tfclima-2024-para27",
+   "source": "G20 Task Force on a Global Mobilization against Climate Change, Ministerial Statement",
+   "symbol": "24 October 2024",
+   "location": "Paragraph 27",
+   "year": 2024,
+   "topics": [
+    "External",
+    "ResponseMeasures-Trade"
+   ],
+   "text_en": "Parties should cooperate on promoting a supportive and open international economic system aimed at achieving sustainable economic growth and development in all countries and thus enabling them to better address the problems of climate change, noting that measures taken to combat climate change, including unilateral ones, should not constitute a means of arbitrary or unjustifiable discrimination or a disguised restriction on international trade.",
+   "status": "supplied_unverified",
+   "note": "زودته زميلة. يكاد يطابق 1/CMA.5 الفقرة ١٥٤ حرفيا. رقم الفقرة لم يطابق. الصياغة نفسها وردت في إعلان قادة ريو دي جانيرو نوفمبر ٢٠٢٤ بحسب مصادر ثانوية. لا يدرج في متن قرارات الأمم المتحدة، ويستعمل حجة شفهية."
+  },
+  {
+   "id": "cop30-mutirao-para56",
+   "source": "Global Mutirao decision, COP30 Belem",
+   "symbol": "",
+   "location": "Paragraph 56 (as supplied)",
+   "year": 2025,
+   "topics": [
+    "ResponseMeasures-Trade"
+   ],
+   "text_ar": "تؤكد من جديد أيضا أن التدابير المتخذة لمكافحة تغير المناخ، بما في ذلك التدابير الأحادية الجانب، لا ينبغي أن تشكل وسيلة للتمييز التعسفي أو غير المبرر أو تقييدا مقنعا للتجارة الدولية",
+   "status": "supplied_unverified",
+   "note": "تأكد ورود الصياغة في القرار وإطلاق حوارات التدابير التجارية في دورات الهيئات الفرعية ٢٠٢٦ و٢٠٢٧ و٢٠٢٨ مع تقرير موجز ٢٠٢٨، من مصادر ثانوية. رقم الفقرة ورمز المقرر لم يطابقا."
+  },
+  {
+   "id": "rio-principle12",
+   "source": "Rio Declaration on Environment and Development",
+   "symbol": "A/CONF.151/26 (Vol. I)",
+   "location": "Principle 12",
+   "year": 1992,
+   "topics": [
+    "Core",
+    "ResponseMeasures-Trade",
+    "External"
+   ],
+   "text_en": "States should cooperate to promote a supportive and open international economic system that would lead to economic growth and sustainable development in all countries, to better address the problems of environmental degradation. Trade policy measures for environmental purposes should not constitute a means of arbitrary or unjustifiable discrimination or a disguised restriction on international trade. Unilateral actions to deal with environmental challenges outside the jurisdiction of the importing country should be avoided. Environmental measures addressing transboundary or global environmental problems should, as far as possible, be based on an international consensus.",
+   "status": "verified_secondary",
+   "note": ""
+  },
+  {
+   "id": "agenda2030-para30",
+   "source": "Transforming our world: the 2030 Agenda for Sustainable Development",
+   "symbol": "A/RES/70/1",
+   "location": "Paragraph 30",
+   "year": 2015,
+   "topics": [
+    "External",
+    "ResponseMeasures-Trade"
+   ],
+   "text_en": "States are strongly urged to refrain from promulgating and applying any unilateral economic, financial or trade measures not in accordance with international law and the Charter of the United Nations that impede the full achievement of economic and social development, particularly in developing countries.",
+   "status": "verified_secondary",
+   "note": "النص مأخوذ من مقتطف بحث، يطابق حرفيا مع القرار."
+  },
+  {
+   "id": "sbi65-a62-infdoc-draft-p1f",
+   "source": "SBI Chair informal document",
+   "symbol": "SBI65/A6.2/InfDoc",
+   "location": "Annex, draft decision -/CMA.8, paragraph 1(f)",
+   "year": 2026,
+   "date": "2026-10-19",
+   "topics": [
+    "Article6"
+   ],
+   "text_en": "Avoiding the creation of barriers to participation in cooperative approaches under Article 6, paragraph 2, by imposing of undue financial burdens on developing country Parties, particularly the least developed countries and small island developing States, that wish to participate;",
+   "status": "verified_original",
+   "note": "نص مقترح في مستند غير رسمي وليس لغة متفقا عليها. طوبق في 8/11/2026."
+  },
+  {
+   "id": "sbi65-a62-infdoc-draft-p1g",
+   "source": "SBI Chair informal document",
+   "symbol": "SBI65/A6.2/InfDoc",
+   "location": "Annex, draft decision -/CMA.8, paragraph 1(g)",
+   "year": 2026,
+   "date": "2026-10-19",
+   "topics": [
+    "Article6"
+   ],
+   "text_en": "Ensuring that the costs of operation and maintenance of the infrastructure and processes are borne only by Parties and entities participating in or benefiting from cooperative approaches under Article 6, paragraph 2 and not by Parties that do not participate in such approaches;",
+   "status": "verified_original",
+   "note": "نص مقترح في مستند غير رسمي. طوبق في 8/11/2026."
+  },
+  {
+   "id": "sbi65-a62-infdoc-draft-waiver",
+   "source": "SBI Chair informal document",
+   "symbol": "SBI65/A6.2/InfDoc",
+   "location": "Annex, draft decision -/CMA.8, paragraphs 10, 18, 25 and 32",
+   "year": 2026,
+   "date": "2026-10-19",
+   "topics": [
+    "Article6",
+    "Finance"
+   ],
+   "text_en": "Decides that the fee referred to in paragraph 6 above shall be waived for [the least developed countries and small island developing States][developing country Parties];",
+   "status": "verified_original",
+   "note": "صيغة الفقرة 10، وتتكرر الأقواس نفسها في الفقرات 18 و25 و32. طوبق في 8/11/2026."
+  },
+  {
+   "id": "cma2026-8-para18o",
+   "source": "Article 6.4 Supervisory Body annual report",
+   "symbol": "FCCC/PA/CMA/2026/8",
+   "location": "paragraph 18(o)",
+   "year": 2026,
+   "date": "2026-10-22",
+   "topics": [
+    "Article6"
+   ],
+   "text_en": "Note that, considering the financial situation of the Article 6.4 mechanism, it could review the application of the exemption of the LDCs and SIDS from the fees pertaining to the share of proceeds for administrative expenses set out in paragraphs 50–55 of the annex to decision 7/CMA.4, as provided for in paragraph 58 thereof, with respect to eligible transitioned CDM activities registered under the Article 6.4 mechanism, while continuing to take into account the special circumstances and needs of the LDCs and SIDS.",
+   "status": "verified_original",
+   "note": "توصية من هيئة الإشراف إلى CMA 8. طوبق في 8/11/2026."
+  },
+  {
+   "id": "4-cma6-p56",
+   "source": "CMA decision",
+   "symbol": "FCCC/PA/CMA/2024/17/Add.1",
+   "location": "Decision 4/CMA.6, paragraph 56",
+   "year": 2024,
+   "topics": [
+    "Article6"
+   ],
+   "text_en": "Also requests the secretariat, as part of the capacity-building programme referred to in decision 2/CMA.3, paragraph 12(b), to organize a dialogue, to be held in conjunction with each session of the Subsidiary Body for Implementation, among interested participating Parties and observers to exchange information on and experience in how cooperative approaches in which they participate support ambition;",
+   "status": "verified_original",
+   "note": "ولاية حوار الطموح للمادة 6.2. طوبق مع الوثيقة الرسمية من documents.un.org في 8/11/2026."
+  },
+  {
+   "id": "4-cma3-p10",
+   "source": "CMA decision",
+   "symbol": "FCCC/PA/CMA/2021/10/Add.1",
+   "location": "Decision 4/CMA.3, paragraph 10",
+   "year": 2021,
+   "topics": [
+    "Article6"
+   ],
+   "text_en": "Requests the Subsidiary Body for Scientific and Technological Advice to review the work programme, including its activities, at its sixty-fourth (June 2026) and sixty-fifth (November 2026) sessions with a view to enhancing the effectiveness of the work programme, taking into account relevant inputs, including the outcomes of the global stocktake, and to make recommendations thereon for consideration and adoption by the Conference of the Parties serving as the meeting of the Parties to the Paris Agreement by no later than at its eighth session (2026);",
+   "status": "verified_original",
+   "note": "ولاية مراجعة برنامج عمل النهج غير السوقية في SBSTA 64 و65. طوبق مع الوثيقة الرسمية من documents.un.org في 9/11/2026."
+  },
+  {
+   "id": "4-cma3-annex-p3c",
+   "source": "CMA decision",
+   "symbol": "FCCC/PA/CMA/2021/10/Add.1",
+   "location": "Decision 4/CMA.3, annex, paragraph 3(c)",
+   "year": 2021,
+   "topics": [
+    "Article6"
+   ],
+   "text_en": "In addition, each NMA facilitated under the framework: ... (c) Does not involve the transfer of any mitigation outcomes;",
+   "status": "verified_original",
+   "note": "الفارق الجوهري بين النهج غير السوقية والمادتين 6.2 و6.4. طوبق مع الوثيقة الرسمية من documents.un.org في 9/11/2026."
+  },
+  {
+   "id": "8-cma4-p9",
+   "source": "CMA decision",
+   "symbol": "FCCC/PA/CMA/2022/10/Add.2",
+   "location": "Decision 8/CMA.4, paragraph 9",
+   "year": 2022,
+   "topics": [
+    "Article6"
+   ],
+   "text_en": "Notes that recording information on a non-market approach or support available or needed on the UNFCCC web-based platform is for information exchange purposes only, and neither creates any rights or obligations for any Party or other entity nor represents endorsement or approval of the non-market approach;",
+   "status": "verified_original",
+   "note": "التسجيل في المنصة لا ينشئ التزاما. طوبق مع الوثيقة الرسمية من documents.un.org في 9/11/2026."
+  },
+  {
+   "id": "8-cma4-p10a",
+   "source": "CMA decision",
+   "symbol": "FCCC/PA/CMA/2022/10/Add.2",
+   "location": "Decision 8/CMA.4, paragraph 10(a)",
+   "year": 2022,
+   "topics": [
+    "Article6"
+   ],
+   "text_en": "Requests the secretariat, subject to the availability of resources, to facilitate opportunities for participating Parties to identify, develop and implement non-market approaches by: (a) Organizing an in-session workshop, including plenary presentations and round-table discussions, to be held in conjunction with each meeting of the Glasgow Committee on Non-market Approaches, to exchange information on the non-market approaches including best practices and lessons learned from identifying, developing and implementing non-market approaches as well as non-market approaches that may require financial, technology and capacity-building support and the support available for such non-market approaches;",
+   "status": "verified_original",
+   "note": "ولاية ورشة 6.8 أثناء الدورة. طوبق مع الوثيقة الرسمية من documents.un.org في 9/11/2026."
+  },
+  {
+   "id": "7-cma6-p7",
+   "source": "CMA decision",
+   "symbol": "FCCC/PA/CMA/2024/17/Add.1",
+   "location": "Decision 7/CMA.6, paragraph 7",
+   "year": 2024,
+   "topics": [
+    "Article6"
+   ],
+   "text_en": "Recognizes that one non-market approach has been submitted by Parties to the NMA Platform since its recent launch, with submissions anticipated to increase over time;",
+   "status": "verified_original",
+   "note": "حجم استعمال المنصة عند CMA.6. طوبق مع الوثيقة الرسمية من documents.un.org في 9/11/2026."
+  },
+  {
+   "id": "21-cma7-p14",
+   "source": "CMA decision",
+   "symbol": "",
+   "location": "Decision 21/CMA.7, paragraph 14",
+   "year": 2025,
+   "topics": [
+    "Article6"
+   ],
+   "text_en": "(paraphrase from the concept note) invited Parties and observers to submit views and information on topics for discussion at the in-session workshop to be held in conjunction with GCNMA 10 and requested the secretariat to organize the workshop on the basis of the topics identified.",
+   "status": "verified_secondary",
+   "note": "من المذكرة المفاهيمية النهائية لورشة 6.8 في COP31، ولم يطابق نص المقرر."
+  }
+ ]
 }
