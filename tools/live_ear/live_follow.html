@@ -1,0 +1,508 @@
+<title>المتابعة الحية</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600;700&family=Noto+Kufi+Arabic:wght@600;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one column console. Status strip, setup steps, live transcript, answer card, fixed action bar. */
+:root {
+  --paper: #f3f5f4;
+  --card: #ffffff;
+  --ink: #15212b;
+  --muted: #5a6b74;
+  --line: #d8e0e0;
+  --accent: #0b6e69;
+  --accent-ink: #ffffff;
+  --flag: #b86e00;
+  --flag-bg: #fff3df;
+  --live: #cc2f27;
+  --ok: #1d7a3e;
+  --soft: #e7efee;
+  --ar: "Simplified Arabic", "Noto Naskh Arabic", "Traditional Arabic", serif;
+  --ar-head: "Noto Kufi Arabic", "Simplified Arabic", sans-serif;
+  --en: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+  --mono: "IBM Plex Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f1619; --card: #172126; --ink: #e6eeee; --muted: #93a6ab; --line: #2a393f;
+    --accent: #3fb3aa; --accent-ink: #06201e; --flag: #f0b25a; --flag-bg: #33270f;
+    --live: #ff6b5e; --ok: #5ccb83; --soft: #1d2b30; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0f1619; --card: #172126; --ink: #e6eeee; --muted: #93a6ab; --line: #2a393f;
+  --accent: #3fb3aa; --accent-ink: #06201e; --flag: #f0b25a; --flag-bg: #33270f;
+  --live: #ff6b5e; --ok: #5ccb83; --soft: #1d2b30; color-scheme: dark;
+}
+html, body { background: var(--paper); color: var(--ink); }
+body {
+  font-family: var(--ar); font-size: 17px; line-height: 1.7; direction: rtl;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 12px 128px;
+}
+.wrap { max-width: 760px; margin: 0 auto; display: grid; gap: 14px; }
+header { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+h1 { font-family: var(--ar-head); font-size: 22px; margin: 0; text-wrap: balance; }
+.sub { color: var(--muted); font-size: 14px; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 3px 10px; border-radius: 999px; background: var(--soft); color: var(--muted); border: 1px solid var(--line); }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+.chip.ok .dot { background: var(--ok); }
+.chip.live .dot { background: var(--live); animation: pulse 1.4s infinite; }
+.chip.warn .dot { background: var(--flag); }
+@keyframes pulse { 50% { opacity: .25; } }
+@media (prefers-reduced-motion: reduce) { .chip.live .dot { animation: none; } }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; min-width: 0; }
+.card h2 { font-family: var(--ar-head); font-size: 15px; margin: 0 0 8px; color: var(--muted); letter-spacing: .02em; }
+.steps { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.steps li { display: grid; grid-template-columns: 30px 1fr; gap: 10px; align-items: start; }
+.num { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-family: var(--ar-head); font-size: 14px; background: var(--soft); color: var(--muted); border: 1px solid var(--line); }
+.steps li.done .num { background: var(--ok); color: #fff; border-color: var(--ok); }
+.steps li.wait .num { background: var(--flag-bg); color: var(--flag); border-color: var(--flag); }
+.steps .t { font-weight: 600; }
+.steps .d { color: var(--muted); font-size: 14px; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+label { font-size: 14px; color: var(--muted); }
+input[type=text] { font: inherit; font-size: 16px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--paper); color: var(--ink); min-width: 0; flex: 1 1 200px; }
+button { font-family: var(--ar-head); font-size: 15px; border-radius: 10px; border: 1px solid var(--line); background: var(--card); color: var(--ink); padding: 10px 16px; cursor: pointer; }
+button:focus-visible, input:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+button.stop { color: var(--live); border-color: var(--live); }
+button:disabled { opacity: .5; cursor: default; }
+.transcript { direction: ltr; text-align: left; font-family: var(--en); font-size: 15px; line-height: 1.55; max-height: 46vh; overflow-y: auto; display: grid; gap: 4px; padding-inline-end: 4px; }
+.ln { display: grid; grid-template-columns: 64px 1fr; gap: 8px; padding: 3px 6px; border-radius: 6px; }
+.ln time { font-family: var(--mono); font-size: 12px; color: var(--muted); padding-top: 3px; font-variant-numeric: tabular-nums; }
+.ln.flag { background: var(--flag-bg); box-shadow: inset 3px 0 0 var(--flag); }
+.ln mark { background: transparent; color: var(--flag); font-weight: 500; }
+.ln.mark-line { color: var(--muted); font-size: 13px; }
+.empty { color: var(--muted); font-family: var(--ar); direction: rtl; text-align: right; }
+.answer { white-space: pre-wrap; font-size: 17px; }
+.answer .en { direction: ltr; text-align: left; font-family: var(--en); }
+.meta { color: var(--muted); font-size: 13px; }
+.bar {
+  position: fixed; inset: auto 0 0 0; background: var(--card); border-top: 1px solid var(--line);
+  padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+  display: flex; justify-content: center; z-index: 5;
+}
+.bar .inner { max-width: 760px; width: 100%; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px; }
+.bar button { padding: 14px 8px; font-size: 16px; }
+.note { font-size: 14px; color: var(--muted); }
+.err { color: var(--live); font-size: 14px; }
+a { color: var(--accent); }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>المتابعة الحية</h1>
+      <div class="sub">الحاسوب يسمع القاعة، وأنت تختار متى تتدخل</div>
+    </div>
+    <div class="chips" aria-live="polite">
+      <span class="chip" id="chipDrive"><span class="dot"></span><span>Drive</span></span>
+      <span class="chip" id="chipEar"><span class="dot"></span><span id="earTxt">الحاسوب</span></span>
+      <span class="chip" id="chipLast"><span class="dot"></span><span id="lastTxt">لا كلام بعد</span></span>
+    </div>
+  </header>
+
+  <section class="card" id="setup">
+    <h2>تجهيز الجلسة</h2>
+    <ol class="steps">
+      <li id="s1"><span class="num">١</span><div><div class="t">مزامنة Drive على الحاسوب</div><div class="d" id="s1d">أتحقق من آخر إشارة وصلت من الحاسوب</div></div></li>
+      <li id="s2"><span class="num">٢</span><div><div class="t">برنامج الأذن الحية</div><div class="d" id="s2d">أتحقق من أن البرنامج ينتظر في الخلفية</div></div></li>
+      <li id="s3"><span class="num">٣</span><div><div class="t">ضع الحاسوب قرب مكبر الصوت أو صل به سماعة الترجمة، ثم ابدأ</div>
+        <div class="row" style="margin-top:8px">
+          <input type="text" id="sessName" placeholder="اسم الجلسة، مثل ورشة 6.8" aria-label="اسم الجلسة">
+          <button class="primary" id="btnStart">ابدأ الاستماع</button>
+        </div>
+        <div class="d" id="s3d"></div></div></li>
+    </ol>
+  </section>
+
+  <section class="card">
+    <div class="row" style="justify-content:space-between">
+      <h2 style="margin:0">ما يقال الآن</h2>
+      <button id="btnRefresh" style="padding:4px 12px;font-size:13px">تحديث</button>
+    </div>
+    <div class="transcript" id="tx"><div class="empty">سيظهر هنا كلام القاعة بعد نحو دقيقة من قوله. الأسطر المميزة تمس العراق أو مواقف المجموعات.</div></div>
+  </section>
+
+  <section class="card" id="ansCard" hidden>
+    <div class="row" style="justify-content:space-between">
+      <h2 style="margin:0" id="ansTitle">الرد المقترح</h2>
+      <div class="row">
+        <button id="btnCopy" style="padding:4px 12px;font-size:13px">نسخ</button>
+        <button id="btnCancel" style="padding:4px 12px;font-size:13px" hidden>إيقاف</button>
+      </div>
+    </div>
+    <div class="answer" id="ans"></div>
+    <div class="meta" id="ansMeta"></div>
+  </section>
+
+  <section class="card" id="endCard" hidden>
+    <h2>نتائج الجلسة</h2>
+    <div id="endSteps" class="note"></div>
+  </section>
+
+  <p class="note" id="globalNote"></p>
+</div>
+
+<nav class="bar" aria-label="أزرار المتابعة">
+  <div class="inner">
+    <button class="primary" id="btnReply">رد</button>
+    <button id="btnSum">ملخص</button>
+    <button class="stop" id="btnStop">أوقف المتابعة</button>
+  </div>
+</nav>
+
+<script>
+const TRANSCRIPT_ID = "1oPr3AAXrYMBWpmj0IC5px8bpo42IyTh1"
+const CONTROL_ID = "1djrOhWIRrG_v_3Vdvc3F0SQoX30W96Sy"
+const MAIN_SESSION = "session_011WPkSpneZZNUraRrm1kzvT"
+const MAIN_TRIGGER = "trig_01XmeCzxgVBGSQMxdiMVTwhR"
+const DRIVE = "Google Drive"
+const CCR = "Claude Code Remote"
+const COP31_FOLDER = "15tiYhgHJVglL4mwh0HMElQfB7fjAfViJ"
+const DAY_FOLDERS = {
+  "2026-11-08": "1WKn0QuDPykgt4jRM9q8Z3BMfCA6adxB2", "2026-11-09": "14P5lt5iMV-uapCnBj9aeu8Ub0xIzK4Oe",
+  "2026-11-10": "12dzsqix8TAgFtM5BgvOscZQZnoO1oNGn", "2026-11-11": "1LtHVhQPMelDI0mbD3EBYsN2-O6Cmmy8L",
+  "2026-11-12": "1PBhfKEEdC4m8niLx5zkOsCoBWjYZ70h9", "2026-11-13": "1ja-4LTQsEBrLMJhX6PZlJO7zjCAjMkdR",
+  "2026-11-14": "1d2UDJLzds2eWOzSnHlwK6PloiN1LIdJh", "2026-11-15": "1uG1XQqIa9dv5d0dTNd2rjcUxHiHraGjm",
+  "2026-11-16": "1Ur6b4r14w80Sbm6s7LFFMhAieCvbj-5r", "2026-11-17": "1nqIlH5Efh3UaI6dM4zGfy3BVhPtIzjYn",
+  "2026-11-18": "164h2TPdJCAC7dXHAujsWnbDf0WVgeq3i", "2026-11-19": "1ad2bKf_ZOP8VVWYl1pFyOBbdb6FAuegK",
+  "2026-11-20": "1hYpsCtfaBxLT0WsZJ2PFTQDrb2k7xTud"
+}
+const FLAG_WORDS = ["iraq", "arab group", "lmdc", "like-minded", "like minded", "opec", "saudi", "fee", "fees", "share of proceeds",
+  "registry", "registries", "host countr", "capacity building", "capacity-building", "review", "6.2", "6.4", "6.8", "non-market",
+  "finance", "response measures", "unilateral", "cbam", "authoriz", "authoris", "corresponding adjustment", "g77", "g-77", "china",
+  "african group", "ldc", "aosis", "ailac", "european union", "umbrella", "first transfer", "itmo", "mitigation contribution", "work programme", "work program"]
+
+const IRAQ_BRIEF = `You assist the delegation of the Republic of Iraq at COP31 (Antalya, November 2026). Scope: Article 6 of the Paris Agreement (6.2, 6.4, 6.8) and coordination in LMDC and OPEC meetings.
+Iraq's agreed positions on Article 6, taken from the delegation's position paper. Use only these as national positions:
+1. Article 6.2 infrastructure, including the international registry, is funded from the core budget, not by fees on Parties.
+2. No cost is imposed on host countries for registry access.
+3. Capacity building stays separate from any fee formula.
+4. Review remains facilitative and non-punitive, respecting national circumstances and capacities.
+5. Article 6 complements finance commitments of developed countries and never replaces them.
+6. Iraq favours an early joint text with like-minded developing countries, the African Group, LDCs and AILAC.
+Rules: Never invent other Iraqi national positions. If a point is outside these, propose procedural language (request clarification, support the Chair's process, align with the Group statement) and say that it needs confirmation from the head of delegation. Speak as Iraq, aligning with G77 and China, the Arab Group and LMDC where the transcript shows them speaking. Never use the name Enhanced Transparency Framework or its abbreviation, describe the idea instead. In any Arabic text: no diacritics, no long dash, no semicolon, and use parentheses instead of quotation marks.`
+
+let mcp = null, sample = null
+let lines = []           // {t, text, flag, marker}
+let sessionStart = null  // index into lines of the current START marker
+let listening = false
+let busy = null
+
+const $ = (id) => document.getElementById(id)
+const todayKey = () => {
+  const d = new Date()
+  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0")
+}
+function setChip(id, cls, text) {
+  const el = $(id)
+  el.classList.remove("ok", "live", "warn")
+  if (cls) el.classList.add(cls)
+  if (text != null) el.querySelector("span:last-child").textContent = text
+}
+function stepState(id, state, text) {
+  const li = $(id)
+  li.classList.remove("done", "wait")
+  if (state) li.classList.add(state)
+  if (text != null) $(id + "d").textContent = text
+}
+function note(text, isErr) {
+  const n = $("globalNote")
+  n.textContent = text || ""
+  n.className = isErr ? "err" : "note"
+}
+function errCopy(e, server) {
+  const code = e && e.code
+  const s = server || (e && e.server) || "الموصل"
+  if (code === "needs_reauth") return "انتهى اتصال " + s + ". أعد ربطه من إعدادات الموصلات في claude.ai ثم حدث الصفحة."
+  if (code === "server_not_connected" || code === "selection_required") return "الموصل " + s + " غير مضاف أو غير محدد. أضفه من إعدادات الموصلات في claude.ai."
+  if (code === "not_in_manifest" || code === "approval_required" || code === "consent_required") return "لم يسمح للصفحة باستعمال " + s + ". افتح قائمة الأذونات في أعلى الصفحة واسمح به."
+  if (code === "blocked_by_policy") return "سياسة الحساب تمنع هذه الأداة في " + s + "."
+  if (code === "server_unavailable") return s + " لا يستجيب الآن. أعد المحاولة بعد قليل."
+  if (code === "not_granted") return "تحتاج الصفحة إلى إذنك لاستعمال Claude. اسمح بذلك حين يطلب منك."
+  if (code === "rate_limited") return "بلغت حد الاستعمال مؤقتا. انتظر دقيقة ثم أعد المحاولة."
+  if (code === "cancelled") return "أوقف الطلب."
+  return "تعذر الطلب في " + s + ". " + (e && e.message ? String(e.message).slice(0, 160) : "")
+}
+
+// ---------- transcript parsing ----------
+function parse(raw) {
+  const out = []
+  for (let l of String(raw || "").split(/\r?\n/)) {
+    l = l.replace(/\\([\[\]_*#-])/g, "$1").trim()
+    const m = l.match(/^\[(\d{1,2}:\d{2}:\d{2})\]\s*(.*)$/)
+    if (!m) continue
+    const text = m[2].trim()
+    if (!text) continue
+    const marker = /^=====/.test(text)
+    const low = text.toLowerCase()
+    const flag = !marker && FLAG_WORDS.some(w => low.includes(w))
+    out.push({ t: m[1], text, flag, marker })
+  }
+  return out
+}
+function currentSession() {
+  let idx = -1
+  for (let i = lines.length - 1; i >= 0; i--) if (lines[i].marker && lines[i].text.includes("START")) { idx = i; break }
+  return lines.slice(idx + 1).filter(l => !(l.marker && l.text.includes("STOP")))
+}
+function render() {
+  const tx = $("tx")
+  const cur = currentSession()
+  const atBottom = tx.scrollHeight - tx.scrollTop - tx.clientHeight < 40
+  tx.textContent = ""
+  if (!cur.length) {
+    const e = document.createElement("div")
+    e.className = "empty"
+    e.textContent = listening ? "بانتظار أول كلام من القاعة. يصل النص بعد نحو دقيقة من قوله." : "سيظهر هنا كلام القاعة بعد بدء الاستماع. الأسطر المميزة تمس العراق أو مواقف المجموعات."
+    tx.appendChild(e)
+  }
+  for (const l of cur) {
+    const row = document.createElement("div")
+    row.className = "ln" + (l.flag ? " flag" : "") + (l.marker ? " mark-line" : "")
+    const time = document.createElement("time")
+    time.textContent = l.t
+    const p = document.createElement("div")
+    if (l.flag) {
+      const low = l.text.toLowerCase()
+      const hits = FLAG_WORDS.filter(w => low.includes(w)).sort((a, b) => b.length - a.length)
+      const re = new RegExp("(" + hits.map(w => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|") + ")", "ig")
+      let last = 0
+      l.text.replace(re, (m, _g, off) => {
+        p.appendChild(document.createTextNode(l.text.slice(last, off)))
+        const mk = document.createElement("mark"); mk.textContent = m; p.appendChild(mk)
+        last = off + m.length
+        return m
+      })
+      p.appendChild(document.createTextNode(l.text.slice(last)))
+    } else p.textContent = l.text
+    row.append(time, p)
+    tx.appendChild(row)
+  }
+  if (atBottom) tx.scrollTop = tx.scrollHeight
+  const real = cur.filter(l => !l.marker)
+  if (real.length) setChip("chipLast", listening ? "live" : "ok", "آخر كلام " + real[real.length - 1].t)
+}
+function applyTranscript(payload) {
+  const raw = payload && (payload.fileContent ?? payload.content ?? (typeof payload === "string" ? payload : ""))
+  lines = parse(raw)
+  setChip("chipDrive", "ok", "Drive متصل")
+  render()
+}
+
+// ---------- status of the laptop ----------
+let statusId = null
+function applyStatus(payload) {
+  const raw = String((payload && (payload.fileContent ?? payload)) || "").replace(/\\/g, "").trim()
+  const m = raw.match(/^(\w+)\s+(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})/)
+  if (!m) { stepState("s2", "wait", "لم تصل إشارة من البرنامج بعد"); return }
+  const age = (Date.now() - new Date(m[2]).getTime()) / 1000
+  const fresh = age < 240
+  stepState("s1", fresh ? "done" : "wait", fresh ? "الحاسوب يزامن Drive، آخر إشارة قبل " + Math.max(0, Math.round(age)) + " ثانية" : "آخر إشارة من الحاسوب قديمة. تأكد أن الحاسوب يعمل وأن Google Drive متصل")
+  if (m[1] === "listening") {
+    stepState("s2", "done", "البرنامج يسمع القاعة الآن")
+    setChip("chipEar", fresh ? "live" : "warn", "الحاسوب يسمع")
+  } else if (m[1] === "standby") {
+    stepState("s2", fresh ? "done" : "wait", fresh ? "البرنامج جاهز وينتظر أمر البدء" : "البرنامج كان جاهزا، لكن الإشارة قديمة")
+    setChip("chipEar", fresh ? "ok" : "warn", "الحاسوب جاهز")
+  } else {
+    stepState("s2", "wait", "البرنامج مغلق. أعد تشغيل الحاسوب أو شغل LiveEar من مجلد بدء التشغيل")
+    setChip("chipEar", "warn", "البرنامج مغلق")
+  }
+}
+
+async function findStatusFile() {
+  try {
+    const r = await mcp.callTool(DRIVE, "search_files", { query: "title = 'COP31_live_status.txt' and trashed = false", excludeContentSnippets: true, pageSize: 1 })
+    const f = r.payload && r.payload.files && r.payload.files[0]
+    if (!f) { stepState("s1", "wait", "لم يصل ملف الإشارة من الحاسوب بعد. شغل ملف install.bat مرة واحدة على الحاسوب"); stepState("s2", "wait", "بانتظار البرنامج"); return }
+    statusId = f.id
+    mcp.watchTool(DRIVE, "read_file_content", { fileId: statusId }, ev => {
+      if (ev.type === "data") applyStatus(ev.result.payload)
+      else if (["needs_reauth", "server_not_connected", "not_in_manifest", "blocked_by_policy", "approval_required"].includes(ev.error.code)) stepState("s1", "wait", errCopy(ev.error, DRIVE))
+    }, { refetchInterval: 30000 })
+  } catch (e) { stepState("s1", "wait", errCopy(e, DRIVE)) }
+}
+
+function watchTranscript() {
+  mcp.watchTool(DRIVE, "read_file_content", { fileId: TRANSCRIPT_ID }, ev => {
+    if (ev.type === "data") applyTranscript(ev.result.payload)
+    else if (["needs_reauth", "server_not_connected", "not_in_manifest", "blocked_by_policy", "approval_required"].includes(ev.error.code)) {
+      setChip("chipDrive", "warn", "Drive غير متاح"); note(errCopy(ev.error, DRIVE), true)
+    }
+  }, { refetchInterval: 30000 })
+}
+async function refreshNow() {
+  try {
+    const r = await mcp.callTool(DRIVE, "read_file_content", { fileId: TRANSCRIPT_ID }, { cache: { staleTime: 0, gcTime: 300000, refresh: true } })
+    applyTranscript(r.payload)
+  } catch (e) { note(errCopy(e, DRIVE), true) }
+}
+
+async function setListening(on) {
+  await mcp.callTool(DRIVE, "update_file", { fileId: CONTROL_ID, title: on ? "COP31_listen_ON.txt" : "COP31_listen_OFF.txt" })
+  listening = on
+  try { localStorage.setItem("lf_listening", on ? "1" : "0") } catch (e) {}
+}
+
+// ---------- Claude calls ----------
+function transcriptText(maxChars) {
+  const cur = currentSession().filter(l => !l.marker)
+  let s = cur.map(l => "[" + l.t + "] " + l.text).join("\n")
+  if (s.length > maxChars) s = "...\n" + s.slice(s.length - maxChars)
+  return s || "(no speech captured yet)"
+}
+function sessName() { return ($("sessName").value || "").trim() || "جلسة المادة السادسة" }
+
+async function ask(kind) {
+  if (!sample) { note("لا يمكن استدعاء Claude من هذه النسخة من الصفحة. افتحها من تطبيق Claude أو من claude.ai.", true); return null }
+  if (busy) busy.abort()
+  const ctl = new AbortController(); busy = ctl
+  await refreshNow()
+  const tr = transcriptText(kind === "final" ? 120000 : 24000)
+  let prompt, title
+  if (kind === "reply") {
+    title = "الرد المقترح"
+    prompt = IRAQ_BRIEF + `
+
+Live transcript of the session (${sessName()}), automatic speech recognition, may contain errors. The latest lines are the most important:
+${tr}
+
+Task: write the intervention Iraq should deliver now, reacting to the most recent relevant point in the room.
+Output exactly in this plain-text layout, no markdown symbols:
+الرد للإلقاء (English):
+<60 to 90 words, starting with: Thank you, Chair. Precise, diplomatic, ready to read aloud.>
+
+الترجمة العربية:
+<faithful Arabic translation>
+
+لماذا الآن:
+<one Arabic line naming the speaker or point you react to, and whether the position is covered by the brief or needs confirmation>`
+  } else if (kind === "summary") {
+    title = "الملخص حتى الآن"
+    prompt = IRAQ_BRIEF + `
+
+Live transcript of the session (${sessName()}), automatic speech recognition, may contain errors:
+${tr}
+
+Task: brief the head of delegation in Arabic, plain short paragraphs, no bullet symbols, at most 170 words. Cover in order: ما يدور الآن، مواقف الأطراف والمجموعات كما ظهرت، ما يمس موقف العراق، هل يستحق التدخل الآن ولماذا.`
+  } else {
+    title = "خلاصة الجلسة"
+    prompt = IRAQ_BRIEF + `
+
+Full transcript of the session (${sessName()}), automatic speech recognition, may contain errors:
+${tr}
+
+Task: write the end-of-session record in Arabic for the head of delegation and for the main assistant who will build the formal report. Plain text, numbered with Arabic-Indic numerals, no bullet symbols. Sections in this order:
+١. موضوع الجلسة ومجراها
+٢. مواقف الأطراف والمجموعات، كل طرف بسطر
+٣. ما يمس موقف العراق والمخاطر
+٤. الوعود والمواعيد والخطوات التالية التي ذكرت
+٥. ما يقترح على الوفد فعله قبل الجلسة القادمة
+At most 350 words. Say clearly where the recording was unclear.`
+  }
+  $("ansCard").hidden = false
+  $("ansTitle").textContent = title
+  $("ans").textContent = "أفكر..."
+  $("ansMeta").textContent = ""
+  $("btnCancel").hidden = false
+  try {
+    const res = await sample(prompt, { signal: ctl.signal, cache: false, onText: ({ text }) => { $("ans").textContent = text } })
+    $("ans").textContent = res.text
+    $("ansMeta").textContent = "بني على كلام القاعة حتى " + (currentSession().filter(l => !l.marker).slice(-1)[0]?.t || "الآن") + (res.truncated ? "، وقد قطع الجواب لطوله" : "")
+    return res.text
+  } catch (e) {
+    $("ans").textContent = e.text || ""
+    $("ansMeta").textContent = errCopy(e, "Claude")
+    return null
+  } finally {
+    $("btnCancel").hidden = true
+    if (busy === ctl) busy = null
+  }
+}
+
+async function finish() {
+  $("btnStop").disabled = true
+  $("endCard").hidden = false
+  const log = $("endSteps")
+  log.textContent = ""
+  const step = (t, cls) => { const d = document.createElement("div"); d.textContent = t; if (cls) d.className = cls; log.appendChild(d); return d }
+  try { await setListening(false); step("١. أوقف الاستماع على الحاسوب.") } catch (e) { step("١. تعذر إيقاف الحاسوب: " + errCopy(e, DRIVE), "err") }
+  await new Promise(r => setTimeout(r, 1500))
+  const summary = await ask("final")
+  if (!summary) { step("٢. تعذرت كتابة الخلاصة. اضغط أوقف المتابعة مرة أخرى بعد قليل.", "err"); $("btnStop").disabled = false; return }
+  step("٢. كتبت خلاصة الجلسة.")
+  const date = todayKey()
+  const full = transcriptText(900000)
+  let fileId = null, fileUrl = null
+  try {
+    const r = await mcp.callTool(DRIVE, "create_file", {
+      title: date + " " + sessName() + " نص وخلاصة",
+      parentId: DAY_FOLDERS[date] || COP31_FOLDER,
+      contentMimeType: "text/plain",
+      textContent: "الجلسة: " + sessName() + "\nالتاريخ: " + date + "\n\nالخلاصة\n\n" + summary + "\n\nالنص الكامل كما التقطه الحاسوب\n\n" + full
+    })
+    fileId = r.payload && r.payload.id
+    fileUrl = r.payload && r.payload.viewUrl
+    const d = step("٣. حفظت النص والخلاصة في مجلد اليوم على Drive. ")
+    if (fileUrl) { const a = document.createElement("a"); a.href = fileUrl; a.target = "_blank"; a.rel = "noopener"; a.textContent = "فتح الملف"; d.appendChild(a) }
+  } catch (e) { step("٣. تعذر الحفظ في Drive: " + errCopy(e, DRIVE), "err") }
+  const msg = "نتائج المتابعة الحية\nالجلسة: " + sessName() + "\nالتاريخ: " + date + "\nملف النص الكامل في Drive: " + (fileId || "لم يحفظ") + "\n\n" + summary
+  let sent = false
+  try {
+    await mcp.callTool(CCR, "send_message", { session_id: MAIN_SESSION, message: msg })
+    sent = true
+  } catch (e) {
+    try { await mcp.callTool(CCR, "fire_trigger", { trigger_id: MAIN_TRIGGER, text: msg }); sent = true } catch (e2) { step("٤. تعذر إرسال النتائج إلى المحادثة الرئيسية: " + errCopy(e2, CCR) + " اكتب هناك (نتائج اليوم) وسأقرأ الملف.", "err") }
+  }
+  if (sent) step("٤. أرسلت النتائج إلى المحادثة الرئيسية، وسيصلك التقرير الرسمي وملخص الواتساب هناك.")
+  $("btnStop").disabled = false
+  render()
+}
+
+// ---------- wiring ----------
+$("btnStart").onclick = async () => {
+  if (!mcp) return
+  $("btnStart").disabled = true
+  try {
+    await setListening(true)
+    stepState("s3", "done", "أرسل أمر البدء. يبدأ الحاسوب السماع خلال دقيقة تقريبا، ثم يظهر الكلام أدناه.")
+    setChip("chipEar", "live", "بدأ السماع")
+    try { localStorage.setItem("lf_name", $("sessName").value) } catch (e) {}
+    $("endCard").hidden = true
+    render()
+  } catch (e) { stepState("s3", "wait", errCopy(e, DRIVE)) }
+  $("btnStart").disabled = false
+}
+$("btnRefresh").onclick = refreshNow
+$("btnReply").onclick = () => ask("reply")
+$("btnSum").onclick = () => ask("summary")
+$("btnStop").onclick = finish
+$("btnCancel").onclick = () => busy && busy.abort()
+$("btnCopy").onclick = async () => {
+  const t = $("ans").textContent
+  try { await navigator.clipboard.writeText(t); $("btnCopy").textContent = "نسخ" + " ✓" }
+  catch (e) { const r = document.createRange(); r.selectNodeContents($("ans")); const s = getSelection(); s.removeAllRanges(); s.addRange(r) }
+  setTimeout(() => { $("btnCopy").textContent = "نسخ" }, 1500)
+}
+try { $("sessName").value = localStorage.getItem("lf_name") || ""; listening = localStorage.getItem("lf_listening") === "1" } catch (e) {}
+render()
+
+;(async () => {
+  try { mcp = await claude.use("mcp") } catch (e) { mcp = null }
+  try { sample = await claude.use("sample") } catch (e) { sample = null }
+  if (!mcp) {
+    note("افتح هذه الصفحة من تطبيق Claude أو من claude.ai حتى تصل إلى Drive.", true)
+    for (const id of ["btnStart", "btnReply", "btnSum", "btnStop", "btnRefresh"]) $(id).disabled = true
+    return
+  }
+  if (!sample) { $("btnReply").disabled = true; $("btnSum").disabled = true }
+  watchTranscript()
+  findStatusFile()
+})()
+</script>
