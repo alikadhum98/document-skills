@@ -757,6 +757,135 @@
    "tone": "2_conditional_openness",
    "tactics": "يعرض حلا وسطا يربط الدفع بالوسم.",
    "use_for_iraq": "رفض ربط الدفع بسلامة المحاسبة."
+  },
+  {
+   "id": "2026-11-11-gcnma-brazil",
+   "date": "2026-11-11",
+   "session": "GCNMA 10 spin-off group on NMA platform functionalities (SBSTA 11(a))",
+   "krisp": "01a1c596575f728db6de81be3114c1e4@10:03",
+   "actor": "Brazil",
+   "attribution": "named",
+   "camp": "reformist",
+   "positions": [
+    "المادة 6.8 ينقصها الطموح والمنصة راكدة",
+    "تأييد عرض النهج المقترحة",
+    "الكلفة بضعة آلاف بحسب الورقة الفنية",
+    "تجربة التعاون بين بلدان الجنوب لا تعرض لغياب الفائدة"
+   ],
+   "formulations_en": [
+    "we are really lacking ambition in 6.8",
+    "we need some creativity on how we can unblock this platform, which really for us seems to be stagnated",
+    "Brazil has a long history of South-South cooperation, a lot of what we do could work as NMAs"
+   ],
+   "tone": "1_support",
+   "tactics": "يربط 6.8 بحوار الطموح في 6.2.",
+   "use_for_iraq": "حليف في خيار العرض."
+  },
+  {
+   "id": "2026-11-11-gcnma-cfrn",
+   "date": "2026-11-11",
+   "session": "GCNMA 10 spin-off group on NMA platform functionalities (SBSTA 11(a))",
+   "krisp": "01a1c596575f728db6de81be3114c1e4@12:16",
+   "actor": "Coalition for Rainforest Nations (likely)",
+   "attribution": "inferred_weak",
+   "camp": "conditional_space",
+   "positions": [
+    "العرض لا التسجيل في الفقرة 31(a)",
+    "أقل تعديل للوظائف",
+    "أكثر من 600 مشروع من الصناديق تستوفي المعايير ولا تسجل",
+    "6.8 ليست آلية تمويل"
+   ],
+   "formulations_en": [
+    "we are against recording, it should be displaying",
+    "even the UNFCCC's own projects cannot be registered in its own platform, where are we and why",
+    "nobody here thinks of 6.8 as another climate finance mechanism",
+    "transformative processes will not be funded by the private sector"
+   ],
+   "tone": "1_support بنبرة احتجاجية",
+   "tactics": "يستعمل مفارقة (مشاريع الاتفاقية لا تسجل على منصتها) لإحراج المعترضين.",
+   "use_for_iraq": "حجة المشاريع الممولة من الصناديق تفتح باب عرض مشاريع عراقية."
+  },
+  {
+   "id": "2026-11-11-gcnma-chile",
+   "date": "2026-11-11",
+   "session": "GCNMA 10 spin-off group on NMA platform functionalities (SBSTA 11(a))",
+   "krisp": "01a1c596575f728db6de81be3114c1e4@22:43",
+   "actor": "Chile",
+   "attribution": "named",
+   "camp": "practical_reformist",
+   "positions": [
+    "عرضت مع كندا برنامجا ولم يأت داعم",
+    "المنتدى لم يرد عليها",
+    "تأييد العرض دون التسجيل بتعديل بسيط مثل لون مختلف",
+    "دون توسيع التعريف"
+   ],
+   "formulations_en": [
+    "we used the forum, we haven't received answers in the forum",
+    "not changing the NMA as a whole, but at least have an option to upload new ones",
+    "maybe a different color, that's the difference"
+   ],
+   "tone": "1_support",
+   "tactics": "تجربة فعلية تسقط حجة كفاية المنتدى.",
+   "use_for_iraq": "أقوى شاهد على فشل المنتدى."
+  },
+  {
+   "id": "2026-11-11-gcnma-nfp-proposer",
+   "date": "2026-11-11",
+   "session": "GCNMA 10 spin-off group on NMA platform functionalities (SBSTA 11(a))",
+   "krisp": "01a1c596575f728db6de81be3114c1e4@03:35",
+   "actor": "unidentified participant",
+   "attribution": "unclear",
+   "camp": "nfp_strengthening",
+   "positions": [
+    "تقوية دور نقاط الاتصال بمساحة على المنصة",
+    "استعمال الأدوات القائمة",
+    "المنصة ليست راكدة"
+   ],
+   "formulations_en": [
+    "our national focal points are cornerstones of this platform",
+    "I don't agree about the stagnation"
+   ],
+   "tone": "2_conditional_openness",
+   "tactics": "يطرح بديلا موازيا يقلل الحاجة إلى العرض.",
+   "use_for_iraq": "يجمع مع العرض لتوسيع القبول."
+  },
+  {
+   "id": "2026-11-11-gcnma-forum-skeptic",
+   "date": "2026-11-11",
+   "session": "GCNMA 10 spin-off group on NMA platform functionalities (SBSTA 11(a))",
+   "krisp": "01a1c596575f728db6de81be3114c1e4@34:46",
+   "actor": "unidentified participant",
+   "attribution": "unclear",
+   "camp": "minimalist",
+   "positions": [
+    "المنتدى القائم يكفي"
+   ],
+   "formulations_en": [
+    "it's on the discussion forum, it's just another click away",
+    "I've never seen anybody comment on this discussion forum, half of them are from the secretariat"
+   ],
+   "tone": "3_soft_opposition",
+   "tactics": "حجة كفاية القائم مع اعتراف بضعفه.",
+   "use_for_iraq": "يرد عليه باعترافه نفسه وبإحصاء الأمانة."
+  },
+  {
+   "id": "2026-11-11-gcnma-nama-overlap",
+   "date": "2026-11-11",
+   "session": "GCNMA 10 spin-off group on NMA platform functionalities (SBSTA 11(a))",
+   "krisp": "01a1c596575f728db6de81be3114c1e4@32:16",
+   "actor": "unidentified participant",
+   "attribution": "unclear",
+   "camp": "minimalist",
+   "positions": [
+    "مشروع البلد الواحد يسجل في سجل NAMA",
+    "العرض يتداخل معه"
+   ],
+   "formulations_en": [
+    "if we allow such functions here, then overlap with the NAMA registry"
+   ],
+   "tone": "3_soft_opposition",
+   "tactics": "حجة التداخل المؤسسي.",
+   "use_for_iraq": "الرد: الغرض مختلف، فالعرض لمبادرات تستوفي معايير 6.8 وتبحث عن طرف ثان."
   }
  ]
 }
