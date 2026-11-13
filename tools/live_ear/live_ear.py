@@ -5,8 +5,11 @@ Two modes:
   python live_ear.py             listen now until Ctrl+C (manual mode)
   python live_ear.py --standby   wait in the background, listen only while the
                                  Drive control file is named COP31_listen_ON.txt
-                                 (the Live Follow page renames it), and write a
-                                 heartbeat to COP31_live_status.txt
+                                 (the Live Follow page renames it)
+Both modes write a heartbeat to COP31_live_status.txt every 20 seconds, and
+both restart the microphone by themselves when it stops delivering sound
+(after the computer sleeps, or when the device drops).
+
 Options:
   --model base.en|small.en   speed versus accuracy (default base.en)
   --lang en|ar|auto          spoken language (default en)
@@ -15,9 +18,10 @@ Options:
   --file clip.wav            transcribe a 16 kHz mono wav instead (test)
   --drive PATH               Drive folder (default: first X:\\My Drive found)
 """
-import argparse, os, queue, sys, threading, time, datetime
+import argparse, os, queue, re, sys, threading, time, datetime
 import numpy as np
 
+VERSION = "2026-11-13b"
 SR = 16000
 BLOCK = 0.1            # seconds per audio block
 SILENCE_END = 0.7      # seconds of silence that closes a phrase
@@ -25,6 +29,15 @@ MIN_PHRASE = 2.0       # seconds
 MAX_PHRASE = 8.0       # seconds
 POLL = 3               # seconds between control checks
 BEAT = 20              # seconds between heartbeats
+STALL = 15             # seconds without microphone sound before a restart
+RETRY_MAX = 60         # longest wait between microphone restart attempts
+
+# Phrases Whisper is known to invent from noise or silence.
+JUNK = {
+    "thanks for watching", "thank you for watching", "thanks for watching!",
+    "please subscribe", "subscribe to my channel", "like and subscribe",
+    "subtitles by the amara.org community", "you",
+}
 
 
 def now():
@@ -43,36 +56,116 @@ def find_drive(arg):
 
 
 class Out:
+    """Appends lines to the transcript. If Drive holds the file for a moment,
+    lines wait in memory and go out with the next write."""
+
     def __init__(self, path):
         self.path = path
         self.lock = threading.Lock()
+        self.pending = []
 
     def write(self, line):
-        with self.lock:
-            with open(self.path, "a", encoding="utf-8") as f:
-                f.write(line + "\n")
-                f.flush()
-                os.fsync(f.fileno())
         print(line, flush=True)
+        with self.lock:
+            self.pending.append(line)
+            for _ in range(3):
+                try:
+                    with open(self.path, "a", encoding="utf-8") as f:
+                        f.write("\n".join(self.pending) + "\n")
+                        f.flush()
+                        os.fsync(f.fileno())
+                    self.pending = []
+                    return
+                except OSError as e:
+                    err = e
+                    time.sleep(0.5)
+            print("write delayed:", err, flush=True)
+
+
+# ---------- hallucination filter ----------
+
+def _norm(w):
+    return re.sub(r"[^\w']", "", w.lower())
+
+
+def collapse_repeats(text, keep=1, min_run=3):
+    """Collapse any 1 to 4 word group repeated min_run or more times in a row."""
+    words = text.split()
+    for n in (1, 2, 3, 4):
+        out, i = [], 0
+        while i < len(words):
+            gram = [_norm(w) for w in words[i:i + n]]
+            if len(gram) < n or not any(gram):
+                out.append(words[i]); i += 1; continue
+            j = i + n
+            while [_norm(w) for w in words[j:j + n]] == gram:
+                j += n
+            reps = (j - i) // n
+            if reps >= min_run:
+                out.extend(words[i:i + n * keep])
+                i = j
+            else:
+                out.append(words[i]); i += 1
+        words = out
+    return " ".join(words)
+
+
+def clean(text, last):
+    """Return cleaned text, or '' when the line is noise."""
+    text = collapse_repeats(text.strip())
+    plain = " ".join(_norm(w) for w in text.split()).strip()
+    if not plain:
+        return ""
+    letters = re.sub(r"[^a-z\u0600-\u06ff]", "", plain)
+    if len(letters) < 2:
+        return ""
+    if plain in JUNK:
+        return ""
+    # a line made of one or two letter tokens only (S. S. M.) is noise
+    if all(len(w) <= 1 for w in plain.split()) and len(plain.split()) > 1:
+        return ""
+    if last and plain == last:
+        return ""
+    return text
+
+
+def good_segment(s):
+    if s.no_speech_prob > 0.6 and s.avg_logprob < -1.0:
+        return False
+    if s.compression_ratio > 2.4:
+        return False
+    if s.avg_logprob < -1.5:
+        return False
+    return True
 
 
 def worker(model, lang, jobs, out):
+    last = ""
     while True:
         item = jobs.get()
         if item is None:
             return
         stamp, audio = item
         try:
-            segs, _ = model.transcribe(audio, language=None if lang == "auto" else lang,
-                                       beam_size=1, vad_filter=True,
-                                       condition_on_previous_text=False)
-            text = " ".join(s.text.strip() for s in segs).strip()
+            segs, _ = model.transcribe(
+                audio, language=None if lang == "auto" else lang,
+                beam_size=1, vad_filter=True,
+                vad_parameters={"min_silence_duration_ms": 500},
+                condition_on_previous_text=False,
+                compression_ratio_threshold=2.4,
+                log_prob_threshold=-1.0,
+                no_speech_threshold=0.6)
+            text = " ".join(s.text.strip() for s in segs if good_segment(s)).strip()
         except Exception as e:  # keep listening whatever happens
             text = ""
             print("transcribe error:", e, flush=True)
+        text = clean(text, last) if text else ""
         if text:
+            last = " ".join(_norm(w) for w in text.split()).strip()
             out.write(f"[{stamp}] {text}")
 
+
+# ---------- audio ----------
 
 def chunker(blocks, jobs):
     buf, speech, silent, start = [], 0.0, 0.0, None
@@ -101,7 +194,7 @@ def chunker(blocks, jobs):
         jobs.put((start or now(), np.concatenate(buf)))
 
 
-def mic_blocks(device, stop):
+def mic_blocks(device, stop, alive):
     import sounddevice as sd
     q = queue.Queue()
 
@@ -112,9 +205,11 @@ def mic_blocks(device, stop):
                         blocksize=int(SR * BLOCK), device=device, callback=cb):
         while not stop.is_set():
             try:
-                yield q.get(timeout=0.5)
+                b = q.get(timeout=0.5)
             except queue.Empty:
-                pass
+                continue
+            alive()
+            yield b
 
 
 def file_blocks(path):
@@ -127,33 +222,87 @@ def file_blocks(path):
 
 
 class Listener:
-    """One listening period: microphone -> phrases -> transcript."""
+    """One listening period: microphone -> phrases -> transcript.
+    check() restarts the microphone when it dies or goes quiet."""
 
-    def __init__(self, device, jobs, out):
+    def __init__(self, device, jobs, out, model_name):
         self.device, self.jobs, self.out = device, jobs, out
+        self.model_name = model_name
         self.stop = threading.Event()
         self.thread = None
+        self.active = False
+        self.last_sound = 0.0
+        self.spawned = 0.0
+        self.next_try = 0.0
+        self.wait = 5
+        self.failing = False
 
-    def start(self, label=""):
-        self.stop.clear()
-        self.out.write(f"[{now()}] ===== START {datetime.date.today()} {label}".rstrip() + " =====")
-        self.thread = threading.Thread(target=self._run, daemon=True)
+    def _touch(self):
+        self.last_sound = time.time()
+
+    def _spawn(self):
+        self.stop = threading.Event()
+        self.spawned = time.time()
+        self.thread = threading.Thread(target=self._run, args=(self.stop,), daemon=True)
         self.thread.start()
 
-    def _run(self):
+    def _run(self, stop):
         try:
-            chunker(mic_blocks(self.device, self.stop), self.jobs)
+            chunker(mic_blocks(self.device, stop, self._touch), self.jobs)
         except Exception as e:
             print("microphone error:", e, flush=True)
 
-    def running(self):
-        return self.thread is not None and self.thread.is_alive()
-
-    def end(self):
+    def _kill(self):
         self.stop.set()
         if self.thread:
             self.thread.join(timeout=5)
         self.thread = None
+
+    def start(self, label=""):
+        self.active = True
+        self.wait = 5
+        self.failing = False
+        self.out.write(f"[{now()}] ===== START {datetime.date.today()} {label} "
+                       f"model={self.model_name} v={VERSION} =====")
+        self._spawn()
+
+    def running(self):
+        return self.active
+
+    def healthy(self):
+        return (self.thread is not None and self.thread.is_alive()
+                and time.time() - max(self.last_sound, self.spawned) < STALL)
+
+    def check(self):
+        """Called every few seconds by the main loop."""
+        if not self.active:
+            return
+        alive = self.thread is not None and self.thread.is_alive()
+        if self.failing and alive and self.last_sound > self.spawned:
+            self.failing = False
+            self.wait = 5
+            self.out.write(f"[{now()}] ===== RESUMED =====")
+            return
+        if self.healthy() or time.time() < self.next_try:
+            return
+        if not self.failing:
+            self.failing = True
+            why = "microphone stopped" if not (self.thread and self.thread.is_alive()) else "no sound from microphone"
+            self.out.write(f"[{now()}] ===== RESTART ({why}) =====")
+        print(f"Restarting microphone (next try in {self.wait}s if it fails)...", flush=True)
+        self._kill()
+        self._spawn()
+        self.next_try = time.time() + self.wait
+        self.wait = min(self.wait * 2, RETRY_MAX)
+
+    def state(self):
+        if not self.active:
+            return "standby"
+        return "restarting" if self.failing else "listening"
+
+    def end(self):
+        self.active = False
+        self._kill()
         self.out.write(f"[{now()}] ===== STOP =====")
 
 
@@ -184,7 +333,7 @@ def main():
     out = Out(a.out or os.path.join(drive, "COP31_live.txt"))
     on_flag = os.path.join(drive, "COP31_listen_ON.txt")
     status = os.path.join(drive, "COP31_live_status.txt")
-    print("Transcript:", out.path, flush=True)
+    print("Live Ear", VERSION, "| transcript:", out.path, flush=True)
 
     from faster_whisper import WhisperModel
     if a.lang != "en" and a.model.endswith(".en"):
@@ -196,7 +345,7 @@ def main():
     threading.Thread(target=worker, args=(model, a.lang, jobs, out), daemon=True).start()
 
     if a.file:
-        out.write(f"[{now()}] ===== START {datetime.date.today()} test =====")
+        out.write(f"[{now()}] ===== START {datetime.date.today()} test model={a.model} v={VERSION} =====")
         chunker(file_blocks(a.file), jobs)
         jobs.put(None)
         time.sleep(0.2)
@@ -206,34 +355,32 @@ def main():
         out.write(f"[{now()}] ===== STOP =====")
         return
 
-    ear = Listener(a.device, jobs, out)
-    if not a.standby:
+    ear = Listener(a.device, jobs, out, a.model)
+    mode = "standby" if a.standby else "manual"
+    if a.standby:
+        print("Standby. Waiting for the Live Follow page. Close this window to quit.", flush=True)
+    else:
         ear.start("manual")
         print("Listening. Press Ctrl+C to stop.", flush=True)
-        try:
-            while True:
-                time.sleep(1)
-        except KeyboardInterrupt:
-            ear.end()
-        return
 
-    print("Standby. Waiting for the Live Follow page. Close this window to quit.", flush=True)
     last_beat = 0
     try:
         while True:
-            want = os.path.exists(on_flag)
-            if want and not ear.running():
-                ear.start("live-follow")
-            elif not want and ear.running():
-                ear.end()
+            if a.standby:
+                want = os.path.exists(on_flag)
+                if want and not ear.running():
+                    ear.start("live-follow")
+                elif not want and ear.running():
+                    ear.end()
+            ear.check()
             if time.time() - last_beat >= BEAT:
-                heartbeat(status, "listening" if ear.running() else "standby")
+                heartbeat(status, f"{mode}-{ear.state()} model={a.model}")
                 last_beat = time.time()
             time.sleep(POLL)
     except KeyboardInterrupt:
         if ear.running():
             ear.end()
-        heartbeat(status, "off")
+        heartbeat(status, f"{mode}-off model={a.model}")
 
 
 if __name__ == "__main__":
