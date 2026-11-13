@@ -11,7 +11,7 @@ import datetime, json, os, shutil, subprocess, sys, threading, time, webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 PORT = 8765
-VERSION = "web-2026-11-13"
+VERSION = "web-2026-11-13b"
 
 
 def find_drive():
@@ -90,7 +90,8 @@ select,button{font:inherit;border-radius:8px;border:1px solid var(--line);backgr
 <script>
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
 const $=id=>document.getElementById(id);
-let rec=null, want=false, n=0, partialEl=null, lastErr="", restarts=0, ctx=null;
+let rec=null, want=false, n=0, partialEl=null, lastErr="", restarts=0, ctx=null, phraseStart=null, cutting=false;
+const MAX_PHRASE_MS=12000;
 try{$("lang").value=localStorage.getItem("lang")||"en-US"}catch(e){}
 $("lang").onchange=()=>{try{localStorage.setItem("lang",$("lang").value)}catch(e){} if(want){rec&&rec.stop()}};
 const pad=x=>String(x).padStart(2,"0");
@@ -114,10 +115,12 @@ function build(){
     for(let i=e.resultIndex;i<e.results.length;i++){
       const r=e.results[i], text=r[0].transcript.trim();
       if(!text) continue;
-      if(r.isFinal){ const now=hms(new Date()); n++; $("n").textContent=n; $("last").textContent=now; show(now,text,false); post("/line",{time:now,text}); }
+      if(r.isFinal){ const now=hms(phraseStart||new Date()); phraseStart=null; restarts=0; n++; $("n").textContent=n; $("last").textContent=now; show(now,text,false); post("/line",{time:now,text}); }
       else interim+=text+" ";
     }
-    if(interim) show("",interim.trim(),true);
+    if(interim){ if(!phraseStart) phraseStart=new Date(); show("",interim.trim(),true);
+      // long unbroken speech: close the phrase so it reaches Drive within seconds
+      if(!cutting && Date.now()-phraseStart.getTime()>MAX_PHRASE_MS){ cutting=true; try{ rec.stop(); }catch(e){} } }
   };
   rec.onerror=e=>{ lastErr=e.error;
     if(e.error==="not-allowed"||e.error==="service-not-allowed"){ want=false; setUi(); warn("الميكروفون ممنوع. اسمح به من أيقونة القفل بجانب العنوان ثم ابدأ من جديد."); beep(); post("/status",{state:"blocked"}); }
@@ -127,6 +130,8 @@ function build(){
   rec.onend=()=>{
     $("state").textContent=want?"يعاد التشغيل":"متوقفة";
     if(!want){ post("/status",{state:"stopped"}); return; }
+    if(cutting && want){ cutting=false; setTimeout(()=>{ try{ rec.start(); }catch(e){} },60); return; }
+    cutting=false;
     restarts++;
     if(restarts===8){ beep(); warn("السماع ينقطع مرارا. تأكد من الإنترنت والميكروفون."); }
     setTimeout(()=>{ if(want){ try{ rec.lang=$("lang").value; rec.start(); }catch(err){} } }, restarts>5?3000:250);
