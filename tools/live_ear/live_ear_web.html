@@ -62,13 +62,34 @@ button:disabled{opacity:.5;cursor:default}
 .bar .act{font-weight:700;padding:13px 10px}
 .bar .primary{background:var(--accent);color:var(--accent-ink);border:none}
 .note{font-size:.8rem;color:var(--muted)}
+.hbtn{padding:6px 12px;font-size:.9rem}
+.hbtn[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.hist{display:flex;flex-direction:column;gap:8px}
+.hist h2,.notes h2{margin:0;font-size:1rem}
+.hrow{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.hrow.cur{border-color:var(--accent)}
+.hrow .nm{font-weight:700;min-width:0;overflow-wrap:anywhere}
+.hrow .meta{grid-column:1;font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.hrow button{grid-row:1/3;grid-column:2}
+.notes{display:flex;flex-direction:column;gap:8px}
+.note-item{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.note-item summary{cursor:pointer;font-weight:500}
+.note-item pre{margin:8px 0 0;white-space:pre-wrap;font-family:var(--ar);font-size:1.05rem;line-height:1.85;overflow-wrap:anywhere}
 </style>
 
 <div class="app">
   <header>
     <h1>الأذن الحية</h1>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+    <button type="button" class="hbtn" id="histBtn" aria-pressed="false">السجل</button>
     <span class="chip" id="chip"><span class="dot"></span><span id="chipText">جاهزة</span></span>
+    </div>
   </header>
+
+  <section class="hist" id="hist" hidden aria-label="سجل الجلسات">
+    <h2>سجل الجلسات</h2>
+    <div id="histList"><p class="note">لا توجد جلسات بعد.</p></div>
+  </section>
 
   <section class="controls" aria-label="إعداد الجلسة">
     <label class="wide">الجلسة
@@ -117,6 +138,11 @@ button:disabled{opacity:.5;cursor:default}
     </div>
   </section>
 
+  <section class="notes" id="notes" hidden>
+    <h2>الردود والملخصات المحفوظة في هذه الجلسة</h2>
+    <div id="notesList"></div>
+  </section>
+
   <p class="note" id="foot">النص يحفظ أولا بأول في مخزن الصفحة، فلا يضيع إن أغلقت الصفحة.</p>
 </div>
 
@@ -134,7 +160,9 @@ button:disabled{opacity:.5;cursor:default}
   const ui = {chip:$("chip"),chipText:$("chipText"),sel:$("sessionSel"),lang:$("lang"),newName:$("newName"),
     mic:$("micBtn"),banner:$("banner"),bannerText:$("bannerText"),resume:$("resumeBtn"),tx:$("tx"),empty:$("empty"),
     nLines:$("nLines"),lastAt:$("lastAt"),dev:$("devName"),out:$("out"),outTitle:$("outTitle"),outText:$("outText"),
-    copy:$("copyBtn"),stopGen:$("stopGen"),outNote:$("outNote"),reply:$("replyBtn"),sum:$("sumBtn"),save:$("saveBtn"),foot:$("foot")};
+    copy:$("copyBtn"),stopGen:$("stopGen"),outNote:$("outNote"),reply:$("replyBtn"),sum:$("sumBtn"),save:$("saveBtn"),foot:$("foot"),
+    histBtn:$("histBtn"),hist:$("hist"),histList:$("histList"),notes:$("notes"),notesList:$("notesList")};
+  let sessions=[], counts={}, unsubNotes=null;
 
   const device = /Android|iPhone|Mobile/i.test(navigator.userAgent) ? "هاتف" : "حاسوب";
   ui.dev.textContent = device;
@@ -198,7 +226,51 @@ button:disabled{opacity:.5;cursor:default}
     unsubLines = db.collection("sessions/"+id+"/lines").orderBy("t").limit(1000).onSnapshot(snap=>{
       lines = snap.docs.map(d=>d.data()); render();
     }, err=>{ ui.foot.textContent="تعذر قراءة النص: "+(err&&err.message||""); });
+    if(unsubNotes){unsubNotes();unsubNotes=null;}
+    unsubNotes = db.collection("sessions/"+id+"/notes").orderBy("t","desc").limit(50).onSnapshot(snap=>{
+      ui.notesList.replaceChildren();
+      snap.docs.forEach(d=>{ const v=d.data();
+        const det=document.createElement("details"); det.className="note-item";
+        const sm=document.createElement("summary"); sm.textContent=(v.kind==="reply"?"رد":"ملخص")+"  "+(v.time||"");
+        const pre=document.createElement("pre"); pre.textContent=v.text||"";
+        det.append(sm,pre); ui.notesList.appendChild(det); });
+      ui.notes.hidden = snap.empty;
+    }, ()=>{});
+    renderHist();
   }
+  function fmtDate(ms){ const d=new Date(ms||0); return pad(d.getDate())+"/"+pad(d.getMonth()+1)+"/"+d.getFullYear(); }
+  function fmtTime(ms){ const d=new Date(ms||0); return pad(d.getHours())+":"+pad(d.getMinutes()); }
+  function renderHist(){
+    ui.histList.replaceChildren();
+    if(!sessions.length){ const p=document.createElement("p"); p.className="note"; p.textContent="لا توجد جلسات بعد."; ui.histList.appendChild(p); return; }
+    sessions.forEach(({id,v})=>{
+      const row=document.createElement("div"); row.className="hrow"+(id===sid?" cur":"");
+      const nm=document.createElement("div"); nm.className="nm"; nm.textContent=v.name||id;
+      const meta=document.createElement("div"); meta.className="meta";
+      const end=v.ended||v.beat;
+      const c=counts[id];
+      meta.textContent=fmtDate(v.started)+"   من "+fmtTime(v.started)+(end?" إلى "+fmtTime(end):"")+(c?"   "+c.lines+" سطر   "+c.notes+" رد وملخص":"");
+      const b=document.createElement("button"); b.type="button"; b.textContent=id===sid?"مفتوحة":"افتح";
+      b.onclick=()=>{ ui.sel.value=id; ui.sel.onchange(); toggleHist(false); };
+      row.append(nm,b,meta); ui.histList.appendChild(row);
+    });
+  }
+  async function loadCounts(){
+    if(!db) return;
+    for(const {id} of sessions){
+      if(counts[id] && id!==sid) continue;
+      try{
+        const [a,b]=await Promise.all([db.collection("sessions/"+id+"/lines").limit(1000).get(), db.collection("sessions/"+id+"/notes").limit(200).get()]);
+        counts[id]={lines:a.size, notes:b.size};
+      }catch(e){}
+    }
+    renderHist();
+  }
+  function toggleHist(on){
+    ui.hist.hidden=!on; ui.histBtn.setAttribute("aria-pressed",String(on));
+    if(on) loadCounts();
+  }
+  ui.histBtn.onclick=()=>toggleHist(ui.hist.hidden);
   async function ensureSession(){
     const name = ui.newName.value.trim();
     if(name || !sid){
@@ -359,7 +431,7 @@ button:disabled{opacity:.5;cursor:default}
             showBanner(why+" اضغط (استأنف السماع).");
             if(reason==="viewer_stopped") wantListening=false;
           }
-          if(db&&sid) db.doc("sessions/"+sid).update({beat:Date.now(), state:"idle", reason:reason||""}).catch(()=>{});
+          if(db&&sid) db.doc("sessions/"+sid).update({beat:Date.now(), ended:Date.now(), state:"idle", reason:reason||""}).catch(()=>{});
         }
       });
     }
@@ -371,6 +443,7 @@ button:disabled{opacity:.5;cursor:default}
         snap.docs.forEach(d=>{ const v=d.data(); const o=document.createElement("option"); o.value=d.id;
           const dt=new Date(v.started||0); o.textContent=(v.name||d.id)+"  "+pad(dt.getDate())+"/"+pad(dt.getMonth()+1)+" "+pad(dt.getHours())+":"+pad(dt.getMinutes()); ui.sel.appendChild(o); });
         if(keep) ui.sel.value=keep;
+        sessions=snap.docs.map(d=>({id:d.id,v:d.data()})); renderHist();
       }, ()=>{});
       db.doc("control/current").get().then(s=>{ const v=s.exists&&s.data(); if(v&&v.sid&&!sid){ watchSession(v.sid); setTimeout(()=>{ui.sel.value=v.sid},300);} }).catch(()=>{});
     }
