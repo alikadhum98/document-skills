@@ -24,6 +24,9 @@ def find_drive():
 
 
 DRIVE = find_drive()
+if sys.stdout is None:  # started with pythonw: no console window
+    _log = open(os.path.join(os.path.expanduser("~"), "LiveEar_PC.log"), "a", encoding="utf-8")
+    sys.stdout = sys.stderr = _log
 OUT = os.path.join(DRIVE, "COP31_live.txt")
 STATUS = os.path.join(DRIVE, "COP31_live_status.txt")
 LOCK = threading.Lock()
@@ -80,6 +83,8 @@ select,button{font:inherit;border-radius:8px;border:1px solid var(--line);backgr
 <div class="st">الحالة: <b id="state">متوقفة</b> | الأسطر: <b id="n">0</b> | آخر كلام: <b id="last">لا يوجد</b></div>
 <div class="st warn" id="warn" hidden></div>
 <div class="st">يمكنك تصغير هذه النافذة بعد البدء. النص يكتب في COP31_live.txt على Drive.</div>
+<div class="row"><a href="https://claude.ai/artifact/9ag5mqwy8LRaGpwUmwi3za" target="_blank" rel="noopener">افتح صفحة الرد والملخص</a>
+<button id="quit" type="button">أغلق البرنامج</button></div>
 <div class="tx" id="tx"></div>
 </div>
 <script>
@@ -135,6 +140,7 @@ $("mic").onclick=()=>{
   post("/start",{lang:$("lang").value});
   try{ rec.start(); }catch(e){}
 };
+$("quit").onclick=()=>{ want=false; try{rec&&rec.stop()}catch(e){} post("/quit",{}).then(()=>{ document.body.innerHTML="<p style='padding:20px'>أغلق البرنامج. يمكنك إغلاق هذه النافذة.</p>"; }); };
 setInterval(()=>{ post("/status",{state: want?($("state").textContent==="تسمع الآن"?"listening":"restarting"):"stopped"}); },20000);
 if(!SR) warn("هذا المتصفح لا يدعم التعرف على الكلام. افتح الصفحة في Edge أو Chrome.");
 </script></body></html>"""
@@ -173,6 +179,11 @@ class Handler(BaseHTTPRequestHandler):
             status("web-stopped")
         elif self.path == "/status":
             status("web-" + str(data.get("state", "unknown"))[:20])
+        elif self.path == "/quit":
+            status("web-off")
+            self._ok()
+            threading.Thread(target=self.server.shutdown, daemon=True).start()
+            return
         self._ok()
 
 
@@ -196,7 +207,7 @@ def main():
         time.sleep(3)
         return
     print("Live Ear (PC)", VERSION, "| transcript:", OUT, flush=True)
-    print("Keep this black window open. You may minimize it.", flush=True)
+    print("Running in the background. Close it from the button in its window.", flush=True)
     threading.Timer(1.0, open_window).start()
     try:
         server.serve_forever()
