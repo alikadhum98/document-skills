@@ -1,0 +1,379 @@
+<title>الأذن الحية</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@500&family=Noto+Naskh+Arabic:wght@400;600&display=swap">
+<style>
+/* Layout: one working column, control strip on top, live transcript in the middle, action bar fixed at the bottom */
+:root{
+  --bg:#f3f5f6; --panel:#ffffff; --fg:#14211f; --muted:#5d6b69; --line:#d9e0e0;
+  --accent:#0b6e78; --accent-ink:#ffffff; --rec:#c62f2f; --rec-soft:#fbe9e9; --ok:#1f7a4d; --warn:#a15c00; --warn-soft:#fff3df;
+  --ar:"Simplified Arabic","Noto Naskh Arabic","Traditional Arabic",serif;
+  --ui:"IBM Plex Sans Arabic","Segoe UI",Tahoma,sans-serif;
+  --en:"IBM Plex Sans","Segoe UI",Arial,sans-serif;
+  --mono:"IBM Plex Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1716; --panel:#162220; --fg:#e4ecea; --muted:#93a4a1; --line:#29393a;
+  --accent:#3fb3be; --accent-ink:#06211f; --rec:#ff6b6b; --rec-soft:#3a1c1c; --ok:#5fd19a; --warn:#f0b450; --warn-soft:#3a2c12; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1716; --panel:#162220; --fg:#e4ecea; --muted:#93a4a1; --line:#29393a;
+  --accent:#3fb3be; --accent-ink:#06211f; --rec:#ff6b6b; --rec-soft:#3a1c1c; --ok:#5fd19a; --warn:#f0b450; --warn-soft:#3a2c12; color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--ui);font-size:15px}
+.app{direction:rtl;display:flex;flex-direction:column;min-height:100%;max-width:980px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:14px 120px;gap:12px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+h1{font-family:var(--ar);font-size:1.6rem;margin:0;font-weight:600;text-wrap:balance}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--panel);font-size:.9rem}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--muted)}
+.chip.live .dot{background:var(--rec);animation:pulse 1.2s infinite}
+.chip.live{border-color:var(--rec);color:var(--rec)}
+@keyframes pulse{50%{opacity:.25}}
+@media (prefers-reduced-motion:reduce){.chip.live .dot{animation:none}}
+.controls{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;align-items:end}
+@media (max-width:640px){.controls{grid-template-columns:1fr 1fr}.controls .wide{grid-column:1/-1}}
+label{display:flex;flex-direction:column;gap:4px;font-size:.82rem;color:var(--muted);min-width:0}
+select,input{font:inherit;color:var(--fg);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:9px 10px;min-width:0}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--fg);padding:10px 14px}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+button:disabled{opacity:.5;cursor:default}
+.mic{display:flex;align-items:center;justify-content:center;gap:10px;font-size:1.15rem;font-weight:700;padding:16px;border:none;background:var(--accent);color:var(--accent-ink)}
+.mic.on{background:var(--rec);color:#fff}
+.banner{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:12px 14px;border-radius:10px;background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn);font-weight:500}
+.banner button{background:var(--warn);color:var(--panel);border:none;font-weight:700}
+.stats{display:flex;gap:16px;flex-wrap:wrap;font-size:.85rem;color:var(--muted)}
+.stats b{color:var(--fg);font-variant-numeric:tabular-nums}
+.transcript{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:6px 0;min-height:240px;max-height:52vh;overflow-y:auto}
+.empty{padding:28px 18px;color:var(--muted);line-height:1.9;font-family:var(--ar);font-size:1.05rem}
+.ln{display:grid;grid-template-columns:auto 1fr;gap:12px;padding:7px 16px;border-bottom:1px solid var(--line)}
+.ln:last-child{border-bottom:none}
+.ln time{font-family:var(--mono);font-size:.78rem;color:var(--muted);padding-top:3px;font-variant-numeric:tabular-nums;direction:ltr}
+.ln p{margin:0;font-family:var(--en);line-height:1.55;direction:ltr;text-align:left;min-width:0;overflow-wrap:anywhere}
+.ln p[lang="ar"]{font-family:var(--ar);direction:rtl;text-align:right;font-size:1.1rem}
+.ln .dev{font-family:var(--ui);font-size:.7rem;color:var(--muted);margin-inline-start:6px}
+.ln.partial p{color:var(--muted);font-style:italic}
+.out{background:var(--panel);border:1px solid var(--accent);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.out h2{margin:0;font-size:1rem;color:var(--accent)}
+.out pre{margin:0;white-space:pre-wrap;font-family:var(--ar);font-size:1.12rem;line-height:1.9;min-width:0;overflow-wrap:anywhere}
+.out .row{display:flex;gap:8px;flex-wrap:wrap}
+.bar{position:fixed;inset:auto 0 0 0;background:var(--panel);border-top:1px solid var(--line);
+  padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));padding-top:10px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.bar .inner{direction:rtl;max-width:980px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:8px}
+.bar .act{font-weight:700;padding:13px 10px}
+.bar .primary{background:var(--accent);color:var(--accent-ink);border:none}
+.note{font-size:.8rem;color:var(--muted)}
+</style>
+
+<div class="app">
+  <header>
+    <h1>الأذن الحية</h1>
+    <span class="chip" id="chip"><span class="dot"></span><span id="chipText">جاهزة</span></span>
+  </header>
+
+  <section class="controls" aria-label="إعداد الجلسة">
+    <label class="wide">الجلسة
+      <select id="sessionSel"><option value="">جار التحميل</option></select>
+    </label>
+    <label>لغة القاعة
+      <select id="lang">
+        <option value="en">الإنكليزية</option>
+        <option value="ar">العربية</option>
+        <option value="">تلقائي</option>
+      </select>
+    </label>
+    <label>اسم جلسة جديدة
+      <input id="newName" placeholder="مثلا Article 6.2 informals">
+    </label>
+  </section>
+
+  <div class="stats">
+    <span>هذا الجهاز: <b id="devName"></b></span>
+    <span>الأسطر: <b id="nLines">0</b></span>
+    <span>آخر كلام: <b id="lastAt">لا يوجد</b></span>
+  </div>
+
+  <button class="mic" id="micBtn" type="button">ابدأ السماع</button>
+
+  <div class="banner" id="banner" hidden>
+    <span id="bannerText">توقف السماع</span>
+    <button type="button" id="resumeBtn">استأنف السماع</button>
+  </div>
+
+  <div class="transcript" id="tx" aria-live="polite">
+    <div class="empty" id="empty">
+      ١. اختر جلسة أو اكتب اسم جلسة جديدة ثم اضغط (ابدأ السماع).<br>
+      ٢. افتح الرابط نفسه على الهاتف في Chrome وضعه قرب المتكلم، واختر الجلسة نفسها، فيكتب الجهازان في نص واحد.<br>
+      ٣. زر (رد) يصوغ مداخلة على آخر ما قيل، وزر (ملخص) يجمع ما قيل حتى الآن.
+    </div>
+  </div>
+
+  <section class="out" id="out" hidden>
+    <h2 id="outTitle">رد</h2>
+    <pre id="outText"></pre>
+    <div class="row">
+      <button type="button" id="copyBtn">انسخ</button>
+      <button type="button" id="stopGen" hidden>أوقف الصياغة</button>
+      <span class="note" id="outNote"></span>
+    </div>
+  </section>
+
+  <p class="note" id="foot">النص يحفظ أولا بأول في مخزن الصفحة، فلا يضيع إن أغلقت الصفحة.</p>
+</div>
+
+<nav class="bar" aria-label="أوامر">
+  <div class="inner">
+    <button class="act primary" id="replyBtn" type="button">رد</button>
+    <button class="act" id="sumBtn" type="button">ملخص</button>
+    <button class="act" id="saveBtn" type="button">حفظ النص</button>
+  </div>
+</nav>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const ui = {chip:$("chip"),chipText:$("chipText"),sel:$("sessionSel"),lang:$("lang"),newName:$("newName"),
+    mic:$("micBtn"),banner:$("banner"),bannerText:$("bannerText"),resume:$("resumeBtn"),tx:$("tx"),empty:$("empty"),
+    nLines:$("nLines"),lastAt:$("lastAt"),dev:$("devName"),out:$("out"),outTitle:$("outTitle"),outText:$("outText"),
+    copy:$("copyBtn"),stopGen:$("stopGen"),outNote:$("outNote"),reply:$("replyBtn"),sum:$("sumBtn"),save:$("saveBtn"),foot:$("foot")};
+
+  const device = /Android|iPhone|Mobile/i.test(navigator.userAgent) ? "هاتف" : "حاسوب";
+  ui.dev.textContent = device;
+  const pad = n => String(n).padStart(2,"0");
+  const hhmmss = d => pad(d.getHours())+":"+pad(d.getMinutes())+":"+pad(d.getSeconds());
+  const AR_DIGITS = "٠١٢٣٤٥٦٧٨٩";
+
+  let db=null, dict=null, sample=null, downloads=null;
+  let sid="", lines=[], unsubLines=null, partial="", wantListening=false, wakeLock=null, audioCtx=null;
+  let buf="", bufStart=0, bufLast=0, genCtl=null;
+  try{ ui.lang.value = localStorage.getItem("ear.lang") ?? "en"; }catch(e){}
+  ui.lang.onchange = ()=>{ try{localStorage.setItem("ear.lang",ui.lang.value)}catch(e){} };
+
+  function setChip(text, live){ ui.chipText.textContent=text; ui.chip.classList.toggle("live",!!live); }
+  function showBanner(text){ ui.bannerText.textContent=text; ui.banner.hidden=false; }
+
+  function beep(){
+    try{
+      audioCtx = audioCtx || new (window.AudioContext||window.webkitAudioContext)();
+      [0,0.35].forEach(off=>{
+        const o=audioCtx.createOscillator(), g=audioCtx.createGain();
+        o.frequency.value=880; g.gain.value=0.15; o.connect(g); g.connect(audioCtx.destination);
+        o.start(audioCtx.currentTime+off); o.stop(audioCtx.currentTime+off+0.18);
+      });
+    }catch(e){}
+  }
+  async function keepAwake(on){
+    try{
+      if(on && !wakeLock && navigator.wakeLock){ wakeLock = await navigator.wakeLock.request("screen"); wakeLock.addEventListener?.("release",()=>{wakeLock=null}); }
+      if(!on && wakeLock){ await wakeLock.release(); wakeLock=null; }
+    }catch(e){ wakeLock=null; }
+  }
+
+  // ---------- rendering ----------
+  function lineEl(l, isPartial){
+    const row=document.createElement("div"); row.className="ln"+(isPartial?" partial":"");
+    const t=document.createElement("time"); t.textContent=l.time||"";
+    const p=document.createElement("p"); p.textContent=l.text;
+    if(/[؀-ۿ]/.test(l.text)) p.lang="ar";
+    if(l.device && !isPartial){ const s=document.createElement("span"); s.className="dev"; s.textContent=l.device; t.appendChild(document.createElement("br")); t.appendChild(s); }
+    row.append(t,p); return row;
+  }
+  function render(){
+    const atBottom = ui.tx.scrollHeight - ui.tx.scrollTop - ui.tx.clientHeight < 60;
+    ui.tx.replaceChildren();
+    if(!lines.length && !partial && !buf){ ui.tx.appendChild(ui.empty); }
+    lines.forEach(l=>ui.tx.appendChild(lineEl(l,false)));
+    const pending=(buf+" "+partial).trim();
+    if(pending) ui.tx.appendChild(lineEl({time:hhmmss(new Date()),text:pending},true));
+    ui.nLines.textContent=String(lines.length);
+    if(lines.length) ui.lastAt.textContent=lines[lines.length-1].time;
+    if(atBottom) ui.tx.scrollTop=ui.tx.scrollHeight;
+  }
+
+  // ---------- sessions ----------
+  function slug(){ const d=new Date(); return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())+"-"+pad(d.getHours())+pad(d.getMinutes())+"-"+Math.random().toString(36).slice(2,6); }
+  function watchSession(id){
+    if(unsubLines){unsubLines();unsubLines=null;}
+    sid=id; lines=[]; render();
+    if(!db||!id) return;
+    unsubLines = db.collection("sessions/"+id+"/lines").orderBy("t").limit(1000).onSnapshot(snap=>{
+      lines = snap.docs.map(d=>d.data()); render();
+    }, err=>{ ui.foot.textContent="تعذر قراءة النص: "+(err&&err.message||""); });
+  }
+  async function ensureSession(){
+    const name = ui.newName.value.trim();
+    if(name || !sid){
+      const id=slug();
+      const label = name || ("جلسة "+hhmmss(new Date()).slice(0,5));
+      await db.doc("sessions/"+id).set({name:label, started:Date.now(), lang:ui.lang.value||"auto"});
+      ui.newName.value="";
+      watchSession(id);
+      ui.sel.value=id;
+    }
+    await db.doc("control/current").set({sid, updated:Date.now(), device});
+  }
+  ui.sel.onchange=()=>{ watchSession(ui.sel.value); if(db&&ui.sel.value) db.doc("control/current").set({sid:ui.sel.value,updated:Date.now(),device}).catch(()=>{}); };
+
+  // ---------- writing lines ----------
+  async function flush(){
+    const text=buf.trim(); if(!text||!db||!sid){ buf=""; return; }
+    const start=bufStart; buf=""; bufStart=0;
+    try{
+      await db.collection("sessions/"+sid+"/lines").add({t:start, time:hhmmss(new Date(start)), text, device, lang:ui.lang.value||"auto"});
+    }catch(e){ ui.foot.textContent="تأخر حفظ سطر، سيعاد مع السطر التالي."; buf=(text+" "+buf).trim(); bufStart=start; }
+  }
+  setInterval(()=>{
+    const now=Date.now();
+    if(buf && ((now-bufStart>12000) || (now-bufLast>2500) || (/[.?!؟]$/.test(buf.trim()) && buf.length>90))) flush();
+  },1000);
+  setInterval(()=>{
+    if(db&&sid&&dict&&dict.active()) db.doc("sessions/"+sid).update({beat:Date.now(), beatDevice:device}).catch(()=>{});
+  },20000);
+
+  // ---------- dictation ----------
+  function startListening(){
+    if(!dict){ return; }
+    wantListening=true; ui.banner.hidden=true;
+    const opts = ui.lang.value ? {language:ui.lang.value} : undefined;
+    const p = dict.start(opts);          // called synchronously from the click
+    beepPrime();
+    p.then(async()=>{ await ensureSession(); keepAwake(true); })
+     .catch(e=>{
+        wantListening=false;
+        const msg={not_granted:"المتصفح أو الصفحة لا يسمحان بالميكروفون. افتح قائمة الصلاحيات في أعلى الصفحة واسمح به.",
+                   dismissed:"أغلقت سؤال الإذن. اضغط (ابدأ السماع) مرة أخرى.",
+                   unavailable:"السماع غير متاح هنا. افتح الرابط في Chrome على الحاسوب أو الهاتف، أو جرب لغة أخرى.",
+                   rate_limited:"ضغط مؤقت على الخدمة. أعد المحاولة بعد دقيقة.",
+                   no_gesture:"اضغط الزر مباشرة لبدء السماع."}[e&&e.code] || "تعذر بدء السماع. أعد المحاولة.";
+        showBanner(msg);
+     });
+  }
+  function beepPrime(){ try{ audioCtx = audioCtx || new (window.AudioContext||window.webkitAudioContext)(); audioCtx.resume?.(); }catch(e){} }
+
+  ui.mic.onclick=()=>{
+    if(!dict) return;
+    if(dict.active()){ wantListening=false; dict.stop().then(flush); return; }
+    startListening();
+  };
+  ui.resume.onclick=()=>startListening();
+
+  document.addEventListener("visibilitychange",()=>{
+    if(document.visibilityState==="visible" && wantListening && dict && !dict.active()){
+      showBanner("عادت الصفحة إلى الشاشة. اضغط (استأنف السماع) لمتابعة الكتابة.");
+    }
+    if(document.visibilityState==="visible" && wantListening) keepAwake(true);
+  });
+
+  // ---------- Claude: reply and summary ----------
+  const HOUSE = "Write the Arabic with no diacritics, no long dash, no semicolon. Replace quotation marks with ordinary parentheses. Any list is numbered with Arabic-Indic digits (١، ٢، ٣), never bullets.";
+  function recentText(seconds){
+    const since = Date.now()-seconds*1000;
+    const pick = lines.filter(l=>l.t>=since);
+    const use = (pick.length>=3?pick:lines.slice(-25));
+    return use.map(l=>"["+l.time+"] "+l.text).join("\n") + (buf? "\n[now] "+buf : "");
+  }
+  async function generate(kind){
+    if(!sample){ return; }
+    if(!lines.length && !buf){ ui.out.hidden=false; ui.outTitle.textContent=kind==="reply"?"رد":"ملخص"; ui.outText.textContent="لا يوجد نص بعد. ابدأ السماع أولا."; return; }
+    genCtl?.abort(); genCtl=new AbortController();
+    const sessName = ui.sel.selectedOptions[0]?.textContent || "";
+    let prompt;
+    if(kind==="reply"){
+      prompt = "You support the delegation of the Republic of Iraq in UN climate negotiations (COP31). Below is a live, imperfect speech-to-text transcript of the last minutes of the session ("+sessName+"). Speech recognition errors are likely: infer the intended meaning.\n\n"
+      + "TASK: draft an intervention the Iraqi delegate can deliver immediately in response to what was just said.\n"
+      + "Output exactly these parts, nothing else:\n"
+      + "الخلاصة: one Arabic line naming who said what just now (if identifiable) and the point to answer.\n"
+      + "المداخلة (English): 60 to 110 words, ready to read aloud, starting with (Thank you, Chair.), diplomatic, firm, grounded in Paris Agreement and Convention principles where relevant (CBDR-RC, national circumstances, nationally determined nature, avoiding unilateral trade measures), concrete ask at the end.\n"
+      + "الترجمة: the Arabic translation of the intervention.\n"
+      + "تنبيه: one Arabic line only if the transcript is too garbled to be sure, otherwise omit this part.\n"
+      + HOUSE + "\n\nTRANSCRIPT:\n" + recentText(240);
+    } else {
+      prompt = "Below is a live, imperfect speech-to-text transcript of a UN climate negotiation session ("+sessName+"). Recognition errors are likely: infer the meaning, do not invent facts.\n"
+      + "Write in Arabic for the Iraqi delegate:\n"
+      + "١. ما قيل: numbered points in order, naming the speaker or party when identifiable.\n"
+      + "٢. المواقف: who supports or opposes what.\n"
+      + "٣. ما يهم العراق: what touches Iraq's interests.\n"
+      + "٤. ما يطلب الآن: decisions, deadlines or next steps mentioned.\n"
+      + HOUSE + "\n\nTRANSCRIPT:\n" + lines.map(l=>"["+l.time+"] "+l.text).join("\n");
+    }
+    ui.out.hidden=false; ui.outTitle.textContent = kind==="reply"?"رد":"ملخص"; ui.outText.textContent="جار الصياغة..."; ui.outNote.textContent="";
+    ui.stopGen.hidden=false; ui.reply.disabled=ui.sum.disabled=true;
+    try{
+      const {text, truncated} = await sample(prompt, {signal:genCtl.signal, cache:false, onText:({text})=>{ ui.outText.textContent=text; }});
+      ui.outText.textContent=text;
+      if(truncated) ui.outNote.textContent="الجواب قصّر بسبب الطول.";
+      if(db&&sid) db.collection("sessions/"+sid+"/notes").add({t:Date.now(), time:hhmmss(new Date()), kind, text}).catch(()=>{});
+    }catch(e){
+      ui.outText.textContent = e.text || "";
+      if(e.code!=="cancelled") ui.outNote.textContent = {not_granted:"لم يسمح للصفحة بسؤال Claude. اسمح به من قائمة الصلاحيات.",rate_limited:"ضغط مؤقت، أعد المحاولة بعد قليل."}[e.code] || "تعذرت الصياغة. أعد المحاولة.";
+    }finally{ ui.stopGen.hidden=true; ui.reply.disabled=ui.sum.disabled=false; }
+  }
+  ui.reply.onclick=()=>generate("reply");
+  ui.sum.onclick=()=>generate("summary");
+  ui.stopGen.onclick=()=>genCtl?.abort();
+  ui.copy.onclick=()=>{
+    const t=ui.outText.textContent;
+    navigator.clipboard?.writeText(t).then(()=>{ui.outNote.textContent="نسخ."}).catch(()=>{
+      const r=document.createRange(); r.selectNodeContents(ui.outText); const s=getSelection(); s.removeAllRanges(); s.addRange(r); ui.outNote.textContent="النص محدد، انسخه يدويا.";
+    });
+  };
+  ui.save.onclick=async()=>{
+    const name=(ui.sel.selectedOptions[0]?.textContent||"session").replace(/[^\w؀-ۿ\- ]+/g,"").trim()||"session";
+    const body=lines.map(l=>"["+l.time+"] "+(l.device?"("+l.device+") ":"")+l.text).join("\r\n");
+    if(!downloads){ ui.foot.textContent="الحفظ غير متاح هنا."; return; }
+    try{ await downloads.save({filename:name+".txt", data:body}); }catch(e){ ui.foot.textContent="لم يحفظ الملف."; }
+  };
+
+  // ---------- boot ----------
+  setChip("جار التشغيل", false);
+  ui.mic.disabled=true;
+  (async()=>{
+    const c = window.claude;
+    if(!c || !c.use){ setChip("افتح الصفحة داخل Claude", false); return; }
+    [db, dict, sample, downloads] = await Promise.all(["db","dictation","sample","downloads"].map(n=>c.use(n).catch(()=>null)));
+    if(!db){ setChip("سجل الدخول لحفظ النص", false); }
+    if(!sample){ ui.reply.disabled=ui.sum.disabled=true; }
+    if(!downloads){ ui.save.hidden=true; }
+    if(!dict){
+      setChip("السماع غير متاح هنا", false);
+      showBanner("افتح هذا الرابط في متصفح Chrome على الحاسوب أو الهاتف ليعمل السماع. النص الموجود والأزرار تعمل هنا.");
+      ui.resume.hidden=true;
+    } else {
+      ui.mic.disabled=false; setChip("جاهزة", false);
+      dict.onPartial(({text})=>{ partial=text; render(); });
+      dict.onFinal(({text})=>{
+        if(!text) return;
+        if(!buf){ bufStart=Date.now(); text=text.replace(/^\s+/,""); }
+        buf+=text; bufLast=Date.now(); partial=""; render();
+      });
+      dict.onState(({state,reason})=>{
+        const on = state!=="idle";
+        ui.mic.classList.toggle("on",on);
+        ui.mic.textContent = on ? "أوقف السماع" : "ابدأ السماع";
+        setChip(state==="listening"?"تسمع الآن":state==="starting"?"تفتح الميكروفون":state==="finishing"?"تنهي آخر جملة":"متوقفة", state==="listening");
+        if(state==="idle"){
+          partial=""; flush(); keepAwake(false);
+          if(wantListening && reason && reason!=="stopped"){
+            beep();
+            const why={viewer_stopped:"أوقفت السماع من زر المنصة.",hidden:"خرجت الصفحة من الشاشة فتوقف السماع.",time_limit:"انتهت ساعة السماع المتصلة.",
+              not_granted:"منع الميكروفون.",upstream_error:"انقطعت خدمة التحويل أو الميكروفون.",rate_limited:"ضغط مؤقت على الخدمة.",unavailable:"السماع غير متاح بهذه اللغة."}[reason]||"توقف السماع.";
+            showBanner(why+" اضغط (استأنف السماع).");
+            if(reason==="viewer_stopped") wantListening=false;
+          }
+          if(db&&sid) db.doc("sessions/"+sid).update({beat:Date.now(), state:"idle", reason:reason||""}).catch(()=>{});
+        }
+      });
+    }
+    if(db){
+      db.collection("sessions").orderBy("started","desc").limit(30).onSnapshot(snap=>{
+        const keep=ui.sel.value||sid;
+        ui.sel.replaceChildren();
+        const o0=document.createElement("option"); o0.value=""; o0.textContent=snap.empty?"لا توجد جلسات، اكتب اسما واضغط ابدأ":"اختر جلسة"; ui.sel.appendChild(o0);
+        snap.docs.forEach(d=>{ const v=d.data(); const o=document.createElement("option"); o.value=d.id;
+          const dt=new Date(v.started||0); o.textContent=(v.name||d.id)+"  "+pad(dt.getDate())+"/"+pad(dt.getMonth()+1)+" "+pad(dt.getHours())+":"+pad(dt.getMinutes()); ui.sel.appendChild(o); });
+        if(keep) ui.sel.value=keep;
+      }, ()=>{});
+      db.doc("control/current").get().then(s=>{ const v=s.exists&&s.data(); if(v&&v.sid&&!sid){ watchSession(v.sid); setTimeout(()=>{ui.sel.value=v.sid},300);} }).catch(()=>{});
+    }
+  })();
+})();
+</script>
