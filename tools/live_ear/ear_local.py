@@ -11,7 +11,7 @@ import datetime, json, os, shutil, subprocess, sys, threading, time, webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 PORT = 8765
-VERSION = "web-2026-11-13b"
+VERSION = "web-2026-11-13c"
 
 
 def find_drive():
@@ -31,10 +31,56 @@ OUT = os.path.join(DRIVE, "COP31_live.txt")
 STATUS = os.path.join(DRIVE, "COP31_live_status.txt")
 LOCK = threading.Lock()
 PENDING = []
+SESS_DIR = os.path.join(os.path.expanduser("~"), "LiveEar_Sessions")
+CURRENT = {"path": None}
+PAGE_URL = "https://claude.ai/artifact/9ag5mqwy8LRaGpwUmwi3za"
+
+
+def safe_name(name):
+    keep = "".join(c if (c.isalnum() or c in " -_.") else " " for c in name).strip()
+    return " ".join(keep.split())[:60] or "session"
+
+
+def new_session(name):
+    os.makedirs(SESS_DIR, exist_ok=True)
+    stamp = datetime.datetime.now().strftime("%Y-%m-%d_%H%M")
+    CURRENT["path"] = os.path.join(SESS_DIR, f"{stamp}_{safe_name(name)}.txt")
+
+
+def to_session(line):
+    if not CURRENT["path"]:
+        return
+    try:
+        with open(CURRENT["path"], "a", encoding="utf-8") as f:
+            f.write(line + "\n")
+    except OSError:
+        pass
+
+
+def list_sessions():
+    out = []
+    if not os.path.isdir(SESS_DIR):
+        return out
+    for fn in sorted(os.listdir(SESS_DIR), reverse=True)[:100]:
+        if not fn.endswith(".txt"):
+            continue
+        full = os.path.join(SESS_DIR, fn)
+        try:
+            with open(full, encoding="utf-8") as f:
+                rows = [r for r in f.read().splitlines() if r.strip()]
+        except OSError:
+            rows = []
+        body = [r for r in rows if "=====" not in r]
+        parts = fn[:-4].split("_", 2)
+        out.append({"file": fn, "date": parts[0] if parts else "", "time": (parts[1][:2] + ":" + parts[1][2:]) if len(parts) > 1 else "",
+                    "name": parts[2] if len(parts) > 2 else fn, "lines": len(body),
+                    "last": body[-1][1:9] if body and body[-1].startswith("[") else ""})
+    return out
 
 
 def append(line):
     print(line, flush=True)
+    to_session(line)
     with LOCK:
         PENDING.append(line)
         for _ in range(3):
@@ -74,18 +120,36 @@ select,button{font:inherit;border-radius:8px;border:1px solid var(--line);backgr
 .tx div{padding:4px 0;border-bottom:1px solid var(--line)}
 .tx time{color:var(--muted);font:12px Consolas,monospace;margin-right:8px}
 .tx .p{color:var(--muted);font-style:italic;border:none}
+.acts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+@media (max-width:420px){.acts{grid-template-columns:1fr 1fr}}
+.acts button{font-weight:700;padding:12px 6px}
+.acts .pri{background:var(--accent);color:#fff;border:none}
+.hist{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:6px 10px;max-height:40vh;overflow-y:auto}
+.hrow{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:8px 2px;border-bottom:1px solid var(--line);cursor:pointer}
+.hrow:last-child{border-bottom:none}
+.hrow b{min-width:0;overflow-wrap:anywhere}
+.hrow span{color:var(--muted);font-size:.85rem;white-space:nowrap}
+.back{margin-bottom:6px}
 </style></head><body><div class="app">
 <h1>الأذن الحية على الحاسوب</h1>
 <div class="row">
+ <label>اسم الجلسة <input id="sname" placeholder="مثلا Article 6.2 informals" style="font:inherit;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--fg);padding:9px 10px;min-width:0;width:15em;max-width:100%"></label>
  <label>لغة القاعة <select id="lang"><option value="en-US">English</option><option value="en-GB">English UK</option><option value="ar-IQ">العربية</option></select></label>
 </div>
 <button class="mic" id="mic">ابدأ السماع</button>
 <div class="st">الحالة: <b id="state">متوقفة</b> | الأسطر: <b id="n">0</b> | آخر كلام: <b id="last">لا يوجد</b></div>
 <div class="st warn" id="warn" hidden></div>
 <div class="st">يمكنك تصغير هذه النافذة بعد البدء. النص يكتب في COP31_live.txt على Drive.</div>
-<div class="row"><a href="https://claude.ai/artifact/9ag5mqwy8LRaGpwUmwi3za" target="_blank" rel="noopener">افتح صفحة الرد والملخص</a>
-<button id="quit" type="button">أغلق البرنامج</button></div>
+<div class="acts">
+ <button id="reply" class="pri" type="button">رد</button>
+ <button id="sum" type="button">ملخص</button>
+ <button id="histBtn" type="button">السجل</button>
+ <button id="folder" type="button">مجلد الجلسات</button>
+</div>
+<div class="st" id="hint">زر (رد) و(ملخص) يفتحان صفحة الصياغة في المتصفح وتبدأ وحدها. النص يصلها عبر Drive، فانتظر ثوان بعد آخر جملة.</div>
+<div class="hist" id="hist" hidden><div id="hlist"></div></div>
 <div class="tx" id="tx"></div>
+<div class="row"><button id="quit" type="button">أغلق البرنامج</button></div>
 </div>
 <script>
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -142,9 +206,30 @@ $("mic").onclick=()=>{
   try{ctx=ctx||new AudioContext();ctx.resume()}catch(e){}
   if(want){ want=false; setUi(); rec&&rec.stop(); post("/stop",{}); return; }
   want=true; setUi(); if(!rec) build(); rec.lang=$("lang").value;
-  post("/start",{lang:$("lang").value});
+  post("/start",{lang:$("lang").value, name:$("sname").value.trim()});
+  $("tx").replaceChildren(); n=0; $("n").textContent="0";
   try{ rec.start(); }catch(e){}
 };
+$("reply").onclick=()=>post("/open",{what:"reply"});
+$("sum").onclick=()=>post("/open",{what:"summary"});
+$("folder").onclick=()=>post("/folder",{});
+async function loadHist(){
+  const box=$("hlist"); box.replaceChildren();
+  let list=[]; try{ list=await (await fetch("/sessions")).json(); }catch(e){}
+  if(!list.length){ box.textContent="لا توجد جلسات محفوظة بعد."; return; }
+  list.forEach(x=>{ const r=document.createElement("div"); r.className="hrow";
+    const b=document.createElement("b"); b.textContent=x.name;
+    const sp=document.createElement("span"); sp.textContent=x.date+"  "+x.time+(x.last?" إلى "+x.last.slice(0,5):"")+"  "+x.lines+" سطر";
+    r.append(b,sp); r.onclick=()=>showSession(x); box.appendChild(r); });
+}
+async function showSession(x){
+  const box=$("hlist"); box.replaceChildren();
+  const back=document.createElement("button"); back.className="back"; back.textContent="رجوع إلى القائمة"; back.onclick=loadHist;
+  const pre=document.createElement("pre"); pre.style.cssText="white-space:pre-wrap;direction:ltr;text-align:left;margin:0;font:14px 'Segoe UI',Arial,sans-serif;line-height:1.5";
+  try{ pre.textContent=await (await fetch("/session?f="+encodeURIComponent(x.file))).text(); }catch(e){ pre.textContent=""; }
+  box.append(back,pre);
+}
+$("histBtn").onclick=()=>{ const h=$("hist"); h.hidden=!h.hidden; $("histBtn").classList.toggle("pri",!h.hidden); if(!h.hidden) loadHist(); };
 $("quit").onclick=()=>{ want=false; try{rec&&rec.stop()}catch(e){} post("/quit",{}).then(()=>{ document.body.innerHTML="<p style='padding:20px'>أغلق البرنامج. يمكنك إغلاق هذه النافذة.</p>"; }); };
 setInterval(()=>{ post("/status",{state: want?($("state").textContent==="تسمع الآن"?"listening":"restarting"):"stopped"}); },20000);
 if(!SR) warn("هذا المتصفح لا يدعم التعرف على الكلام. افتح الصفحة في Edge أو Chrome.");
@@ -163,7 +248,20 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.write(body)
 
     def do_GET(self):
-        self._ok(PAGE.encode("utf-8"), "text/html")
+        from urllib.parse import urlparse, parse_qs
+        u = urlparse(self.path)
+        if u.path == "/sessions":
+            self._ok(json.dumps(list_sessions(), ensure_ascii=False).encode("utf-8"), "application/json")
+        elif u.path == "/session":
+            fn = os.path.basename(parse_qs(u.query).get("f", [""])[0])
+            try:
+                with open(os.path.join(SESS_DIR, fn), encoding="utf-8") as f:
+                    body = f.read()
+            except OSError:
+                body = ""
+            self._ok(body.encode("utf-8"))
+        else:
+            self._ok(PAGE.encode("utf-8"), "text/html")
 
     def do_POST(self):
         n = int(self.headers.get("Content-Length") or 0)
@@ -177,13 +275,24 @@ class Handler(BaseHTTPRequestHandler):
             if text:
                 append(f"[{data.get('time') or now}] {text}")
         elif self.path == "/start":
+            new_session(str(data.get("name") or "session"))
             append(f"[{now}] ===== START {datetime.date.today()} web lang={data.get('lang', '')} v={VERSION} =====")
             status("web-listening")
         elif self.path == "/stop":
             append(f"[{now}] ===== STOP =====")
+            CURRENT["path"] = None
             status("web-stopped")
         elif self.path == "/status":
             status("web-" + str(data.get("state", "unknown"))[:20])
+        elif self.path == "/open":
+            what = "reply" if data.get("what") == "reply" else "summary"
+            webbrowser.open(PAGE_URL + "#" + what)
+        elif self.path == "/folder":
+            os.makedirs(SESS_DIR, exist_ok=True)
+            try:
+                os.startfile(SESS_DIR)
+            except (AttributeError, OSError):
+                pass
         elif self.path == "/quit":
             status("web-off")
             self._ok()
