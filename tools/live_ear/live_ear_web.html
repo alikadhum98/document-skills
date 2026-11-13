@@ -327,10 +327,18 @@ button:disabled{opacity:.5;cursor:default}
     startListening();
   };
   ui.resume.onclick=()=>startListening();
+  // after an unexpected stop, any click or key anywhere on the page resumes
+  function anyResume(e){
+    if(!wantListening || !dict || dict.active() || ui.banner.hidden) return;
+    if(e.target && e.target.closest && e.target.closest("button,select,input,summary")) return;
+    startListening();
+  }
+  document.addEventListener("pointerdown", anyResume);
+  document.addEventListener("keydown", anyResume);
 
   document.addEventListener("visibilitychange",()=>{
     if(document.visibilityState==="visible" && wantListening && dict && !dict.active()){
-      showBanner("عادت الصفحة إلى الشاشة. اضغط (استأنف السماع) لمتابعة الكتابة.");
+      showBanner("عادت الصفحة إلى الشاشة. انقر في أي مكان من الصفحة أو اضغط أي زر لمتابعة السماع.");
     }
     if(document.visibilityState==="visible" && wantListening) keepAwake(true);
   });
