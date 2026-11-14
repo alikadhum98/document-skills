@@ -11,7 +11,7 @@ import datetime, json, os, shutil, subprocess, sys, threading, time, webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 PORT = 8765
-VERSION = "web-2026-11-14c"
+VERSION = "web-2026-11-14d"
 
 
 def find_drive():
@@ -341,16 +341,29 @@ setInterval(()=>{
   if(silentLong && (hard || now-lastStartAt>60000)){ if(!failingSince) failingSince=now; } else failingSince=0;
   if(failingSince && now-failingSince>5000) warn("السماع متعثر منذ أكثر من دقيقة، والبرنامج يشغل التسجيل الاحتياطي.");
 },3000);
-$("mic").onclick=()=>{
-  if(!SR){ warn("هذا المتصفح لا يدعم التعرف على الكلام. افتح الصفحة في Edge أو Chrome."); return; }
+function stopListening(){ if(!want) return; want=false; setUi(); try{rec&&rec.stop()}catch(e){} post("/stop",{}); }
+function startListening(){
+  if(!SR || want) return;
   try{ctx=ctx||new AudioContext();ctx.resume()}catch(e){}
-  if(want){ want=false; setUi(); try{rec&&rec.stop()}catch(e){} post("/stop",{}); return; }
   want=true; setUi(); keepAwake();
   post("/start",{lang:$("lang").value, name:$("sname").value.trim()});
   $("tx").replaceChildren(); n=0; $("n").textContent="0";
   lastResultAt=Date.now(); reasons=[]; failingSince=0; emitted=0; phraseStart=null;
   build(); try{ rec.start(); }catch(e){}
+}
+$("mic").onclick=()=>{
+  if(!SR){ warn("هذا المتصفح لا يدعم التعرف على الكلام. افتح الصفحة في Edge أو Chrome."); return; }
+  if(want) stopListening(); else startListening();
 };
+// remote commands placed in Drive by Claude, relayed by the local server
+setInterval(async()=>{
+  try{
+    const c=await (await fetch("/cmd")).json();
+    if(c.cmd==="start"){ if(c.name) $("sname").value=c.name; startListening(); }
+    else if(c.cmd==="stop") stopListening();
+    else if(c.cmd==="quit"){ want=false; try{rec&&rec.stop()}catch(e){} document.body.innerHTML="<p style='padding:20px'>أغلق البرنامج بأمر من Claude. يمكنك إغلاق هذه النافذة.</p>"; }
+  }catch(e){}
+},3000);
 $("reply").onclick=()=>post("/open",{what:"reply"});
 $("sum").onclick=()=>post("/open",{what:"summary"});
 $("folder").onclick=()=>post("/folder",{});
@@ -395,7 +408,11 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         from urllib.parse import urlparse, parse_qs
         u = urlparse(self.path)
-        if u.path == "/sessions":
+        if u.path == "/cmd":
+            c = {"cmd": CMD["cmd"], "name": CMD["name"]}
+            CMD.update(cmd=None, name="")
+            self._ok(json.dumps(c, ensure_ascii=False).encode("utf-8"), "application/json")
+        elif u.path == "/sessions":
             self._ok(json.dumps(list_sessions(), ensure_ascii=False).encode("utf-8"), "application/json")
         elif u.path == "/session":
             fn = os.path.basename(parse_qs(u.query).get("f", [""])[0])
@@ -458,6 +475,99 @@ class Handler(BaseHTTPRequestHandler):
         self._ok()
 
 
+# ---------- remote control through Drive ----------
+CMD = {"cmd": None, "name": ""}
+CMD_FILES = {"start": "COP31_ear_START.txt", "stop": "COP31_ear_STOP.txt", "quit": "COP31_ear_QUIT.txt"}
+
+
+def command_loop(server):
+    while True:
+        time.sleep(3)
+        for cmd, fn in CMD_FILES.items():
+            path = os.path.join(DRIVE, fn)
+            if not os.path.exists(path):
+                continue
+            name = ""
+            try:
+                with open(path, encoding="utf-8") as f:
+                    name = " ".join(f.read().split())[:80]
+            except OSError:
+                pass
+            try:
+                os.remove(path)
+            except OSError:
+                pass
+            now = datetime.datetime.now().strftime("%H:%M:%S")
+            append(f"[{now}] ===== COMMAND {cmd.upper()} {name} =====".replace("  ", " "))
+            if cmd == "quit":
+                CMD.update(cmd="quit", name="")
+                time.sleep(4)  # let the window hear it
+                stop_fallback("quit")
+                if CURRENT["path"]:
+                    append(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] ===== STOP =====")
+                    CURRENT["path"] = None
+                status("web-off")
+                server.shutdown()
+                return
+            CMD.update(cmd=cmd, name=name)
+
+
+# ---------- one-time setup on this PC ----------
+def ps(script, timeout=60):
+    return subprocess.run(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", script],
+                          capture_output=True, text=True, timeout=timeout, creationflags=0x08000000)
+
+
+def pc_setup():
+    if os.name != "nt":
+        return
+    now = lambda: datetime.datetime.now().strftime("%H:%M:%S")
+    notes = []
+    # 1. start with Windows
+    try:
+        startup = os.path.join(os.environ.get("APPDATA", ""), "Microsoft", "Windows", "Start Menu", "Programs", "Startup")
+        exe = sys.executable or "pythonw"
+        if exe.lower().endswith("python.exe"):
+            alt = exe[:-len("python.exe")] + "pythonw.exe"
+            if os.path.isfile(alt):
+                exe = alt
+        me = os.path.abspath(__file__)
+        with open(os.path.join(startup, "LiveEarPC.bat"), "w", encoding="ascii", errors="ignore") as f:
+            f.write('@echo off\r\nstart "" "%s" "%s"\r\n' % (exe, me))
+        notes.append("autostart on")
+        old = os.path.join(startup, "LiveEar.bat")
+        if os.path.exists(old):
+            os.remove(old)
+            notes.append("old standby removed from startup")
+    except Exception as e:
+        notes.append("autostart failed: " + str(e)[:60])
+    # 2. stop the old standby ear if it is still running
+    try:
+        r = ps("$p = Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match 'live_ear\\.py' -and $_.CommandLine -match '--standby' }; "
+               "$p | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }; ($p | Measure-Object).Count")
+        n = (r.stdout or "0").strip().splitlines()[-1:] or ["0"]
+        if n[0] not in ("", "0"):
+            notes.append("old standby stopped")
+    except Exception:
+        pass
+    # 3. old program copies on the desktop and in downloads go to the recycle bin
+    try:
+        here = os.path.dirname(os.path.abspath(__file__)).replace("'", "''")
+        r = ps("Add-Type -AssemblyName Microsoft.VisualBasic; $out=@(); "
+               "foreach($d in @([Environment]::GetFolderPath('Desktop'), (Join-Path $env:USERPROFILE 'Downloads'))){ "
+               " if(-not (Test-Path $d)){continue}; "
+               " Get-ChildItem -LiteralPath $d -Force | Where-Object { $_.Name -like 'LiveEar_PC*' } | ForEach-Object { "
+               "  if($_.FullName -eq '" + here + "' -or ('" + here + "').StartsWith($_.FullName + '\\')){ return }; "
+               "  if($_.PSIsContainer){ [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteDirectory($_.FullName,'OnlyErrorDialogs','SendToRecycleBin') } "
+               "  else { [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteFile($_.FullName,'OnlyErrorDialogs','SendToRecycleBin') }; "
+               "  $out += $_.Name } }; $out -join ', '", timeout=120)
+        moved = (r.stdout or "").strip()
+        notes.append("recycled: " + moved if moved else "nothing to clean")
+    except Exception as e:
+        notes.append("cleanup failed: " + str(e)[:60])
+    append(f"[{now()}] ===== SETUP {'; '.join(notes)} =====")
+
+
 def mic_setup():
     """Make the real microphone the default at full level, silently, on every start."""
     if os.name != "nt":
@@ -518,6 +628,8 @@ def main():
     print("Live Ear (PC)", VERSION, "| transcript:", OUT, flush=True)
     print("Running in the background. Close it from the button in its window.", flush=True)
     threading.Thread(target=mic_setup, daemon=True).start()
+    threading.Thread(target=pc_setup, daemon=True).start()
+    threading.Thread(target=command_loop, args=(server,), daemon=True).start()
     threading.Thread(target=awake_loop, daemon=True).start()
     threading.Thread(target=fallback_loop, daemon=True).start()
     threading.Timer(1.0, open_window).start()
