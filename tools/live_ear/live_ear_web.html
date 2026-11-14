@@ -424,6 +424,85 @@ button:disabled{opacity:.5;cursor:default}
   ui.src.onchange=()=>{ source=ui.src.value; try{localStorage.setItem("ear.src",source)}catch(e){} applySource(); };
   setInterval(()=>{ if(source==="pc" && document.visibilityState==="visible") pcFetch(); },15000);
 
+  // ---------- live intervention reference (read fresh from Drive on every reply) ----------
+  const REF_FOLDER = "15tiYhgHJVglL4mwh0HMElQfB7fjAfViJ"
+  const REF_NAME = "COP31_intervention_reference.json"
+  async function loadReference(mcpNs) {
+    if (!mcpNs) throw { code: "no_mcp" }
+    const s = await mcpNs.callTool("Google Drive", "search_files", {
+      query: "title = '" + REF_NAME + "' and parentId = '" + REF_FOLDER + "' and trashed = false",
+      orderBy: "modifiedTime desc", pageSize: 1, excludeContentSnippets: true
+    }, { cache: false })
+    const f = s.payload && s.payload.files && s.payload.files[0]
+    if (!f) throw { code: "ref_missing" }
+    const c = await mcpNs.callTool("Google Drive", "read_file_content", { fileId: f.id }, { cache: false })
+    let raw = c.payload
+    raw = typeof raw === "string" ? raw : (raw && (raw.fileContent ?? raw.content)) || ""
+    try { return JSON.parse(raw) } catch (e) { return JSON.parse(raw.replace(/\\([\\\[\]_*#().!`{}+\-])/g, "$1")) }
+  }
+  function pickReferenceItem(ref, recent) {
+    const low = " " + String(recent || "").toLowerCase().replace(/\s+/g, " ") + " "
+    let best = null, bestScore = 0, bestHits = []
+    for (const it of (ref && ref.items) || []) {
+      const hits = (it.ear_keywords || []).filter(k => k && low.includes(String(k).toLowerCase()))
+      const score = hits.reduce((a, k) => a + (String(k).includes(" ") ? 2 : 1), 0)
+      if (score > bestScore) { best = it; bestScore = score; bestHits = hits }
+    }
+    return { item: best, hits: bestHits }
+  }
+  function referenceReplyPrompt(ref, pick, transcript, sessionName) {
+    const m = (ref && ref.meta) || {}
+    const ctx = {
+      reply_rules: m.reply_rules, priority_rule: m.priority_rule, fallback_rule: m.fallback_rule,
+      zero_draft: m.zero_draft, status_levels: m.status_levels, alliances: ref.alliances
+    }
+    const itemPart = pick.item
+      ? "ITEM UNDER DISCUSSION (matched from the room by the words: " + pick.hits.join(", ") + "):\n" + JSON.stringify(pick.item)
+      : "NO ITEM MATCHED THE ROOM. All items follow. Choose the nearest one and apply the fallback rule:\n" + JSON.stringify((ref.items || []).map(i => i))
+    return `You support the delegation of the Republic of Iraq at COP31. Draft the intervention Iraq can deliver now, reacting to the most recent relevant point in the room.
+
+  Iraq's live intervention reference follows. Its rules are binding.
+  REFERENCE RULES AND ALLIANCES:
+  ${JSON.stringify(ctx)}
+
+  ${itemPart}
+
+  Binding rules:
+  1. When alliance positions differ, follow this priority: Arab Group, then LMDC, then OPEC, then G77 and China.
+  2. If no alliance has a position on the topic, build on the nearest position in a similar item and write above the intervention the line: (استنتاج من أقرب موقف: البند <item title>).
+  3. Never use the zero draft.
+  4. Never take paragraph numbers or percentages from the transcript alone. Never present a text whose status is draft_whatsapp as if it was delivered.
+  5. If a speaker in the room says something that contradicts what the reference records, or adds something new to it, write one Arabic line before the intervention starting with (تنبيه:) naming the speaker and the point.
+  6. Never name the Enhanced Transparency Framework or its abbreviation. Describe the idea instead.
+  7. The transcript is automatic speech recognition and may contain errors. Infer the meaning, never invent facts.
+
+  Output in this plain-text layout, no markdown symbols:
+  <optional تنبيه line>
+  <optional استنتاج line>
+  البند: <item title>
+  الرد للإلقاء (English):
+  <60 to 110 words, starting with: Thank you, Chair. Diplomatic, precise, ready to read aloud.>
+
+  الترجمة العربية:
+  <faithful Arabic translation>
+
+  لماذا الآن:
+  <one Arabic line naming the point you react to and the reference position used>
+
+  Arabic text: no diacritics, no long dash, no semicolon, parentheses instead of quotation marks, numbered lists only with Arabic-Indic digits.
+
+  TRANSCRIPT of (${sessionName}):
+  ${transcript}`
+  }
+  function referenceErrorText(e) {
+    const c = e && e.code
+    if (c === "ref_missing") return "لم أجد ملف المرجع في مجلد COP31، فبني الرد دون المرجع."
+    if (c === "no_mcp") return "قراءة Drive غير متاحة هنا، فبني الرد دون المرجع."
+    if (c === "needs_reauth" || c === "server_not_connected") return "Google Drive غير متصل، فبني الرد دون المرجع. اربطه من إعدادات claude.ai."
+    if (c === "not_in_manifest" || c === "approval_required") return "لم يسمح للصفحة بالبحث في Drive، فبني الرد دون المرجع. اسمح به من قائمة الصلاحيات."
+    return "تعذرت قراءة ملف المرجع، فبني الرد دون المرجع."
+  }
+
   // ---------- Claude: reply and summary ----------
   const HOUSE = "Write the Arabic with no diacritics, no long dash, no semicolon. Replace quotation marks with ordinary parentheses. Any list is numbered with Arabic-Indic digits (١، ٢، ٣), never bullets.";
   function recentText(seconds){
@@ -457,13 +536,23 @@ button:disabled{opacity:.5;cursor:default}
       + "٤. ما يطلب الآن: decisions, deadlines or next steps mentioned.\n"
       + HOUSE + "\n\nTRANSCRIPT:\n" + lines.map(l=>"["+l.time+"] "+l.text).join("\n");
     }
-    ui.out.hidden=false; ui.outTitle.textContent = kind==="reply"?"رد":"ملخص"; ui.outText.textContent="جار الصياغة..."; ui.outNote.textContent="";
+    let refNote="";
+    if(kind==="reply"){
+      ui.out.hidden=false; ui.outTitle.textContent="رد"; ui.outText.textContent="أقرأ مرجع المداخلات من Drive..."; ui.outNote.textContent="";
+      try{
+        const ref=await loadReference(mcp);
+        const tr=recentText(300), pick=pickReferenceItem(ref,tr);
+        prompt=referenceReplyPrompt(ref,pick,tr,sessName);
+        refNote="المرجع "+((ref.meta&&ref.meta.version)||"")+"، "+(pick.item?("البند: "+(pick.item.title||pick.item.id)):"لم يطابق بند، طبقت قاعدة أقرب موقف")+". ";
+      }catch(e){ refNote=referenceErrorText(e)+" "; }
+    }
+    ui.out.hidden=false; ui.outTitle.textContent = kind==="reply"?"رد":"ملخص"; ui.outText.textContent="جار الصياغة..."; ui.outNote.textContent=refNote;
     ui.stopGen.hidden=false; ui.reply.disabled=ui.sum.disabled=true;
     try{
       const {text, truncated} = await sample(prompt, {signal:genCtl.signal, cache:false, onText:({text})=>{ ui.outText.textContent=text; }});
       ui.outText.textContent=text;
       if(truncated) ui.outNote.textContent="الجواب قصّر بسبب الطول.";
-      else if(lines.length) ui.outNote.textContent="بني على النص حتى الساعة "+lines[lines.length-1].time+".";
+      else if(lines.length) ui.outNote.textContent=refNote+"بني على النص حتى الساعة "+lines[lines.length-1].time+".";
       if(db&&sid) db.collection("sessions/"+sid+"/notes").add({t:Date.now(), time:hhmmss(new Date()), kind, text}).catch(()=>{});
     }catch(e){
       ui.outText.textContent = e.text || "";
