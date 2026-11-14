@@ -11,7 +11,7 @@ import datetime, json, os, shutil, subprocess, sys, threading, time, webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 PORT = 8765
-VERSION = "web-2026-11-14b"
+VERSION = "web-2026-11-14c"
 
 
 def find_drive():
@@ -458,6 +458,30 @@ class Handler(BaseHTTPRequestHandler):
         self._ok()
 
 
+def mic_setup():
+    """Make the real microphone the default at full level, silently, on every start."""
+    if os.name != "nt":
+        return
+    script = os.path.join(os.path.dirname(os.path.abspath(__file__)), "mic_boost.ps1")
+    if not os.path.isfile(script):
+        return
+    now = datetime.datetime.now().strftime("%H:%M:%S")
+    try:
+        r = subprocess.run(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-WindowStyle", "Hidden",
+                            "-File", script, "-Mode", "silent"], capture_output=True, text=True,
+                           timeout=60, creationflags=0x08000000)
+        out = [l for l in (r.stdout or "").splitlines() if l.strip()]
+        err = [l for l in (r.stderr or "").splitlines() if l.strip()]
+        last = out[-1] if out else (err[-1] if err else "no output")
+        if last.startswith("MIC|"):
+            _, name, old, new = (last.split("|") + ["", "", ""])[:4]
+            append(f"[{now}] ===== MIC {name} level {old}% -> {new}% =====")
+        else:
+            append(f"[{now}] ===== MIC setup note: {last[:120]} =====")
+    except Exception as e:
+        append(f"[{now}] ===== MIC setup failed: {str(e)[:100]} =====")
+
+
 def open_window():
     url = f"http://127.0.0.1:{PORT}/"
     for exe in (shutil.which("msedge"),
@@ -493,6 +517,7 @@ def main():
         return
     print("Live Ear (PC)", VERSION, "| transcript:", OUT, flush=True)
     print("Running in the background. Close it from the button in its window.", flush=True)
+    threading.Thread(target=mic_setup, daemon=True).start()
     threading.Thread(target=awake_loop, daemon=True).start()
     threading.Thread(target=fallback_loop, daemon=True).start()
     threading.Timer(1.0, open_window).start()

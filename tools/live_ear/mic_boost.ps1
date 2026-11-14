@@ -103,9 +103,12 @@ if ($Mode -eq "restore") {
 $devices = [Mic]::List() | ForEach-Object { $p = $_ -split '\|', 2; [pscustomobject]@{ Id = $p[0]; Name = $p[1] } }
 if (-not $devices) { Write-Host "No active microphone found. Check that the microphone is not disabled in Sound settings." -ForegroundColor Red; exit 1 }
 
-Write-Host ""
-Write-Host "Recording devices found:" -ForegroundColor Cyan
-$i = 0; foreach ($d in $devices) { $i++; Write-Host ("  {0}. {1}" -f $i, $d.Name) }
+$silent = ($Mode -eq "silent")
+if (-not $silent) {
+  Write-Host ""
+  Write-Host "Recording devices found:" -ForegroundColor Cyan
+  $i = 0; foreach ($d in $devices) { $i++; Write-Host ("  {0}. {1}" -f $i, $d.Name) }
+}
 
 $virtual = 'krisp|virtual|cable|voicemeeter|stereo mix|what u hear|wave out|nvidia broadcast|camo|droidcam'
 $real = $devices | Where-Object { $_.Name -notmatch $virtual }
@@ -116,11 +119,12 @@ if (-not $pick) { Write-Host "Only virtual microphones were found (such as Krisp
 
 $oldDefault = [Mic]::DefaultId()
 $oldLevel = [Mic]::GetLevel($pick.Id)
-Set-Content -Path $backup -Value @($oldDefault, $pick.Id, $oldLevel.ToString([Globalization.CultureInfo]::InvariantCulture)) -Encoding UTF8
+if (-not ($silent -and (Test-Path $backup))) { Set-Content -Path $backup -Value @($oldDefault, $pick.Id, $oldLevel.ToString([Globalization.CultureInfo]::InvariantCulture)) -Encoding UTF8 }
 
 [Mic]::MakeDefault($pick.Id)
 [Mic]::SetLevel($pick.Id, 1.0)
 $newLevel = [Mic]::GetLevel($pick.Id)
+if ($silent) { Write-Output ("MIC|{0}|{1}|{2}" -f $pick.Name, [math]::Round($oldLevel*100), [math]::Round($newLevel*100)); exit 0 }
 
 Write-Host ""
 Write-Host ("Chosen microphone : {0}" -f $pick.Name) -ForegroundColor Green
