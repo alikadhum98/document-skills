@@ -11,7 +11,7 @@ import datetime, json, os, shutil, subprocess, sys, threading, time, webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 PORT = 8765
-VERSION = "web-2026-11-14"
+VERSION = "web-2026-11-14b"
 
 
 def find_drive():
@@ -470,10 +470,24 @@ def open_window():
 
 
 def main():
-    try:
-        server = ThreadingHTTPServer(("127.0.0.1", PORT), Handler)
-    except OSError:
-        print("Live Ear is already running. Opening its window.", flush=True)
+    server = None
+    for attempt in range(6):
+        try:
+            server = ThreadingHTTPServer(("127.0.0.1", PORT), Handler)
+            break
+        except OSError:
+            # An older copy is still running in the background: the newest launch takes over.
+            if attempt == 0:
+                print("An older Live Ear is running. Replacing it with this version.", flush=True)
+                try:
+                    import urllib.request
+                    req = urllib.request.Request(f"http://127.0.0.1:{PORT}/quit", data=b"{}", method="POST")
+                    urllib.request.urlopen(req, timeout=3).read()
+                except Exception:
+                    pass
+            time.sleep(1.5)
+    if server is None:
+        print("Port", PORT, "is busy and the old copy did not close. Opening its window.", flush=True)
         open_window()
         time.sleep(3)
         return
