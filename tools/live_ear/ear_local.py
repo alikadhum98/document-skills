@@ -11,7 +11,7 @@ import datetime, json, os, shutil, subprocess, sys, threading, time, webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 PORT = 8765
-VERSION = "web-2026-11-14e"
+VERSION = "web-2026-11-14f"
 
 
 def find_drive():
@@ -543,7 +543,10 @@ def pc_setup():
                 exe = alt
         me = os.path.abspath(__file__)
         with open(os.path.join(startup, "LiveEarPC.bat"), "w", encoding="ascii", errors="ignore") as f:
-            f.write('@echo off\r\nstart "" "%s" "%s"\r\n' % (exe, me))
+            # Google Drive may mount a little after login: wait up to five minutes for the program file.
+            f.write('@echo off\r\nset /a n=0\r\n:wait\r\nif exist "%s" goto run\r\nset /a n+=1\r\n'
+                    'if %%n%% geq 60 exit /b\r\ntimeout /t 5 /nobreak >nul\r\ngoto wait\r\n:run\r\n'
+                    'start "" "%s" "%s"\r\n' % (me, exe, me))
         notes.append("autostart on")
         old = os.path.join(startup, "LiveEar.bat")
         if os.path.exists(old):
