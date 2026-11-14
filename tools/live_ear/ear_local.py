@@ -11,7 +11,7 @@ import datetime, json, os, shutil, subprocess, sys, threading, time, webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 PORT = 8765
-VERSION = "web-2026-11-14d"
+VERSION = "web-2026-11-14e"
 
 
 def find_drive():
@@ -30,6 +30,7 @@ if sys.stdout is None:  # started with pythonw: no console window
 OUT = os.path.join(DRIVE, "COP31_live.txt")
 STATUS = os.path.join(DRIVE, "COP31_live_status.txt")
 LOCK = threading.Lock()
+TOKEN = "%x" % int(time.time() * 1000)  # pages served by an older copy carry no or another token
 PENDING = []
 SESS_DIR = os.path.join(os.path.expanduser("~"), "LiveEar_Sessions")
 CURRENT = {"path": None}
@@ -257,7 +258,11 @@ try{$("lang").value=localStorage.getItem("lang")||"en-US"}catch(e){}
 $("lang").onchange=()=>{try{localStorage.setItem("lang",$("lang").value)}catch(e){} if(want) forceRestart("lang");};
 const pad=x=>String(x).padStart(2,"0");
 const hms=d=>pad(d.getHours())+":"+pad(d.getMinutes())+":"+pad(d.getSeconds());
-function post(path,obj){return fetch(path,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(obj)}).catch(()=>{})}
+const TOKEN="__TOKEN__";
+let staleShown=false;
+function post(path,obj){return fetch(path,{method:"POST",headers:{"Content-Type":"application/json","X-Ear-Token":TOKEN},body:JSON.stringify(obj)})
+  .then(r=>{ if(r.status===409 && !staleShown){ staleShown=true; want=false; try{rec&&rec.stop()}catch(e){} document.body.innerHTML="<p style='padding:20px'>هذه نافذة قديمة للبرنامج. أغلقها، فالنسخة الجديدة تعمل في نافذة أخرى.</p>"; } return r; })
+  .catch(()=>{})}
 function beep(){try{ctx=ctx||new AudioContext();[0,.35].forEach(o=>{const s=ctx.createOscillator(),g=ctx.createGain();s.frequency.value=880;g.gain.value=.15;s.connect(g);g.connect(ctx.destination);s.start(ctx.currentTime+o);s.stop(ctx.currentTime+o+.18)})}catch(e){}}
 function warn(t){$("warn").textContent=t;$("warn").hidden=!t}
 async function keepAwake(){ try{ if(want && !wake && navigator.wakeLock && document.visibilityState==="visible"){ wake=await navigator.wakeLock.request("screen"); wake.addEventListener("release",()=>{wake=null}); } }catch(e){ wake=null; } }
@@ -423,7 +428,7 @@ class Handler(BaseHTTPRequestHandler):
                 body = ""
             self._ok(body.encode("utf-8"))
         else:
-            self._ok(PAGE.encode("utf-8"), "text/html")
+            self._ok(PAGE.replace("__TOKEN__", TOKEN).encode("utf-8"), "text/html")
 
     def do_POST(self):
         n = int(self.headers.get("Content-Length") or 0)
@@ -432,6 +437,11 @@ class Handler(BaseHTTPRequestHandler):
         except ValueError:
             data = {}
         now = datetime.datetime.now().strftime("%H:%M:%S")
+        if self.headers.get("X-Ear-Token") != TOKEN:
+            # a window left over from an older copy: ignore it and tell it to stand down
+            self.send_response(409)
+            self.end_headers()
+            return
         if self.path == "/line":
             text = " ".join(str(data.get("text", "")).split())
             if text:
@@ -603,11 +613,38 @@ def open_window():
     webbrowser.open(url)
 
 
+class ExclusiveServer(ThreadingHTTPServer):
+    # On Windows the default reuse flag lets several copies share one port silently.
+    allow_reuse_address = False
+
+    def server_bind(self):
+        import socket
+        if os.name == "nt" and hasattr(socket, "SO_EXCLUSIVEADDRUSE"):
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_EXCLUSIVEADDRUSE, 1)
+        super().server_bind()
+
+
+def kill_other_copies():
+    """Stop every other running copy of this program, whatever its version."""
+    if os.name != "nt":
+        return 0
+    try:
+        r = ps("$me = %d; $p = Get-CimInstance Win32_Process | Where-Object { $_.ProcessId -ne $me -and $_.CommandLine -match 'ear_local\\.py' }; "
+               "$p | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }; ($p | Measure-Object).Count" % os.getpid())
+        n = (r.stdout or "0").strip().splitlines()
+        return int(n[-1]) if n and n[-1].isdigit() else 0
+    except Exception:
+        return 0
+
+
 def main():
+    killed = kill_other_copies()
+    if killed:
+        time.sleep(1.5)
     server = None
     for attempt in range(6):
         try:
-            server = ThreadingHTTPServer(("127.0.0.1", PORT), Handler)
+            server = ExclusiveServer(("127.0.0.1", PORT), Handler)
             break
         except OSError:
             # An older copy is still running in the background: the newest launch takes over.
@@ -627,6 +664,8 @@ def main():
         return
     print("Live Ear (PC)", VERSION, "| transcript:", OUT, flush=True)
     print("Running in the background. Close it from the button in its window.", flush=True)
+    if killed:
+        append(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] ===== SETUP stopped {killed} older running copies =====")
     threading.Thread(target=mic_setup, daemon=True).start()
     threading.Thread(target=pc_setup, daemon=True).start()
     threading.Thread(target=command_loop, args=(server,), daemon=True).start()
