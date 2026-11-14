@@ -11,7 +11,7 @@ import datetime, json, os, shutil, subprocess, sys, threading, time, webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 PORT = 8765
-VERSION = "web-2026-11-13c"
+VERSION = "web-2026-11-14"
 
 
 def find_drive():
@@ -76,6 +76,101 @@ def list_sessions():
                     "name": parts[2] if len(parts) > 2 else fn, "lines": len(body),
                     "last": body[-1][1:9] if body and body[-1].startswith("[") else ""})
     return out
+
+
+# ---------- keep the PC awake while listening ----------
+AWAKE = {"on": False}
+
+
+def awake_loop():
+    while True:
+        if AWAKE["on"] and os.name == "nt":
+            try:
+                import ctypes
+                ctypes.windll.kernel32.SetThreadExecutionState(0x00000001)  # ES_SYSTEM_REQUIRED
+            except Exception:
+                pass
+        time.sleep(30)
+
+
+# ---------- automatic fallback to the offline Whisper ear ----------
+PAGE_STATE = {"ok": True, "seen": 0.0, "bad_since": 0.0, "good_since": 0.0}
+FALLBACK = {"proc": None}
+
+
+def find_whisper_ear():
+    here = os.path.dirname(os.path.abspath(__file__))
+    for p in (os.path.join(here, "live_ear.py"), os.path.join(os.path.expanduser("~"), "LiveEar", "live_ear.py")):
+        if os.path.isfile(p):
+            return p
+    return None
+
+
+def python_exe():
+    exe = sys.executable or "python"
+    if exe.lower().endswith("pythonw.exe"):
+        alt = exe[:-len("pythonw.exe")] + "python.exe"
+        if os.path.isfile(alt):
+            return alt
+    return exe
+
+
+def start_fallback(why):
+    if FALLBACK["proc"] and FALLBACK["proc"].poll() is None:
+        return
+    script = find_whisper_ear()
+    now = datetime.datetime.now().strftime("%H:%M:%S")
+    if not script:
+        append(f"[{now}] ===== FALLBACK unavailable: live_ear.py not found =====")
+        PAGE_STATE["bad_since"] = time.time() + 600  # do not retry for ten minutes
+        return
+    append(f"[{now}] ===== FALLBACK START ({why}) small.en =====")
+    flags = 0x08000000 if os.name == "nt" else 0  # CREATE_NO_WINDOW
+    try:
+        FALLBACK["proc"] = subprocess.Popen([python_exe(), script, "--model", "small.en", "--drive", DRIVE],
+                                            creationflags=flags, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except OSError as e:
+        append(f"[{now}] ===== FALLBACK failed: {e} =====")
+
+
+def stop_fallback(why):
+    p = FALLBACK["proc"]
+    if p and p.poll() is None:
+        try:
+            p.terminate()
+        except OSError:
+            pass
+        append(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] ===== FALLBACK END ({why}) =====")
+    FALLBACK["proc"] = None
+
+
+def fallback_loop():
+    while True:
+        time.sleep(5)
+        now = time.time()
+        active = CURRENT["path"] is not None
+        if not active:
+            stop_fallback("session stopped")
+            continue
+        stale = now - PAGE_STATE["seen"] > 150  # minimized windows send their heartbeat late
+        bad = stale or not PAGE_STATE["ok"]
+        if bad:
+            PAGE_STATE["good_since"] = 0.0
+            if not PAGE_STATE["bad_since"]:
+                PAGE_STATE["bad_since"] = now
+            if now - PAGE_STATE["bad_since"] > 60:
+                start_fallback("browser silent" if stale else "browser failing")
+        else:
+            PAGE_STATE["bad_since"] = 0.0
+            if not PAGE_STATE["good_since"]:
+                PAGE_STATE["good_since"] = now
+            if FALLBACK["proc"] and now - PAGE_STATE["good_since"] > 30:
+                stop_fallback("browser back")
+        p = FALLBACK["proc"]
+        if p and p.poll() is not None:
+            append(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] ===== FALLBACK exited (code {p.returncode}) =====")
+            FALLBACK["proc"] = None
+            PAGE_STATE["bad_since"] = now + 600
 
 
 def append(line):
@@ -154,15 +249,19 @@ select,button{font:inherit;border-radius:8px;border:1px solid var(--line);backgr
 <script>
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
 const $=id=>document.getElementById(id);
-let rec=null, want=false, n=0, partialEl=null, lastErr="", restarts=0, ctx=null, phraseStart=null, cutting=false;
-const MAX_PHRASE_MS=12000;
+let rec=null, want=false, n=0, partialEl=null, ctx=null, wake=null;
+let phraseStart=null, emitted=0;               // words of the current phrase already written
+let lastResultAt=0, lastStartAt=0, lastRestartAt=0, reasons=[], failingSince=0;
+const EMIT_AFTER_MS=12000, STALL_MS=20000, GAP_LOG_MS=20000;
 try{$("lang").value=localStorage.getItem("lang")||"en-US"}catch(e){}
-$("lang").onchange=()=>{try{localStorage.setItem("lang",$("lang").value)}catch(e){} if(want){rec&&rec.stop()}};
+$("lang").onchange=()=>{try{localStorage.setItem("lang",$("lang").value)}catch(e){} if(want) forceRestart("lang");};
 const pad=x=>String(x).padStart(2,"0");
 const hms=d=>pad(d.getHours())+":"+pad(d.getMinutes())+":"+pad(d.getSeconds());
 function post(path,obj){return fetch(path,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(obj)}).catch(()=>{})}
 function beep(){try{ctx=ctx||new AudioContext();[0,.35].forEach(o=>{const s=ctx.createOscillator(),g=ctx.createGain();s.frequency.value=880;g.gain.value=.15;s.connect(g);g.connect(ctx.destination);s.start(ctx.currentTime+o);s.stop(ctx.currentTime+o+.18)})}catch(e){}}
 function warn(t){$("warn").textContent=t;$("warn").hidden=!t}
+async function keepAwake(){ try{ if(want && !wake && navigator.wakeLock && document.visibilityState==="visible"){ wake=await navigator.wakeLock.request("screen"); wake.addEventListener("release",()=>{wake=null}); } }catch(e){ wake=null; } }
+document.addEventListener("visibilitychange", keepAwake);
 function show(time,text,partial){
   if(partial){ if(!partialEl){partialEl=document.createElement("div");partialEl.className="p";$("tx").appendChild(partialEl)} partialEl.textContent=text; }
   else{ if(partialEl){partialEl.remove();partialEl=null}
@@ -171,44 +270,86 @@ function show(time,text,partial){
   $("tx").scrollTop=$("tx").scrollHeight;
 }
 function setUi(){ $("mic").textContent=want?"أوقف السماع":"ابدأ السماع"; $("mic").classList.toggle("on",want); }
+function alive(){
+  const now=Date.now();
+  if(lastResultAt && now-lastResultAt>GAP_LOG_MS){
+    const secs=Math.round((now-lastResultAt)/1000);
+    const why=[...new Set(reasons)].join(" ")||"silence";
+    post("/gap",{time:hms(new Date(lastResultAt)),secs,why});
+  }
+  reasons=[]; lastResultAt=now; failingSince=0;
+}
+function writeLine(time,text){
+  alive();
+  n++; $("n").textContent=n; $("last").textContent=time; show(time,text,false); post("/line",{time,text});
+}
 function build(){
+  if(rec){ try{ rec.onend=null; rec.onerror=null; rec.onresult=null; rec.abort(); }catch(e){} }
   rec=new SR(); rec.continuous=true; rec.interimResults=true; rec.lang=$("lang").value; rec.maxAlternatives=1;
-  rec.onstart=()=>{ $("state").textContent="تسمع الآن"; warn(""); restarts=0; };
+  rec.onstart=()=>{ lastStartAt=Date.now(); $("state").textContent="تسمع الآن"; warn(""); };
   rec.onresult=e=>{
     let interim="";
     for(let i=e.resultIndex;i<e.results.length;i++){
       const r=e.results[i], text=r[0].transcript.trim();
       if(!text) continue;
-      if(r.isFinal){ const now=hms(phraseStart||new Date()); phraseStart=null; restarts=0; n++; $("n").textContent=n; $("last").textContent=now; show(now,text,false); post("/line",{time:now,text}); }
-      else interim+=text+" ";
+      if(r.isFinal){
+        const words=text.split(/\s+/), rest=words.slice(emitted).join(" ");
+        const time=hms(phraseStart||new Date());
+        phraseStart=null; emitted=0;
+        if(rest) writeLine(time,rest); else alive();
+      } else interim+=text+" ";
     }
-    if(interim){ if(!phraseStart) phraseStart=new Date(); show("",interim.trim(),true);
-      // long unbroken speech: close the phrase so it reaches Drive within seconds
-      if(!cutting && Date.now()-phraseStart.getTime()>MAX_PHRASE_MS){ cutting=true; try{ rec.stop(); }catch(e){} } }
+    if(interim){
+      if(!phraseStart) phraseStart=new Date();
+      alive(); // words are arriving: recognition is alive
+      const words=interim.trim().split(/\s+/);
+      show("",words.slice(emitted).join(" "),true);
+      // long unbroken speech: write the settled part now, without stopping recognition
+      if(Date.now()-phraseStart.getTime()>EMIT_AFTER_MS && words.length-3>emitted){
+        const chunk=words.slice(emitted, words.length-3).join(" ");
+        const time=hms(phraseStart); emitted=words.length-3; phraseStart=new Date();
+        writeLine(time,chunk);
+      }
+    }
   };
-  rec.onerror=e=>{ lastErr=e.error;
-    if(e.error==="not-allowed"||e.error==="service-not-allowed"){ want=false; setUi(); warn("الميكروفون ممنوع. اسمح به من أيقونة القفل بجانب العنوان ثم ابدأ من جديد."); beep(); post("/status",{state:"blocked"}); }
-    else if(e.error==="network"){ warn("انقطع الإنترنت، سيعاد الاتصال تلقائيا."); }
-    else if(e.error==="audio-capture"){ warn("لا يوجد ميكروفون يعمل. تأكد من اختيار الميكروفون الصحيح."); }
+  rec.onerror=e=>{ reasons.push(e.error);
+    if(e.error==="not-allowed"||e.error==="service-not-allowed"){ want=false; setUi(); warn("الميكروفون ممنوع. اسمح به من أيقونة القفل بجانب العنوان ثم ابدأ من جديد."); beep(); post("/status",{state:"blocked",ok:false}); }
+    else if(e.error==="network"){ warn("انقطع الإنترنت، يعاد الاتصال تلقائيا."); }
+    else if(e.error==="audio-capture"){ warn("لا يصل صوت من الميكروفون. تأكد من اختيار الميكروفون الصحيح."); }
   };
   rec.onend=()=>{
-    $("state").textContent=want?"يعاد التشغيل":"متوقفة";
-    if(!want){ post("/status",{state:"stopped"}); return; }
-    if(cutting && want){ cutting=false; setTimeout(()=>{ try{ rec.start(); }catch(e){} },60); return; }
-    cutting=false;
-    restarts++;
-    if(restarts===8){ beep(); warn("السماع ينقطع مرارا. تأكد من الإنترنت والميكروفون."); }
-    setTimeout(()=>{ if(want){ try{ rec.lang=$("lang").value; rec.start(); }catch(err){} } }, restarts>5?3000:250);
+    if(!want){ $("state").textContent="متوقفة"; post("/status",{state:"stopped",ok:true}); return; }
+    $("state").textContent="يعاد التشغيل";
+    emitted=0; phraseStart=null;
+    // restart at once: timers are slowed down while the window is minimized
+    try{ rec.lang=$("lang").value; rec.start(); }catch(err){ forceRestart("start-failed"); }
   };
 }
+function forceRestart(why){
+  if(!want) return;
+  reasons.push(why); lastRestartAt=Date.now();
+  build();
+  try{ rec.start(); }catch(e){ reasons.push("start-failed"); }
+}
+// watchdog: recognition alive but silent for too long, or never restarted
+setInterval(()=>{
+  if(!want) return;
+  const now=Date.now();
+  if(now-Math.max(lastResultAt,lastStartAt,lastRestartAt)>STALL_MS) forceRestart("stall");
+  const hard = reasons.some(r=>r!=="no-speech" && r!=="aborted" && r!=="stall" && r!=="lang");
+  const silentLong = now-lastResultAt>60000;
+  if(silentLong && (hard || now-lastStartAt>60000)){ if(!failingSince) failingSince=now; } else failingSince=0;
+  if(failingSince && now-failingSince>5000) warn("السماع متعثر منذ أكثر من دقيقة، والبرنامج يشغل التسجيل الاحتياطي.");
+},3000);
 $("mic").onclick=()=>{
   if(!SR){ warn("هذا المتصفح لا يدعم التعرف على الكلام. افتح الصفحة في Edge أو Chrome."); return; }
   try{ctx=ctx||new AudioContext();ctx.resume()}catch(e){}
-  if(want){ want=false; setUi(); rec&&rec.stop(); post("/stop",{}); return; }
-  want=true; setUi(); if(!rec) build(); rec.lang=$("lang").value;
+  if(want){ want=false; setUi(); try{rec&&rec.stop()}catch(e){} post("/stop",{}); return; }
+  want=true; setUi(); keepAwake();
   post("/start",{lang:$("lang").value, name:$("sname").value.trim()});
   $("tx").replaceChildren(); n=0; $("n").textContent="0";
-  try{ rec.start(); }catch(e){}
+  lastResultAt=Date.now(); reasons=[]; failingSince=0; emitted=0; phraseStart=null;
+  build(); try{ rec.start(); }catch(e){}
 };
 $("reply").onclick=()=>post("/open",{what:"reply"});
 $("sum").onclick=()=>post("/open",{what:"summary"});
@@ -231,7 +372,11 @@ async function showSession(x){
 }
 $("histBtn").onclick=()=>{ const h=$("hist"); h.hidden=!h.hidden; $("histBtn").classList.toggle("pri",!h.hidden); if(!h.hidden) loadHist(); };
 $("quit").onclick=()=>{ want=false; try{rec&&rec.stop()}catch(e){} post("/quit",{}).then(()=>{ document.body.innerHTML="<p style='padding:20px'>أغلق البرنامج. يمكنك إغلاق هذه النافذة.</p>"; }); };
-setInterval(()=>{ post("/status",{state: want?($("state").textContent==="تسمع الآن"?"listening":"restarting"):"stopped"}); },20000);
+setInterval(()=>{
+  if(!want){ post("/status",{state:"stopped",ok:true}); return; }
+  const failing = !!(failingSince && Date.now()-failingSince>0);
+  post("/status",{state: failing?"failing":($("state").textContent==="تسمع الآن"?"listening":"restarting"), ok:!failing});
+},10000);
 if(!SR) warn("هذا المتصفح لا يدعم التعرف على الكلام. افتح الصفحة في Edge أو Chrome.");
 </script></body></html>"""
 
@@ -274,16 +419,27 @@ class Handler(BaseHTTPRequestHandler):
             text = " ".join(str(data.get("text", "")).split())
             if text:
                 append(f"[{data.get('time') or now}] {text}")
+        elif self.path == "/gap":
+            append(f"[{data.get('time') or now}] ===== GAP {int(data.get('secs') or 0)} ثانية, {str(data.get('why') or '')[:60]} =====")
         elif self.path == "/start":
             new_session(str(data.get("name") or "session"))
+            AWAKE["on"] = True
+            PAGE_STATE.update(ok=True, seen=time.time(), bad_since=0.0, good_since=0.0)
             append(f"[{now}] ===== START {datetime.date.today()} web lang={data.get('lang', '')} v={VERSION} =====")
             status("web-listening")
         elif self.path == "/stop":
             append(f"[{now}] ===== STOP =====")
             CURRENT["path"] = None
+            AWAKE["on"] = False
+            stop_fallback("stopped")
             status("web-stopped")
         elif self.path == "/status":
-            status("web-" + str(data.get("state", "unknown"))[:20])
+            PAGE_STATE["seen"] = time.time()
+            PAGE_STATE["ok"] = data.get("ok", True) is not False
+            state = str(data.get("state", "unknown"))[:20]
+            if FALLBACK["proc"]:
+                state += "+fallback"
+            status("web-" + state)
         elif self.path == "/open":
             what = "reply" if data.get("what") == "reply" else "summary"
             webbrowser.open(PAGE_URL + "#" + what)
@@ -294,6 +450,7 @@ class Handler(BaseHTTPRequestHandler):
             except (AttributeError, OSError):
                 pass
         elif self.path == "/quit":
+            stop_fallback("quit")
             status("web-off")
             self._ok()
             threading.Thread(target=self.server.shutdown, daemon=True).start()
@@ -322,6 +479,8 @@ def main():
         return
     print("Live Ear (PC)", VERSION, "| transcript:", OUT, flush=True)
     print("Running in the background. Close it from the button in its window.", flush=True)
+    threading.Thread(target=awake_loop, daemon=True).start()
+    threading.Thread(target=fallback_loop, daemon=True).start()
     threading.Timer(1.0, open_window).start()
     try:
         server.serve_forever()

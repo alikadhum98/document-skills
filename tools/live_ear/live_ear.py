@@ -21,7 +21,7 @@ Options:
 import argparse, os, queue, re, sys, threading, time, datetime
 import numpy as np
 
-VERSION = "2026-11-13b"
+VERSION = "2026-11-14"
 SR = 16000
 BLOCK = 0.1            # seconds per audio block
 SILENCE_END = 0.7      # seconds of silence that closes a phrase
@@ -307,6 +307,16 @@ class Listener:
 
 
 def heartbeat(path, state):
+    # The browser ear (ear_local.py) shares this file. While it is alive,
+    # an idle standby must not overwrite its fresher state.
+    if "standby-standby" in state or state.endswith("-off"):
+        try:
+            if time.time() - os.path.getmtime(path) < 60:
+                with open(path, encoding="utf-8") as f:
+                    if f.read(4) == "web-":
+                        return
+        except OSError:
+            pass
     try:
         with open(path, "w", encoding="utf-8") as f:
             f.write(f"{state} {datetime.datetime.now().isoformat(timespec='seconds')}\n")
