@@ -1273,6 +1273,169 @@
    "tone": "2_conditional_openness",
    "tactics": "تأييد انتقائي للخيارات بأرقامها، والإحالة إلى ما اتفق عليه سابقا.",
    "use_for_iraq": "يبني عليه العراق بنقاط الدعم وتيسير المنصة دون تكرار."
+  },
+  {
+   "id": "2026-11-16-cma18-iraq",
+   "date": "2026-11-16",
+   "session": "CMA 18 informal consultations, arrangements for funding Article 6.2 infrastructure, processes and capacity-building",
+   "krisp": "01a1db871c71771b8a90e6c53160c0f5@22:31",
+   "actor": "Iraq",
+   "attribution": "named",
+   "attribution_note": "مداخلة العراق، سماها الميسر.",
+   "camp": "budget",
+   "positions": [
+    "الإعفاء يشمل فتح قسم الطرف في السجل الدولي وتشغيله",
+    "عدم دفع الرسم لا يربط باتساق النتائج، ورفض الفقرة 14"
+   ],
+   "formulations_en": [
+    "Consistency checks concern environmental integrity, not financial compliance."
+   ],
+   "tone": "2_conditional_openness",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-16-cma18-arabgroup",
+   "date": "2026-11-16",
+   "session": "CMA 18 informal consultations, arrangements for funding Article 6.2 infrastructure, processes and capacity-building",
+   "krisp": "01a1db871c71771b8a90e6c53160c0f5@15:30",
+   "actor": "Arab Group",
+   "attribution": "supplied_unverified",
+   "attribution_note": "نصها من المستخدم ويطابق التسجيل، والتسجيل نسبها إلى اسم مشوه.",
+   "camp": "budget",
+   "positions": [
+    "الميزانية الأساسية مع التبرعات",
+    "رسوم السجل الدولي مع إعفاء البلدان النامية",
+    "الرسوم للمادة 6.2 وحدها"
+   ],
+   "formulations_en": [
+    "we support the introduction of fees, provided that exemptions or waivers are granted to developing countries"
+   ],
+   "tone": "2_conditional_openness",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-16-cma18-lmdc",
+   "date": "2026-11-16",
+   "session": "CMA 18 informal consultations, arrangements for funding Article 6.2 infrastructure, processes and capacity-building",
+   "krisp": "01a1db871c71771b8a90e6c53160c0f5@12:26",
+   "actor": "LMDC",
+   "attribution": "supplied_unverified",
+   "attribution_note": "نصها من المستخدم ويطابق التسجيل.",
+   "camp": "budget",
+   "positions": [
+    "الميزانية الأساسية مع التبرعات",
+    "الإعفاء والتنازل للبلدان النامية في أي رسوم",
+    "رفض آليات عدم الدفع",
+    "الرسوم للمادة 6.2 وحدها",
+    "تحفظ على رسوم وحدات SMO"
+   ],
+   "formulations_en": [
+    "We also can't accept non-payment mechanisms across all."
+   ],
+   "tone": "2_conditional_openness",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-16-cma18-pakistan",
+   "date": "2026-11-16",
+   "session": "CMA 18 informal consultations, arrangements for funding Article 6.2 infrastructure, processes and capacity-building",
+   "krisp": "01a1db871c71771b8a90e6c53160c0f5@26:54",
+   "actor": "Pakistan",
+   "attribution": "named",
+   "attribution_note": "سماها الميسر.",
+   "camp": "budget",
+   "positions": [
+    "النهج الأول",
+    "إعفاء البلدان النامية وجهاتها",
+    "لا آلية لعدم الدفع",
+    "الرسوم للمادة 6.2 وحدها"
+   ],
+   "formulations_en": [
+    "developing countries were promised access to the international registry without strings attached"
+   ],
+   "tone": "2_conditional_openness",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-16-cma18-switzerland",
+   "date": "2026-11-16",
+   "session": "CMA 18 informal consultations, arrangements for funding Article 6.2 infrastructure, processes and capacity-building",
+   "krisp": "01a1db871c71771b8a90e6c53160c0f5@02:55",
+   "actor": "Switzerland",
+   "attribution": "named",
+   "attribution_note": "سماها الميسر.",
+   "camp": "fee",
+   "positions": [
+    "الرسوم على الجهات المأذونة عند تقديم المعلومات الأولية",
+    "ربط الرسم بكل نهج تعاوني جديد لا بالحجم"
+   ],
+   "formulations_en": [],
+   "tone": "2_conditional_openness",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-16-cma18-japan",
+   "date": "2026-11-16",
+   "session": "CMA 18 informal consultations, arrangements for funding Article 6.2 infrastructure, processes and capacity-building",
+   "krisp": "01a1db871c71771b8a90e6c53160c0f5@08:47",
+   "actor": "Japan",
+   "attribution": "named",
+   "attribution_note": "عرفت نفسها.",
+   "camp": "bridge",
+   "positions": [
+    "لا يستبق القرار إدخال رسوم على السجل الدولي",
+    "تحليل الكلفة والإيرادات وأثر المشاركة أولا، وقيمة الفقرة 57"
+   ],
+   "formulations_en": [
+    "we should not prejudge in this decision whether a fee will be introduced for the international registry"
+   ],
+   "tone": "2_conditional_openness",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-16-cma18-russia",
+   "date": "2026-11-16",
+   "session": "CMA 18 informal consultations, arrangements for funding Article 6.2 infrastructure, processes and capacity-building",
+   "krisp": "01a1db871c71771b8a90e6c53160c0f5@23:29",
+   "actor": "Russian Federation",
+   "attribution": "named",
+   "attribution_note": "سماها الميسر.",
+   "camp": "budget",
+   "positions": [
+    "ضد رسوم الحجم في النهج الثالث",
+    "الوظائف الأساسية من الميزانية",
+    "ضد رسم فتح قسم الطرف",
+    "منفتح على رسوم المعاملات للجهات"
+   ],
+   "formulations_en": [],
+   "tone": "2_conditional_openness",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-16-cma18-ailac",
+   "date": "2026-11-16",
+   "session": "CMA 18 informal consultations, arrangements for funding Article 6.2 infrastructure, processes and capacity-building",
+   "krisp": "01a1db871c71771b8a90e6c53160c0f5@34:47",
+   "actor": "AILAC",
+   "attribution": "likely",
+   "attribution_note": "التسجيل كتبها IDAC.",
+   "camp": "budget",
+   "positions": [
+    "النهج الأول ونهج ثان موسع",
+    "لا رسوم على البلدان النامية في السجل الدولي",
+    "ضد النهجين الثالث والرابع ما لم تعف البلدان النامية"
+   ],
+   "formulations_en": [],
+   "tone": "2_conditional_openness",
+   "tactics": "",
+   "use_for_iraq": ""
   }
  ]
 }
