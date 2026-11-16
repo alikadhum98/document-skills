@@ -1246,6 +1246,33 @@
    "tone": "3_soft_opposition",
    "tactics": "",
    "use_for_iraq": "حليف في رفض الأعباء."
+  },
+  {
+   "id": "2026-11-16-16c-arabgroup",
+   "date": "2026-11-16",
+   "session": "CMA 16(c) informal consultations, work programme under the framework for non-market approaches",
+   "krisp": null,
+   "actor": "Arab Group",
+   "attribution": "named",
+   "attribution_note": "أكد المستخدم أن المجموعة العربية ألقتها، ونصها منه.",
+   "camp": "budget",
+   "positions": [
+    "النهج غير السوقية ليست مسارا ثانويا، واستمرار البرنامج وتقويته",
+    "القسم A الخيار الثاني بلا قيود الوقت والقدرات",
+    "البديل 12، والفقرة 14 الخيار الثاني، وحذف good practices من 16(b)",
+    "رفض 37 و38، وتأييد 39 و40 بقسم مخصص",
+    "الترتيبات المؤسسية الخيار الرابع بلا نص، ورفض الخيار الأول ومنه 45",
+    "تنفيذ 13/CMA.7 كما اعتمد ضمن إطار المادة 6.8",
+    "استمرار بناء قدرات نقاط الاتصال"
+   ],
+   "formulations_en": [
+    "Non-market approaches are not a secondary track.",
+    "Parties already agreed to consider this in 2027. Option 4, with no text in this decision, respects that.",
+    "Any early discussion must also consider strengthening Article 6.8."
+   ],
+   "tone": "2_conditional_openness",
+   "tactics": "تأييد انتقائي للخيارات بأرقامها، والإحالة إلى ما اتفق عليه سابقا.",
+   "use_for_iraq": "يبني عليه العراق بنقاط الدعم وتيسير المنصة دون تكرار."
   }
  ]
 }
