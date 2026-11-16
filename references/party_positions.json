@@ -1436,6 +1436,199 @@
    "tone": "2_conditional_openness",
    "tactics": "",
    "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-16-16a-japan",
+   "date": "2026-11-16",
+   "session": "CMA 16(a) informal consultations, first reading of draft DT.CMA8.i16a.1",
+   "krisp": "01a1e35b73cd71588a086153f37914e6@00:01",
+   "actor": "Japan",
+   "attribution": "named",
+   "attribution_note": "سماها التسجيل.",
+   "camp": "bridge",
+   "positions": [
+    "الفقرة 24 لها آثار في الميزانية، فتدمج في حوارات قائمة أو تعقد عن بعد",
+    "الفقرة 38 مهمة",
+    "حذف 40 و41"
+   ],
+   "formulations_en": [
+    "we should not redact the scope or priority of mandate review or create a new negotiation process"
+   ],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-16-16a-group-a",
+   "date": "2026-11-16",
+   "session": "CMA 16(a) informal consultations, first reading of draft DT.CMA8.i16a.1",
+   "krisp": "01a1e35b73cd71588a086153f37914e6@02:39",
+   "actor": "Unidentified group (02:39)",
+   "attribution": "unclear",
+   "attribution_note": "لم يسم.",
+   "camp": "mixed",
+   "positions": [
+    "رفض الفقرة 16",
+    "الحوار بند دائم",
+    "معاملة متساوية للحالات المتشابهة",
+    "تقدير الأمانة لكلفة المقترحات"
+   ],
+   "formulations_en": [
+    "You cannot just judge an agreed 6.2 reporting provision against a much later agreed 6.4 policy decision"
+   ],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-16-16a-uk",
+   "date": "2026-11-16",
+   "session": "CMA 16(a) informal consultations, first reading of draft DT.CMA8.i16a.1",
+   "krisp": "01a1e35b73cd71588a086153f37914e6@09:22",
+   "actor": "United Kingdom (likely)",
+   "attribution": "likely",
+   "attribution_note": "مضمونها يطابق مواقفها السابقة.",
+   "camp": "fee",
+   "positions": [
+    "إبقاء الفقرة 16",
+    "حذف الإشارة إلى 5.2",
+    "حوار سنوي",
+    "حذف إشارة البلدان النامية في 26 و27",
+    "حذف 39",
+    "تقرير الأمانة قبل SB 66 في 41"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-16-16a-aosis",
+   "date": "2026-11-16",
+   "session": "CMA 16(a) informal consultations, first reading of draft DT.CMA8.i16a.1",
+   "krisp": "01a1e35b73cd71588a086153f37914e6@26:23",
+   "actor": "AOSIS (likely)",
+   "attribution": "likely",
+   "attribution_note": "مضمونها يطابق مواقفها في 14/11.",
+   "camp": "fee",
+   "positions": [
+    "استمرار الحوار",
+    "الشفافية في 31 إلى 33",
+    "عدم الاتساق في حصة التكيف سهل الجواب"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-16-16a-lmdc",
+   "date": "2026-11-16",
+   "session": "CMA 16(a) informal consultations, first reading of draft DT.CMA8.i16a.1",
+   "krisp": "01a1e35b73cd71588a086153f37914e6@29:10",
+   "actor": "LMDC (likely)",
+   "attribution": "likely",
+   "attribution_note": "قال our group وvery long speech، ولم يسم.",
+   "camp": "budget",
+   "positions": [
+    "حذف 11",
+    "استبدال 13 و14 بلغة تلزم المراجعين بالإرشادات",
+    "لا ترحيب بتقرير التوليف",
+    "لا إرشاد إضافي",
+    "لا نتيجة للحوار ولا حوار في حزيران",
+    "قرار بسيط جدا"
+   ],
+   "formulations_en": [
+    "we will not accept any additional guidance whatsoever",
+    "I would like the entire room to follow the path of ourselves and the CDM room and just have a very simple outcome"
+   ],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-16-16a-arabgroup",
+   "date": "2026-11-16",
+   "session": "CMA 16(a) informal consultations, first reading of draft DT.CMA8.i16a.1",
+   "krisp": "01a1e35b73cd71588a086153f37914e6@34:51",
+   "actor": "Arab Group (likely)",
+   "attribution": "likely",
+   "attribution_note": "مضمونها يطابق كلمة المجموعة في 14/11.",
+   "camp": "budget",
+   "positions": [
+    "قرار قصير",
+    "إحاطة بالتقارير لا ترحيب",
+    "المراجعة في حدود متطلبات الإبلاغ",
+    "لا إرشاد ولا حوار جديد",
+    "حذف 23",
+    "لا تقرير توليف محدث"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-16-16a-ukraine",
+   "date": "2026-11-16",
+   "session": "CMA 16(a) informal consultations, first reading of draft DT.CMA8.i16a.1",
+   "krisp": "01a1e35b73cd71588a086153f37914e6@37:41",
+   "actor": "Ukraine",
+   "attribution": "named",
+   "attribution_note": "سماها الميسر.",
+   "camp": "mixed",
+   "positions": [
+    "الفقرة 14 لا تحتاج إرشادا",
+    "لا إشارة إلى أطر أخرى",
+    "معايير 20 علنية",
+    "سؤال عن اتساق 31 مع مقرر باكو"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-16-16a-group-b",
+   "date": "2026-11-16",
+   "session": "CMA 16(a) informal consultations, first reading of draft DT.CMA8.i16a.1",
+   "krisp": "01a1e35b73cd71588a086153f37914e6@39:55",
+   "actor": "Unidentified group (39:55)",
+   "attribution": "unclear",
+   "attribution_note": "تكلمت باسم مجموعة لم يتضح اسمها.",
+   "camp": "budget",
+   "positions": [
+    "تعريف تضارب المصالح أولا",
+    "إرشاد يحدد نطاق تقييم كل عنصر بدل 14",
+    "نهج 6.4 ليس معيارا فعليا لمراجعة 6.2",
+    "بدء أولويات المراجعة الآن مبكر"
+   ],
+   "formulations_en": [
+    "should not become the de facto criteria for article 6.2 technical review"
+   ],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-16-16a-canada",
+   "date": "2026-11-16",
+   "session": "CMA 16(a) informal consultations, first reading of draft DT.CMA8.i16a.1",
+   "krisp": "01a1e35b73cd71588a086153f37914e6@44:52",
+   "actor": "Canada",
+   "attribution": "named",
+   "attribution_note": "سماها الميسر.",
+   "camp": "bridge",
+   "positions": [
+    "حذف ما يكرر",
+    "دمج الحوار مع فعاليات 6.2 القائمة",
+    "حذف 39 إن كررت 38",
+    "تأخير المدخلات إلى تموز"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
   }
  ]
 }
