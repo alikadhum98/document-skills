@@ -1919,6 +1919,344 @@
    "tone": "3_soft_opposition",
    "tactics": "",
    "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-16a-noon-ldc",
+   "date": "2026-11-17",
+   "session": "CMA 16(a) informal consultations 17/11 noon",
+   "krisp": "01a1e8892f1a76aa957d1b4026d392e0",
+   "actor": "LDC Group",
+   "attribution": "named",
+   "attribution_note": "سماها الميسر.",
+   "camp": "opponent",
+   "positions": [
+    "تسجيل تشغيل السجل الدولي",
+    "إبراز نتائج المراجعة",
+    "رفض تضييق نظر فرق المراجعة",
+    "الإبقاء على فقرتي شرح النتائج واستيراد نهج 6.4"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-16a-noon-korea",
+   "date": "2026-11-17",
+   "session": "CMA 16(a) informal consultations 17/11 noon",
+   "krisp": "01a1e8892f1a76aa957d1b4026d392e0",
+   "actor": "Republic of Korea",
+   "attribution": "named",
+   "attribution_note": "سماها الميسر.",
+   "camp": "bridge",
+   "positions": [
+    "المراجعة في حدود إرشادات 6.2 دون تقييم الكفاية خارج متطلبات الإبلاغ",
+    "حذف فقرة استيراد نهج 6.4"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": "يسند طلب LMDC في نطاق المراجعة."
+  },
+  {
+   "id": "2026-11-17-16a-noon-ailac",
+   "date": "2026-11-17",
+   "session": "CMA 16(a) informal consultations 17/11 noon",
+   "krisp": "01a1e8892f1a76aa957d1b4026d392e0",
+   "actor": "AILAC",
+   "attribution": "named",
+   "attribution_note": "سماها الميسر.",
+   "camp": "ally",
+   "positions": [
+    "حذف القائمة في فقرة عدم الاتساق",
+    "المراجعة في حدود الولاية المتفق عليها",
+    "حذف فقرة استيراد نهج 6.4"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-16a-noon-saudi",
+   "date": "2026-11-17",
+   "session": "CMA 16(a) informal consultations 17/11 noon",
+   "krisp": "01a1e8892f1a76aa957d1b4026d392e0",
+   "actor": "Saudi Arabia",
+   "attribution": "named",
+   "attribution_note": "سماها الميسر.",
+   "camp": "ally",
+   "positions": [
+    "السؤال عن الحاجة إلى فقرة التذكير بنشر تقارير المراجعة"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-16a-noon-uk",
+   "date": "2026-11-17",
+   "session": "CMA 16(a) informal consultations 17/11 noon",
+   "krisp": "01a1e8892f1a76aa957d1b4026d392e0",
+   "actor": "United Kingdom",
+   "attribution": "named",
+   "attribution_note": "سماها الميسر.",
+   "camp": "opponent",
+   "positions": [
+    "فقرة استيراد نهج 6.4 مرجعا عند غموض الإرشادات",
+    "الحوار كل سنة"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-16a-noon-aosis",
+   "date": "2026-11-17",
+   "session": "CMA 16(a) informal consultations 17/11 noon",
+   "krisp": "01a1e8892f1a76aa957d1b4026d392e0",
+   "actor": "AOSIS",
+   "attribution": "named",
+   "attribution_note": "قدمت نفسها.",
+   "camp": "opponent",
+   "positions": [
+    "الإبقاء على القائمة في فقرة عدم الاتساق",
+    "اعتراض على خلاصة التوافق قبل سماعها"
+   ],
+   "formulations_en": [],
+   "tone": "4_firm_opposition",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-16a-eve-lmdc",
+   "date": "2026-11-17",
+   "session": "CMA 16(a) final round 17/11 evening",
+   "krisp": "01a1e8a2d4ed751e876358be5e017546",
+   "actor": "LMDC",
+   "attribution": "content",
+   "attribution_note": "بحسب المضمون وترتيب القائمة.",
+   "camp": "ally",
+   "positions": [
+    "لا إبلاغ مفصل عن الإسهام",
+    "حذف التتبع على المنصة",
+    "الشطر الأول من التسميات المشتركة",
+    "رفض التحضير لمراجعة 2028",
+    "الحوار بلا نتيجة وإلا فلا حوار"
+   ],
+   "formulations_en": [
+    "not every outcome is a progress"
+   ],
+   "tone": "4_firm_opposition",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-16a-eve-aosis",
+   "date": "2026-11-17",
+   "session": "CMA 16(a) final round 17/11 evening",
+   "krisp": "01a1e8a2d4ed751e876358be5e017546",
+   "actor": "AOSIS",
+   "attribution": "content",
+   "attribution_note": "يرجح بحسب المضمون.",
+   "camp": "opponent",
+   "positions": [
+    "الإبقاء على القائمة",
+    "الحوار مع مذكرة غير رسمية",
+    "الإبقاء على فقرات الإسهام بوصفها لغة متفقا عليها",
+    "علامة مميزة للحصة والتخفيف الشامل في معرف الوحدة"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-16a-eve-japan",
+   "date": "2026-11-17",
+   "session": "CMA 16(a) final round 17/11 evening",
+   "krisp": "01a1e8a2d4ed751e876358be5e017546",
+   "actor": "Japan",
+   "attribution": "named",
+   "attribution_note": "ذكرت في ملخص Krisp باسمها.",
+   "camp": "bridge",
+   "positions": [
+    "لا يلزم مراجعة كل عناصر القرار السابق",
+    "محايدة في فقرة عدم الاتساق، وإن بقيت فتشجيع المعالجة وفق المقررات ذات الصلة"
+   ],
+   "formulations_en": [
+    "encourage Parties concerned to make efforts to address them in accordance with relevant CMA decisions"
+   ],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": "جسر يغني عن القائمة."
+  },
+  {
+   "id": "2026-11-17-68-eve-lmdc",
+   "date": "2026-11-17",
+   "session": "CMA 16(c) evening informal huddle 17/11",
+   "krisp": "01a1e8bf79de734db5000e095288bf8c",
+   "actor": "LMDC",
+   "attribution": "content",
+   "attribution_note": "بحسب المضمون.",
+   "camp": "ally",
+   "positions": [
+    "تقديم النهج من طرف واحد لمشاريع تحتاج دعما وللمشاريع الوطنية",
+    "رفض أن يحل المنتدى محل المنصة",
+    "طلب إيقاف النقاش في آخره"
+   ],
+   "formulations_en": [],
+   "tone": "4_firm_opposition",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-68-eve-eu-uk-jp",
+   "date": "2026-11-17",
+   "session": "CMA 16(c) evening informal huddle 17/11",
+   "krisp": "01a1e8bf79de734db5000e095288bf8c",
+   "actor": "EU, UK, Japan",
+   "attribution": "reported",
+   "attribution_note": "أعلن متكلم أنها تعترض.",
+   "camp": "opponent",
+   "positions": [
+    "ضد عرض المبادرات من طرف واحد على المنصة"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-68-eve-dev",
+   "date": "2026-11-17",
+   "session": "CMA 16(c) evening informal huddle 17/11",
+   "krisp": "01a1e8bf79de734db5000e095288bf8c",
+   "actor": "Developed Party (unnamed)",
+   "attribution": "content",
+   "attribution_note": "بحسب المضمون.",
+   "camp": "opponent",
+   "positions": [
+    "المقرر 4/CMA.3 يشترط أكثر من طرف",
+    "خيط لكل بلد في منتدى النقاش",
+    "التمويل مكانه بنود التمويل",
+    "استعمال سجل إجراءات التخفيف الملائمة وطنيا"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-68-eve-bridge",
+   "date": "2026-11-17",
+   "session": "CMA 16(c) evening informal huddle 17/11",
+   "krisp": "01a1e8bf79de734db5000e095288bf8c",
+   "actor": "Unnamed Parties",
+   "attribution": "content",
+   "attribution_note": "لم يسموا.",
+   "camp": "bridge",
+   "positions": [
+    "مرحلة ما قبل التسجيل كما في آلية التنمية النظيفة",
+    "عرض لمدة محددة من خمس إلى عشر سنوات"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": "صيغ تحفظ جوهر موقف العراق."
+  },
+  {
+   "id": "2026-11-17-18-lmdc",
+   "date": "2026-11-17",
+   "session": "CMA 18 informal consultations 17/11",
+   "krisp": "ear only",
+   "actor": "LMDC",
+   "attribution": "content",
+   "attribution_note": "الأذن وحدها، غير مؤكد.",
+   "camp": "ally",
+   "positions": [
+    "ورقة فنية بتوقعات لخمس سنوات",
+    "النهج الأول",
+    "إعفاء البلدان النامية وجهاتها",
+    "لا ربط لعدم الدفع بالاتساق"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-18-eu",
+   "date": "2026-11-17",
+   "session": "CMA 18 informal consultations 17/11",
+   "krisp": "ear only",
+   "actor": "EU (likely)",
+   "attribution": "content",
+   "attribution_note": "الأذن وحدها، يرجح.",
+   "camp": "opponent",
+   "positions": [
+    "إعفاء أقل البلدان نموا والدول الجزرية وحدها"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-18-japan",
+   "date": "2026-11-17",
+   "session": "CMA 18 informal consultations 17/11",
+   "krisp": "ear only",
+   "actor": "Japan",
+   "attribution": "content",
+   "attribution_note": "الأذن وحدها.",
+   "camp": "bridge",
+   "positions": [
+    "التحليل قبل أي رسم",
+    "مواصلة النقاش حتى CMA 9"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-64-pm-arab",
+   "date": "2026-11-17",
+   "session": "CMA 16(b) final round 17/11 afternoon",
+   "krisp": "ear only",
+   "actor": "Arab Group",
+   "attribution": "content",
+   "attribution_note": "الأذن وحدها.",
+   "camp": "ally",
+   "positions": [
+    "استبدال فقرة أولويات المنهجيات",
+    "تأييد تجنب تراكم التحفظ",
+    "حذف التفويض بعد الإصدار"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-64-pm-aosis-korea",
+   "date": "2026-11-17",
+   "session": "CMA 16(b) final round 17/11 afternoon",
+   "krisp": "ear only",
+   "actor": "AOSIS, Republic of Korea",
+   "attribution": "content",
+   "attribution_note": "الأذن وحدها.",
+   "camp": "opponent",
+   "positions": [
+    "الإبقاء على قسم التفويض بعد الإصدار"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
   }
  ]
 }
