@@ -1629,6 +1629,296 @@
    "tone": "",
    "tactics": "",
    "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-16c-lmdc",
+   "date": "2026-11-17",
+   "session": "CMA 16(c) informal consultations 17/11 morning, draft DT.CMA8.i16c.1 (16/11 23:00)",
+   "krisp": "01a1e53d22277264b734ec1bf612d59b@08:01",
+   "actor": "LMDC",
+   "attribution": "named",
+   "attribution_note": "شكرها الميسر باسمها.",
+   "camp": "developing",
+   "positions": [
+    "خيبة أمل من مسار النقاش واختلاف فهم الولاية",
+    "رفض إنهاء برنامج عمل 6.8",
+    "النهج غير السوقية جوهر التعاون وتوازن المادة السادسة",
+    "تفضيل مواصلة النقاش العام القادم على نتيجة متعجلة",
+    "القسم الثاني معطل حتى تحسم مراجعة البرنامج وولاية برنامج عمل التخفيف"
+   ],
+   "formulations_en": [
+    "the proposed closure of the work programme under Article 6.8 is not acceptable to us. We cannot support closing the work programme",
+    "comfortable continuing these discussions next year rather than rushing towards an outcome in the absence of consensus"
+   ],
+   "tone": "5_red_line",
+   "tactics": "تأجيل بدل إنهاء",
+   "use_for_iraq": "تأييد رفض الإنهاء، وصياغة التأجيل تفضيلا على الإنهاء فقط حفاظا على موقف المجموعة العربية"
+  },
+  {
+   "id": "2026-11-17-16c-eu",
+   "date": "2026-11-17",
+   "session": "CMA 16(c) informal consultations 17/11 morning, draft DT.CMA8.i16c.1 (16/11 23:00)",
+   "krisp": "01a1e577f83f7148925788719a046aa5@00:00",
+   "actor": "European Union",
+   "attribution": "inferred_strong",
+   "attribution_note": "أشارت إليه اليابان وطرف آخر بعده.",
+   "camp": "minimalist_conclude",
+   "positions": [
+    "قلة النهج المسجلة تعكس الطبيعة الطوعية",
+    "لا يمكن إجبار أي طرف على استخدام المنصة",
+    "قبول عبارة النمو بوتيرة متواضعة ورفض بقية الأقواس",
+    "سأل LMDC هل تبحث المسائل الكبرى في ساعة المساء"
+   ],
+   "formulations_en": [],
+   "tone": "3_soft_opposition",
+   "tactics": "تفسير ضعف المنصة بالطوعية لخدمة الإنهاء",
+   "use_for_iraq": "الرد: ضعف المشاركة يدل على الحاجة إلى التواصل وبناء القدرات"
+  },
+  {
+   "id": "2026-11-17-16c-ukraine",
+   "date": "2026-11-17",
+   "session": "CMA 16(c) informal consultations 17/11 morning, draft DT.CMA8.i16c.1 (16/11 23:00)",
+   "krisp": "01a1e577f83f7148925788719a046aa5@05:49",
+   "actor": "Ukraine",
+   "attribution": "named",
+   "attribution_note": "سماها الميسر.",
+   "camp": "minimalist",
+   "positions": [
+    "حذف فقرتي القيود",
+    "رفع القوسين عن interested وحذف central",
+    "حذف التقييمات وفقرتي الإمكانات غير المحققة والانخراط الضعيف",
+    "رفض تقييم أداء نقاط الاتصال"
+   ],
+   "formulations_en": [],
+   "tone": "3_soft_opposition",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-16c-japan",
+   "date": "2026-11-17",
+   "session": "CMA 16(c) informal consultations 17/11 morning, draft DT.CMA8.i16c.1 (16/11 23:00)",
+   "krisp": "01a1e577f83f7148925788719a046aa5@08:40",
+   "actor": "Japan",
+   "attribution": "named",
+   "attribution_note": "سماها الميسر.",
+   "camp": "minimalist",
+   "positions": [
+    "تؤيد الاتحاد الأوروبي",
+    "حذف فقرة القيود",
+    "رفض القوس الأخير عن الدعم المالي والتكنولوجي وبناء القدرات",
+    "أقواس النمو والانخراط تكرار بلا قيمة"
+   ],
+   "formulations_en": [],
+   "tone": "4_strong_opposition",
+   "tactics": "",
+   "use_for_iraq": "العراق أيد عبارة الدعم في مداخلته الثانية"
+  },
+  {
+   "id": "2026-11-17-16c-iraq",
+   "date": "2026-11-17",
+   "session": "CMA 16(c) informal consultations 17/11 morning, draft DT.CMA8.i16c.1 (16/11 23:00)",
+   "krisp": "01a1e577f83f7148925788719a046aa5@07:24 و@10:41",
+   "actor": "Iraq",
+   "attribution": "named",
+   "attribution_note": "سماه الميسر.",
+   "camp": "developing",
+   "positions": [
+    "يؤيد LMDC ولا يقبل إنهاء برنامج العمل",
+    "المراجعة أظهرت أن العمل لم يكتمل",
+    "يفضل مواصلة النقاش العام القادم على الإنهاء",
+    "المداخلة الثانية: تأييد عبارة الدعم، حذف فقرة قيمة المنصة مستودعا، تأييد توسيع الاستخدام وإزالة العوائق، وأن تدعم المنصة تطوير النهج"
+   ],
+   "formulations_en": [
+    "This review has shown that the work is unfinished, not that it is done"
+   ],
+   "tone": "5_red_line",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-16c-agn",
+   "date": "2026-11-17",
+   "session": "CMA 16(c) informal consultations 17/11 morning, draft DT.CMA8.i16c.1 (16/11 23:00)",
+   "krisp": "01a1e577f83f7148925788719a046aa5@12:05",
+   "actor": "African Group (AGN)",
+   "attribution": "inferred_strong",
+   "attribution_note": "أشار إليه متكلم لاحق بتأييد LMDC وAGN.",
+   "camp": "developing",
+   "positions": [
+    "النقاش فقرة بفقرة لا يحقق المطلوب",
+    "يجب معالجة جوهر برنامج العمل"
+   ],
+   "formulations_en": [],
+   "tone": "3_soft_opposition",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-16b-lmdc",
+   "date": "2026-11-17",
+   "session": "CMA 16(b) informal consultations 17/11 morning, second iteration (17/11 01:00)",
+   "krisp": "01a1e582a198715f90b6acbbd3481e6b@12:33 و01a1e85ceba375c8a0957aa373044ac8@00:33",
+   "actor": "LMDC",
+   "attribution": "named",
+   "attribution_note": "سماها الميسر.",
+   "camp": "developing",
+   "positions": [
+    "فقرات غير مقوسة تعترض عليها جوهريا",
+    "تقبل عدم تمديد المدد بشرط الأولوية في مراجعة 2028",
+    "تعترض على فقرة شفافية أولويات المنهجيات",
+    "الطبيعة الوطنية وعدم فرض المسارات مهمة جدا، ثم أبقتها حتى نهاية النقاش للعودة إليها",
+    "تسأل عن الحاجة إلى معايير جديدة لتضارب المصالح",
+    "تتمسك بفقرة تشجيع استخدام الآلية مع تقرير عن الهدف الخامس"
+   ],
+   "formulations_en": [
+    "We are okay not having a decision on extension of the term limits, but we insist that it's very important for us to just prioritize and review of 2028",
+    "we would like to keep paragraph 14 until we've proceeded with discussing the entirety of the text"
+   ],
+   "tone": "4_strong_opposition",
+   "tactics": "إبقاء الفقرة 14 ورقة للمساومة في آخر الجولة",
+   "use_for_iraq": "تقديم لغة الحصيلة العالمية بديلا عن حذف عبارة المسارات"
+  },
+  {
+   "id": "2026-11-17-16b-eu",
+   "date": "2026-11-17",
+   "session": "CMA 16(b) informal consultations 17/11 morning, second iteration (17/11 01:00)",
+   "krisp": "01a1e582a198715f90b6acbbd3481e6b@15:04",
+   "actor": "European Union",
+   "attribution": "named",
+   "attribution_note": "سماه الميسر.",
+   "camp": "integrity",
+   "positions": [
+    "لم يؤخذ بمقترحاته ومنها تضارب المصالح",
+    "حذف المعايير والمبررات من فقرة شفافية المنهجيات",
+    "فقرة الطبيعة الوطنية تأكيد سياسي خارج نطاق الآلية"
+   ],
+   "formulations_en": [
+    "we think that this decision needs to focus on the operational provisions"
+   ],
+   "tone": "4_strong_opposition",
+   "tactics": "",
+   "use_for_iraq": "الرد: القرار يستذكر المادة 6.1 عن تنفيذ المساهمات المحددة وطنيا"
+  },
+  {
+   "id": "2026-11-17-16b-uk",
+   "date": "2026-11-17",
+   "session": "CMA 16(b) informal consultations 17/11 morning, second iteration (17/11 01:00)",
+   "krisp": "01a1e582a198715f90b6acbbd3481e6b@21:44",
+   "actor": "United Kingdom (likely)",
+   "attribution": "inferred_weak",
+   "attribution_note": "استدل عليه من المضمون.",
+   "camp": "practical_minimalist",
+   "positions": [
+    "الخيار الأول في المدد",
+    "إعادة فقرة مواد تعريف الأعضاء الجدد",
+    "في الطبيعة الوطنية لغة متفق عليها بدل لغة جديدة"
+   ],
+   "formulations_en": [
+    "if there's language that we can recall perhaps from the RMPs on this point"
+   ],
+   "tone": "3_soft_opposition",
+   "tactics": "",
+   "use_for_iraq": "لغة الحصيلة العالمية 1/CMA.5 الفقرة 28 جواب على طلبه"
+  },
+  {
+   "id": "2026-11-17-16b-unnamed",
+   "date": "2026-11-17",
+   "session": "CMA 16(b) informal consultations 17/11 morning, second iteration (17/11 01:00)",
+   "krisp": "01a1e582a198715f90b6acbbd3481e6b@24:09",
+   "actor": "Unidentified Party",
+   "attribution": "unclear",
+   "attribution_note": "",
+   "camp": "minimalist",
+   "positions": [
+    "الخيار الثاني في المدد أو الأول بلا عبارة الأولوية",
+    "يقبل احترام الطبيعة الوطنية ويسأل عن عبارة المسارات الوطنية أو القطاعية"
+   ],
+   "formulations_en": [],
+   "tone": "3_soft_opposition",
+   "tactics": "يقبل الشطر الأول من الفقرة 14",
+   "use_for_iraq": "موضع الحل الوسط في عبارة المسارات"
+  },
+  {
+   "id": "2026-11-17-16a-lmdc",
+   "date": "2026-11-17",
+   "session": "CMA 16(a) informal consultations 17/11 noon, second iteration (16/11 23:45)",
+   "krisp": "01a1e86a760172a7b50b578fc9f9ce2b@13:28",
+   "actor": "LMDC",
+   "attribution": "named",
+   "attribution_note": "تكلمت أولا وشكرها الميسر.",
+   "camp": "developing",
+   "positions": [
+    "لا إرشاد إضافي",
+    "فقرة عدم الاتساق تنتهي عند reviews conducted to date",
+    "حذف فقرات التنسيق وتكرار الشرح واستيراد نهج 6.4 واستنتاجات رؤساء المراجعين وطلبات الأمانة",
+    "استبدال فقرة نطاق المراجعة بطلب التزام فرق المراجعة بمتطلبات الإبلاغ",
+    "الحوار في CMA القادم بلا نتيجة ولا مذكرة",
+    "أغلب طلباتها لم يدرج"
+   ],
+   "formulations_en": [
+    "it shall not have an outcome"
+   ],
+   "tone": "5_red_line",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-16a-developed",
+   "date": "2026-11-17",
+   "session": "CMA 16(a) informal consultations 17/11 noon, second iteration (16/11 23:45)",
+   "krisp": "ear 12:33 و12:48",
+   "actor": "Developed Party (likely Switzerland or UK)",
+   "attribution": "inferred_weak",
+   "attribution_note": "من الأذن وحدها، ear_unconfirmed.",
+   "camp": "practical_reformist",
+   "positions": [
+    "يقبل حذف قائمة الفقرة 11 ويتمسك بالتشجيع على المعالجة بلغة باكو",
+    "يرفض كلمة الكفاية في فقرة النطاق ويقترح in line with the requirements of the guidance",
+    "ترشيح الخبراء لأن المتقدمين قليلون",
+    "حذف المذكرة غير الرسمية"
+   ],
+   "formulations_en": [],
+   "tone": "2_conditional_openness",
+   "tactics": "تنازل عن القائمة مقابل التشجيع",
+   "use_for_iraq": "الحل الوسط في النطاق قريب من طلب LMDC"
+  },
+  {
+   "id": "2026-11-17-16a-china",
+   "date": "2026-11-17",
+   "session": "CMA 16(a) informal consultations 17/11 noon, second iteration (16/11 23:45)",
+   "krisp": "ear 12:42",
+   "actor": "China",
+   "attribution": "named",
+   "attribution_note": "سماها الميسر، من الأذن.",
+   "camp": "developing",
+   "positions": [
+    "لا استعمال لإرشادات آليات أخرى",
+    "معايير موحدة للمراجعين",
+    "الحوار العام القادم"
+   ],
+   "formulations_en": [],
+   "tone": "3_soft_opposition",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-16a-singapore",
+   "date": "2026-11-17",
+   "session": "CMA 16(a) informal consultations 17/11 noon, second iteration (16/11 23:45)",
+   "krisp": "ear 12:46",
+   "actor": "Singapore",
+   "attribution": "named",
+   "attribution_note": "سماها الميسر، من الأذن.",
+   "camp": "bridge",
+   "positions": [
+    "حذف فقرة استيراد نهج 6.4 لأنها آلية مختلفة",
+    "تأييد حوار غير رسمي مع مرونة في الموعد"
+   ],
+   "formulations_en": [],
+   "tone": "3_soft_opposition",
+   "tactics": "",
+   "use_for_iraq": ""
   }
  ]
 }
