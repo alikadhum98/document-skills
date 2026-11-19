@@ -2257,6 +2257,207 @@
    "tone": "",
    "tactics": "",
    "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-19-16a-lmdc",
+   "date": "2026-11-19",
+   "session": "CMA 16(a) forwarding session 19/11",
+   "krisp": "01a1f2a82585718cbbdbb9bbf924dcbf",
+   "actor": "LMDC",
+   "attribution": "named",
+   "attribution_note": "سماها الميسر.",
+   "camp": "ally",
+   "positions": [
+    "رفض النص بسبب فقرة تحليل المواعيد",
+    "لا إرشاد إضافي قبل 2028"
+   ],
+   "formulations_en": [
+    "We will not accept guidance that puts us in negotiation mode when we are in an implementation mode"
+   ],
+   "tone": "5_rejection",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-19-16a-eu",
+   "date": "2026-11-19",
+   "session": "CMA 16(a) forwarding session 19/11",
+   "krisp": "01a1f2a82585718cbbdbb9bbf924dcbf",
+   "actor": "EU",
+   "attribution": "named",
+   "attribution_note": "سماه الميسر.",
+   "camp": "opponent",
+   "positions": [
+    "قبول الحذف على مضض",
+    "مسألة المواعيد ثغرة في إرشادات غلاسكو يجب بحثها"
+   ],
+   "formulations_en": [
+    "it's a gap in our guidance"
+   ],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-19-68-ailac",
+   "date": "2026-11-19",
+   "session": "CMA 16(c) 19/11 noon",
+   "krisp": "01a1e9fd40fb732887a91e4391f3d888",
+   "actor": "AILAC",
+   "attribution": "named",
+   "attribution_note": "ملخص Krisp.",
+   "camp": "ally",
+   "positions": [
+    "قسم على المنصة للنهج المقترحة",
+    "تسجيل جهات الدعم"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-19-68-eu",
+   "date": "2026-11-19",
+   "session": "CMA 16(c) 19/11 noon",
+   "krisp": "01a1e9fd40fb732887a91e4391f3d888",
+   "actor": "EU",
+   "attribution": "named",
+   "attribution_note": "ملخص Krisp.",
+   "camp": "opponent",
+   "positions": [
+    "الولاية تلزم بالنظر لا بالتغيير",
+    "مقترح AILAC ليس جسرا"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-19-68-uk",
+   "date": "2026-11-19",
+   "session": "CMA 16(c) 19/11 noon",
+   "krisp": "01a1e9fd40fb732887a91e4391f3d888",
+   "actor": "United Kingdom",
+   "attribution": "named",
+   "attribution_note": "ملخص Krisp.",
+   "camp": "opponent",
+   "positions": [
+    "المراجعة أنجزت",
+    "إعادة تسمية منتدى النقاش للنهج المقترحة"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-19-68-egypt",
+   "date": "2026-11-19",
+   "session": "CMA 16(c) 19/11 noon",
+   "krisp": "ear 12:34",
+   "actor": "Egypt",
+   "attribution": "named",
+   "attribution_note": "سماها الميسر في الأذن.",
+   "camp": "ally",
+   "positions": [
+    "التنفيذ غير اختياري",
+    "اجتماع المستشارين مع الشؤون القانونية"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-19-68-lmdc-eve",
+   "date": "2026-11-19",
+   "session": "CMA 16(c) final 19/11",
+   "krisp": "01a1f3e1f1b376aaafd561715d52ba9f",
+   "actor": "LMDC",
+   "attribution": "named",
+   "attribution_note": "سماها الميسر.",
+   "camp": "ally",
+   "positions": [
+    "الإحاطة بتقرير لجنة غلاسكو بدل الترحيب"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-19-18-uae",
+   "date": "2026-11-19",
+   "session": "CMA 18 19/11",
+   "krisp": "ear 10:40",
+   "actor": "United Arab Emirates for Arab Group",
+   "attribution": "named",
+   "attribution_note": "سماها الميسر.",
+   "camp": "ally",
+   "positions": [
+    "الميزانية والتبرعات",
+    "النهجان الثالث والرابع بين قوسين"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-19-18-cfrn",
+   "date": "2026-11-19",
+   "session": "CMA 18 19/11",
+   "krisp": "01a1e8d14200726db0c29d06b5c66634",
+   "actor": "Coalition for Rainforest Nations",
+   "attribution": "named",
+   "attribution_note": "سماه الميسر.",
+   "camp": "ally",
+   "positions": [
+    "رسوم المستخدم باستثناء البلدان النامية",
+    "المراجعات من الميزانية الأساسية"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-19-18-aosis",
+   "date": "2026-11-19",
+   "session": "CMA 18 19/11",
+   "krisp": "01a1e8d14200726db0c29d06b5c66634",
+   "actor": "AOSIS",
+   "attribution": "named",
+   "attribution_note": "سماها الميسر.",
+   "camp": "opponent",
+   "positions": [
+    "رسوم الاستخدام",
+    "لا كلفة على غير المشاركين",
+    "مراعاة الحجم"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-19-18-uk",
+   "date": "2026-11-19",
+   "session": "CMA 18 19/11",
+   "krisp": "01a1e8d14200726db0c29d06b5c66634",
+   "actor": "United Kingdom",
+   "attribution": "named",
+   "attribution_note": "سماها الميسر.",
+   "camp": "opponent",
+   "positions": [
+    "مذكرة معلومات عن الرسوم على الجهات"
+   ],
+   "formulations_en": [],
+   "tone": "",
+   "tactics": "",
+   "use_for_iraq": ""
   }
  ]
 }
