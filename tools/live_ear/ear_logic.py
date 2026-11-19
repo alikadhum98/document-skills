@@ -1,0 +1,357 @@
+"""Live Ear (PC): logic that does not depend on Windows, the browser or the microphone.
+
+1. Writer: every line goes to the Drive transcript through a pending queue that a
+   background flusher retries, so a Drive or network outage delays lines but never
+   drops them.
+2. AudioStore: the room audio is kept on the PC in five-minute WAV segments while a
+   session runs, so any stretch the browser recogniser missed can be transcribed later.
+3. Backfiller: when the browser reports a gap caused by the network or a stall, the
+   missing stretch is cut from the stored audio and transcribed offline. Its lines carry
+   the original times and the mark (تكملة).
+4. SpeakerTracker: reads the chair's cues ("next on my list is the LMDC", "UK, please",
+   "on behalf of the Arab Group") and tags each line with the current speaker. It raises
+   an alert when the Arab Group or the LMDC take the floor.
+
+Standard library and numpy only. Tested by test_ear_logic.py.
+"""
+import datetime, json, os, queue, re, threading, time, wave
+
+# ---------------------------------------------------------------- writer
+
+class Writer:
+    """Appends lines to a file that may be briefly unavailable (Google Drive)."""
+
+    def __init__(self, path, opener=open, clock=time.time):
+        self.path, self.opener, self.clock = path, opener, clock
+        self.lock = threading.Lock()
+        self.pending = []
+        self.failing_since = 0.0
+
+    def append(self, line):
+        with self.lock:
+            self.pending.append(line)
+        return self.flush()
+
+    def flush(self):
+        with self.lock:
+            if not self.pending:
+                return True
+            try:
+                with self.opener(self.path, "a", encoding="utf-8") as f:
+                    f.write("\n".join(self.pending) + "\n")
+                self.pending.clear()
+                self.failing_since = 0.0
+                return True
+            except OSError:
+                if not self.failing_since:
+                    self.failing_since = self.clock()
+                return False
+
+    def run_flusher(self, every=5.0, stop=None):
+        def loop():
+            while not (stop and stop.is_set()):
+                time.sleep(every)
+                self.flush()
+        t = threading.Thread(target=loop, daemon=True)
+        t.start()
+        return t
+
+# ---------------------------------------------------------------- audio store
+
+STAMP = "%Y%m%d_%H%M%S"
+
+
+class AudioStore:
+    """Rolling WAV segments of 16-bit mono audio, named by their start time."""
+
+    def __init__(self, folder, rate=16000, segment_secs=300, keep_hours=8):
+        self.folder, self.rate = folder, rate
+        self.segment_secs, self.keep_hours = segment_secs, keep_hours
+        self.lock = threading.Lock()
+        self.cur = None          # open wave writer
+        self.cur_start = 0.0     # wall time of the first sample in the current segment
+        self.cur_samples = 0
+        os.makedirs(folder, exist_ok=True)
+
+    def _open(self, start):
+        self.close()
+        name = "audio_" + datetime.datetime.fromtimestamp(start).strftime(STAMP) + "_%03d.wav" % int((start % 1) * 1000)
+        w = wave.open(os.path.join(self.folder, name), "wb")
+        w.setnchannels(1)
+        w.setsampwidth(2)
+        w.setframerate(self.rate)
+        self.cur, self.cur_start, self.cur_samples = w, start, 0
+
+    def write(self, block, end_time=None):
+        """block: float32 numpy array in [-1, 1]; end_time: wall time of its last sample."""
+        import numpy as np
+        end_time = time.time() if end_time is None else end_time
+        start = end_time - len(block) / self.rate
+        with self.lock:
+            expected = self.cur_start + self.cur_samples / self.rate if self.cur else None
+            # a new segment when none is open, when it is full, or when the stream jumped (restart)
+            if self.cur is None or self.cur_samples >= self.segment_secs * self.rate or abs(start - expected) > 1.0:
+                self._open(start)
+            pcm = (np.clip(block, -1, 1) * 32767).astype("<i2").tobytes()
+            self.cur.writeframes(pcm)
+            self.cur_samples += len(block)
+
+    def close(self):
+        if self.cur is not None:
+            try:
+                self.cur.close()
+            except Exception:
+                pass
+            self.cur = None
+
+    def segments(self):
+        out = []
+        for fn in sorted(os.listdir(self.folder)):
+            m = re.fullmatch(r"audio_(\d{8}_\d{6})_(\d{3})\.wav", fn)
+            if m:
+                t = datetime.datetime.strptime(m.group(1), STAMP).timestamp() + int(m.group(2)) / 1000
+                out.append((t, os.path.join(self.folder, fn)))
+        return out
+
+    def extract(self, start, end):
+        """Audio between two wall times, joined across segments (float32 numpy array)."""
+        import numpy as np
+        with self.lock:
+            if self.cur is not None:
+                self.cur._file.flush()
+            parts = []
+            for t0, path in self.segments():
+                try:
+                    with wave.open(path, "rb") as w:
+                        n = w.getnframes()
+                        t1 = t0 + n / self.rate
+                        if t1 <= start or t0 >= end:
+                            continue
+                        a = int(max(0, (start - t0) * self.rate))
+                        b = int(min(n, (end - t0) * self.rate))
+                        w.setpos(a)
+                        raw = w.readframes(b - a)
+                except (wave.Error, EOFError, OSError):
+                    continue
+                parts.append(np.frombuffer(raw, "<i2").astype(np.float32) / 32768)
+        return np.concatenate(parts) if parts else np.zeros(0, np.float32)
+
+    def prune(self, now=None):
+        now = time.time() if now is None else now
+        for t0, path in self.segments():
+            if now - t0 > self.keep_hours * 3600 and (self.cur is None or t0 != self.cur_start):
+                try:
+                    os.remove(path)
+                except OSError:
+                    pass
+
+# ---------------------------------------------------------------- backfill
+
+BACKFILL_REASONS = ("network", "stall", "start-failed", "browser")
+
+
+def needs_backfill(why, secs, min_secs=20):
+    """Gaps of real silence need nothing; gaps where recognition failed are filled from audio."""
+    return secs >= min_secs and any(r in (why or "") for r in BACKFILL_REASONS)
+
+
+def clock_to_ts(hms, ref=None):
+    """'14:05:09' today (or yesterday when that would be in the future) as a timestamp."""
+    ref = time.time() if ref is None else ref
+    d = datetime.datetime.fromtimestamp(ref)
+    h, m, s = (int(x) for x in hms.split(":"))
+    t = d.replace(hour=h, minute=m, second=s, microsecond=0).timestamp()
+    return t - 86400 if t > ref + 60 else t
+
+
+def hms(ts):
+    return datetime.datetime.fromtimestamp(ts).strftime("%H:%M:%S")
+
+
+class Backfiller:
+    """Transcribes stored audio for gaps the browser missed, one gap at a time."""
+
+    def __init__(self, store, transcribe, write, chunk_secs=30, settle=3.0, sleep=time.sleep, clock=time.time):
+        self.store, self.transcribe, self.write = store, transcribe, write
+        self.chunk_secs, self.settle, self.sleep, self.clock = chunk_secs, settle, sleep, clock
+        self.jobs = queue.Queue()
+
+    def enqueue(self, start, end):
+        self.jobs.put((start, end))
+
+    def run_once(self):
+        """Process one queued gap. Returns the number of lines written (None when idle)."""
+        try:
+            start, end = self.jobs.get_nowait()
+        except queue.Empty:
+            return None
+        wait = end + self.settle - self.clock()
+        if wait > 0:
+            self.sleep(wait)
+        audio = self.store.extract(start, end)
+        rate = self.store.rate
+        if not len(audio):
+            self.write(f"[{hms(start)}] ===== BACKFILL no audio for {int(end - start)} ثانية =====")
+            return 0
+        self.write(f"[{hms(start)}] ===== BACKFILL {int(end - start)} ثانية =====")
+        n = 0
+        step = int(self.chunk_secs * rate)
+        for i in range(0, len(audio), step):
+            piece = audio[i:i + step]
+            try:
+                segs = self.transcribe(piece) or []
+            except Exception as e:  # keep going whatever happens
+                self.write(f"[{hms(start + i / rate)}] ===== BACKFILL error: {str(e)[:80]} =====")
+                continue
+            for off, text in segs:
+                text = " ".join(str(text).split())
+                if text:
+                    self.write(f"[{hms(start + i / rate + off)}] (تكملة) {text}")
+                    n += 1
+        self.write(f"[{hms(end)}] ===== BACKFILL END {n} سطر =====")
+        return n
+
+    def run_forever(self, stop=None):
+        def loop():
+            while not (stop and stop.is_set()):
+                if self.run_once() is None:
+                    time.sleep(1.0)
+        t = threading.Thread(target=loop, daemon=True)
+        t.start()
+        return t
+
+
+def whisper_transcriber(model_name="small.en", threads=2):
+    """A transcribe(audio) -> [(offset_seconds, text)] backed by faster-whisper, or None."""
+    try:
+        from faster_whisper import WhisperModel
+    except ImportError:
+        return None
+    holder = {}
+
+    def run(audio):
+        if "m" not in holder:
+            holder["m"] = WhisperModel(model_name, device="cpu", compute_type="int8", cpu_threads=threads)
+        segs, _ = holder["m"].transcribe(audio, language="en", beam_size=1, vad_filter=True,
+                                          condition_on_previous_text=False)
+        return [(s.start, s.text) for s in segs if s.avg_logprob > -1.5 and s.compression_ratio < 2.4]
+    return run
+
+# ---------------------------------------------------------------- speakers
+
+# canonical name -> spoken forms, including recognition errors heard at COP31
+ALIASES = {
+    "Arab Group": [r"arab group", r"group of arab states", r"error\.? group"],
+    "LMDC": [r"l\.? ?m\.? ?d\.? ?c", r"like[- ]minded(?: developing countries| group)?", r"lmcc", r"lmpc", r"lmc", r"lms", r"lbc", r"lntc", r"lnmdc"],
+    "AOSIS": [r"aosis", r"a\.? ?o\.? ?s\.? ?i\.? ?s", r"alliance of small island states", r"out ?space", r"out ?sis"],
+    "AILAC": [r"ailac", r"i ?lac", r"independent alliance of latin america"],
+    "LDC Group": [r"least developed countries", r"ldcs?(?: group)?"],
+    "African Group": [r"african group(?: of negotiators)?", r"agn"],
+    "G77 and China": [r"g ?77(?: and china)?", r"group of 77(?: and china)?"],
+    "CfRN": [r"coalition for rainforest nations", r"cfr[nm]"],
+    "EIG": [r"environmental integrity group", r"eig"],
+    "EU": [r"european union", r"the eu", r"eu"],
+    "UK": [r"united kingdom", r"the uk", r"uk", r"britain"],
+    "UAE": [r"united arab emirates", r"the emirates", r"emirates", r"uae"],
+    "Saudi Arabia": [r"kingdom of saudi arabia", r"saudi arabia", r"saudi"],
+    "Russian Federation": [r"russian federation", r"russia", r"russian"],
+    "Republic of Korea": [r"republic of korea", r"korea"],
+    "Japan": [r"japan"], "China": [r"china"], "Brazil": [r"brazil"], "Egypt": [r"egypt"],
+    "Switzerland": [r"switzerland"], "Norway": [r"norway"], "Australia": [r"australia"],
+    "Canada": [r"canada"], "India": [r"india"], "Pakistan": [r"pakistan"], "Iraq": [r"iraq"],
+    "Iran": [r"iran"], "Bolivia": [r"bolivia"], "Singapore": [r"singapore"], "Germany": [r"germany"],
+    "New Zealand": [r"new zealand"], "United States": [r"united states", r"the us", r"usa"],
+    "Secretariat": [r"(?:the )?secretariat"],
+}
+ALERT_FOR = {"Arab Group": "arab_group", "LMDC": "lmdc"}
+GROUPS = {"Arab Group", "LMDC", "AOSIS", "AILAC", "LDC Group", "African Group", "G77 and China", "CfRN", "EIG", "EU"}
+
+CUE_BEFORE = [  # the name comes after the cue
+    r"next (?:on (?:my|the) list )?(?:is|we have|speaker is|i have|turn to)",
+    r"(?:i |we )?(?:now )?(?:give|turn|pass|hand) (?:the floor )?(?:over )?(?:now )?to",
+    r"(?:we'll|we will|let's|let me|i'll|i will) (?:now )?(?:go|turn|move) (?:next )?(?:over )?to",
+    r"followed by",
+    r"i (?:now )?(?:see|have) (?:a flag (?:from|by) )",
+    r"(?:the )?floor (?:goes|now goes) to",
+]
+CUE_AFTER = r"(?:,|\.)?\s*(?:please|you have the floor|the floor is yours|over to you|go ahead)\b"
+BEHALF = r"(?:on behalf of|speaking for|aligns? (?:itself |ourselves |myself )?with(?: the statement (?:delivered |made )?by)?|associates? (?:itself )?with)"
+
+
+def load_aliases(path=None):
+    al = {k: list(v) for k, v in ALIASES.items()}
+    if path and os.path.isfile(path):
+        try:
+            with open(path, encoding="utf-8") as f:
+                for k, v in json.load(f).items():
+                    al.setdefault(k, [])
+                    al[k] = list(v) + al[k]
+        except (OSError, ValueError):
+            pass
+    return al
+
+
+class SpeakerTracker:
+    def __init__(self, aliases=None):
+        al = aliases or ALIASES
+        pairs = [(c, v) for c, vs in al.items() for v in vs]
+        pairs.sort(key=lambda p: -len(p[1]))  # longest spoken form first (united arab emirates before arab)
+        self.names = [(c, re.compile(r"(?<![\w])(?:the )?" + v + r"(?![\w])", re.I)) for c, v in pairs]
+        self.before = [re.compile(r"\b" + c + r"\s+(?:the\s+)?(?P<x>.{1,60})", re.I) for c in CUE_BEFORE]
+        self.after = re.compile(r"(?P<x>[\w .'-]{2,45}?)" + CUE_AFTER, re.I)
+        self.behalf = re.compile(r"\b" + BEHALF + r"\s+(?:the\s+)?(?P<x>.{1,60})", re.I)
+        self.speaker = None
+        self.alerted = None
+
+    def name_at_start(self, s):
+        s = s.strip(" ,.:;")
+        for canon, rx in self.names:
+            m = rx.match(s)
+            if m:
+                return canon
+        return None
+
+    def name_at_end(self, s):
+        s = s.strip(" ,.:;")
+        best = None
+        for canon, rx in self.names:
+            for m in rx.finditer(s):
+                if m.end() >= len(s) - 1 and (best is None or m.start() < best[1]):
+                    best = (canon, m.start())
+        return best[0] if best else None
+
+    def feed(self, text):
+        """Returns (speaker_for_this_line, alert) and updates the speaker for the next lines."""
+        line_speaker, nxt = self.speaker, None
+        for rx in self.before:
+            for m in rx.finditer(text):
+                who = self.name_at_start(m.group("x"))
+                if who:
+                    nxt = who
+        if nxt is None:
+            for m in self.after.finditer(text):
+                who = self.name_at_end(m.group("x"))
+                if who:
+                    nxt = who
+        if nxt is not None:
+            line_speaker = "Chair"  # the line that calls the next speaker is the chair's
+            self.speaker = nxt
+        b = self.behalf.search(text)
+        if b:
+            grp = self.name_at_start(b.group("x"))
+            if grp in GROUPS and grp != self.speaker:
+                own = self.speaker if (self.speaker and self.speaker not in GROUPS and self.speaker != "Chair") else None
+                self.speaker = grp + (f" ({own})" if own else "")
+                line_speaker = self.speaker
+        alert = None
+        base = (self.speaker or "").split(" (")[0]
+        if base in ALERT_FOR and self.alerted != self.speaker:
+            alert = ALERT_FOR[base]
+            self.alerted = self.speaker
+        elif base not in ALERT_FOR:
+            self.alerted = None
+        return line_speaker, alert
+
+    def tag(self, text):
+        who, alert = self.feed(text)
+        return (f"[المتكلم: {who}] {text}" if who else text), alert

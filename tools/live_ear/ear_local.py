@@ -7,11 +7,19 @@ appended to COP31_live.txt in Google Drive, and a heartbeat goes to
 COP31_live_status.txt every 20 seconds. Standard library only: nothing to
 install beyond Python itself.
 """
-import datetime, json, os, shutil, subprocess, sys, threading, time, webbrowser
+import datetime, json, os, queue, shutil, subprocess, sys, threading, time, webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+try:
+    import ear_logic as L  # writer with retry, audio store, gap backfill, speaker tags
+except ImportError:
+    with open(os.path.join(os.path.expanduser("~"), "LiveEar_PC.log"), "a", encoding="utf-8") as _f:
+        _f.write("ear_logic.py is missing: copy it next to ear_local.py\n")
+    raise SystemExit("ear_logic.py is missing: copy it next to ear_local.py")
+
 PORT = 8765
-VERSION = "web-2026-11-14f"
+VERSION = "web-2026-11-20a"
 
 
 def find_drive():
@@ -31,7 +39,6 @@ OUT = os.path.join(DRIVE, "COP31_live.txt")
 STATUS = os.path.join(DRIVE, "COP31_live_status.txt")
 LOCK = threading.Lock()
 TOKEN = "%x" % int(time.time() * 1000)  # pages served by an older copy carry no or another token
-PENDING = []
 SESS_DIR = os.path.join(os.path.expanduser("~"), "LiveEar_Sessions")
 CURRENT = {"path": None}
 PAGE_URL = "https://claude.ai/artifact/9ag5mqwy8LRaGpwUmwi3za"
@@ -174,25 +181,80 @@ def fallback_loop():
             PAGE_STATE["bad_since"] = now + 600
 
 
+WRITER = L.Writer(OUT)  # lines wait here while Drive is unavailable; a flusher retries every 5 s
+
+
 def append(line):
     print(line, flush=True)
-    to_session(line)
-    with LOCK:
-        PENDING.append(line)
-        for _ in range(3):
-            try:
-                with open(OUT, "a", encoding="utf-8") as f:
-                    f.write("\n".join(PENDING) + "\n")
-                PENDING.clear()
-                return
-            except OSError:
-                time.sleep(0.4)
+    to_session(line)      # the PC copy first: it never depends on Drive
+    WRITER.append(line)
+
+
+# ---------- room audio kept on the PC, and backfill of gaps ----------
+HERE = os.path.dirname(os.path.abspath(__file__))
+STORE = L.AudioStore(os.path.join(SESS_DIR, "audio"))
+BACKFILL = {"b": None}
+REC = {"on": False, "note": ""}
+
+
+def backfill_setup():
+    tr = L.whisper_transcriber("small.en", threads=2)
+    if tr is None:
+        append(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] ===== BACKFILL unavailable: faster-whisper not installed =====")
+        return
+    BACKFILL["b"] = L.Backfiller(STORE, tr, append)
+    BACKFILL["b"].run_forever()
+
+
+def recorder_loop():
+    """Keeps the room audio on the PC while a session runs, independent of the browser."""
+    try:
+        import sounddevice as sd
+    except ImportError:
+        REC["note"] = "sounddevice not installed"
+        return
+    blocks = queue.Queue()
+    while True:
+        if not CURRENT["path"]:
+            time.sleep(1)
+            continue
+        try:
+            def cb(indata, frames, t, st):
+                blocks.put((indata[:, 0].copy(), time.time()))
+            with sd.InputStream(samplerate=STORE.rate, channels=1, dtype="float32",
+                                blocksize=STORE.rate // 10, callback=cb):
+                REC["on"] = True
+                while CURRENT["path"]:
+                    try:
+                        b, t = blocks.get(timeout=1)
+                    except queue.Empty:
+                        continue
+                    STORE.write(b, end_time=t)
+        except Exception as e:
+            REC["note"] = str(e)[:80]
+            time.sleep(5)  # the microphone dropped: try again
+        finally:
+            REC["on"] = False
+            STORE.close()
+
+
+# ---------- speaker tags and the group alert ----------
+TRACKER = {"t": L.SpeakerTracker(L.load_aliases(os.path.join(HERE, "speakers.json")))}
+ALERT = {"who": "", "at": 0.0, "time": "", "sent": True}
+
+
+def raise_alert(who, when):
+    ALERT.update(who=who, at=time.time(), time=when, sent=False)
+    append(f"[{when}] ===== ALERT {who} =====")
 
 
 def status(state):
+    extra = ""
+    if ALERT["who"] and time.time() - ALERT["at"] < 600:
+        extra = f" alert={ALERT['who']}@{ALERT['time']}"
     try:
         with open(STATUS, "w", encoding="utf-8") as f:
-            f.write(f"{state} {datetime.datetime.now().isoformat(timespec='seconds')}\n")
+            f.write(f"{state} {datetime.datetime.now().isoformat(timespec='seconds')}{extra}\n")
     except OSError:
         pass
 
@@ -364,6 +426,7 @@ $("mic").onclick=()=>{
 setInterval(async()=>{
   try{
     const c=await (await fetch("/cmd")).json();
+    if(c.alert){ warn(c.alert==="lmdc"?"تتكلم الآن مجموعة البلدان النامية المتشابهة التفكير":"تتكلم الآن المجموعة العربية"); beep(); setTimeout(()=>warn(""),60000); }
     if(c.cmd==="start"){ if(c.name) $("sname").value=c.name; startListening(); }
     else if(c.cmd==="stop") stopListening();
     else if(c.cmd==="quit"){ want=false; try{rec&&rec.stop()}catch(e){} document.body.innerHTML="<p style='padding:20px'>أغلق البرنامج بأمر من Claude. يمكنك إغلاق هذه النافذة.</p>"; }
@@ -416,6 +479,9 @@ class Handler(BaseHTTPRequestHandler):
         if u.path == "/cmd":
             c = {"cmd": CMD["cmd"], "name": CMD["name"]}
             CMD.update(cmd=None, name="")
+            if not ALERT["sent"]:
+                c["alert"] = ALERT["who"]
+                ALERT["sent"] = True
             self._ok(json.dumps(c, ensure_ascii=False).encode("utf-8"), "application/json")
         elif u.path == "/sessions":
             self._ok(json.dumps(list_sessions(), ensure_ascii=False).encode("utf-8"), "application/json")
@@ -445,11 +511,21 @@ class Handler(BaseHTTPRequestHandler):
         if self.path == "/line":
             text = " ".join(str(data.get("text", "")).split())
             if text:
-                append(f"[{data.get('time') or now}] {text}")
+                when = data.get("time") or now
+                tagged, alert = TRACKER["t"].tag(text)
+                append(f"[{when}] {tagged}")
+                if alert:
+                    raise_alert(alert, when)
         elif self.path == "/gap":
-            append(f"[{data.get('time') or now}] ===== GAP {int(data.get('secs') or 0)} ثانية, {str(data.get('why') or '')[:60]} =====")
+            when, secs, why = data.get("time") or now, int(data.get("secs") or 0), str(data.get("why") or "")[:60]
+            append(f"[{when}] ===== GAP {secs} ثانية, {why} =====")
+            if BACKFILL["b"] and REC["on"] and L.needs_backfill(why, secs):
+                start = L.clock_to_ts(when)
+                BACKFILL["b"].enqueue(start, start + secs)
         elif self.path == "/start":
             new_session(str(data.get("name") or "session"))
+            TRACKER["t"] = L.SpeakerTracker(L.load_aliases(os.path.join(HERE, "speakers.json")))
+            threading.Thread(target=STORE.prune, daemon=True).start()
             AWAKE["on"] = True
             PAGE_STATE.update(ok=True, seen=time.time(), bad_since=0.0, good_since=0.0)
             append(f"[{now}] ===== START {datetime.date.today()} web lang={data.get('lang', '')} v={VERSION} =====")
@@ -674,6 +750,9 @@ def main():
     threading.Thread(target=command_loop, args=(server,), daemon=True).start()
     threading.Thread(target=awake_loop, daemon=True).start()
     threading.Thread(target=fallback_loop, daemon=True).start()
+    WRITER.run_flusher(5.0)
+    threading.Thread(target=recorder_loop, daemon=True).start()
+    threading.Thread(target=backfill_setup, daemon=True).start()
     threading.Timer(1.0, open_window).start()
     try:
         server.serve_forever()
