@@ -19,7 +19,7 @@ except ImportError:
     raise SystemExit("ear_logic.py is missing: copy it next to ear_local.py")
 
 PORT = 8765
-VERSION = "web-2026-11-20a"
+VERSION = "web-2026-11-20b"
 
 
 def find_drive():
@@ -132,10 +132,12 @@ def start_fallback(why):
         append(f"[{now}] ===== FALLBACK unavailable: live_ear.py not found =====")
         PAGE_STATE["bad_since"] = time.time() + 600  # do not retry for ten minutes
         return
-    append(f"[{now}] ===== FALLBACK START ({why}) small.en =====")
+    arabic = SESSION["lang"].startswith("ar")
+    model = ["--model", "small", "--lang", "ar"] if arabic else ["--model", "small.en"]
+    append(f"[{now}] ===== FALLBACK START ({why}) {model[1]} =====")
     flags = 0x08000000 if os.name == "nt" else 0  # CREATE_NO_WINDOW
     try:
-        FALLBACK["proc"] = subprocess.Popen([python_exe(), script, "--model", "small.en", "--drive", DRIVE],
+        FALLBACK["proc"] = subprocess.Popen([python_exe(), script] + model + ["--drive", DRIVE],
                                             creationflags=flags, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     except OSError as e:
         append(f"[{now}] ===== FALLBACK failed: {e} =====")
@@ -197,8 +199,11 @@ BACKFILL = {"b": None}
 REC = {"on": False, "note": ""}
 
 
+SESSION = {"lang": "en-US"}  # the room language chosen in the window: English or Arabic (ar-IQ)
+
+
 def backfill_setup():
-    tr = L.whisper_transcriber("small.en", threads=2)
+    tr = L.language_transcriber(lambda: SESSION["lang"], threads=2)
     if tr is None:
         append(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] ===== BACKFILL unavailable: faster-whisper not installed =====")
         return
@@ -275,7 +280,7 @@ select,button{font:inherit;border-radius:8px;border:1px solid var(--line);backgr
 .st b{color:var(--fg)}
 .warn{color:var(--warn);font-weight:600}
 .tx{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 12px;height:55vh;overflow-y:auto;direction:ltr;text-align:left;font-family:"Segoe UI",Arial,sans-serif;line-height:1.5}
-.tx div{padding:4px 0;border-bottom:1px solid var(--line)}
+.tx div{padding:4px 0;border-bottom:1px solid var(--line);unicode-bidi:plaintext}
 .tx time{color:var(--muted);font:12px Consolas,monospace;margin-right:8px}
 .tx .p{color:var(--muted);font-style:italic;border:none}
 .acts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
@@ -292,7 +297,7 @@ select,button{font:inherit;border-radius:8px;border:1px solid var(--line);backgr
 <h1>الأذن الحية على الحاسوب</h1>
 <div class="row">
  <label>اسم الجلسة <input id="sname" placeholder="مثلا Article 6.2 informals" style="font:inherit;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--fg);padding:9px 10px;min-width:0;width:15em;max-width:100%"></label>
- <label>لغة القاعة <select id="lang"><option value="en-US">English</option><option value="en-GB">English UK</option><option value="ar-IQ">العربية</option></select></label>
+ <label>لغة القاعة <select id="lang"><option value="en-US">English</option><option value="en-GB">English UK</option><option value="ar-IQ">العربية (العراق)</option><option value="ar-SA">العربية (الفصحى)</option></select></label>
 </div>
 <button class="mic" id="mic">ابدأ السماع</button>
 <div class="st">الحالة: <b id="state">متوقفة</b> | الأسطر: <b id="n">0</b> | آخر كلام: <b id="last">لا يوجد</b></div>
@@ -524,6 +529,7 @@ class Handler(BaseHTTPRequestHandler):
                 BACKFILL["b"].enqueue(start, start + secs)
         elif self.path == "/start":
             new_session(str(data.get("name") or "session"))
+            SESSION["lang"] = str(data.get("lang") or "en-US")
             TRACKER["t"] = L.SpeakerTracker(L.load_aliases(os.path.join(HERE, "speakers.json")))
             threading.Thread(target=STORE.prune, daemon=True).start()
             AWAKE["on"] = True

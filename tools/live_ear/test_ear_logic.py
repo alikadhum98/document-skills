@@ -120,6 +120,25 @@ class SpeakerTests(unittest.TestCase):
         self.assertIsNone(t.feed("EU, you have the floor.")[1])
         self.assertEqual(t.feed("Next is the Like-Minded Developing Countries.")[1], "lmdc")
 
+    def test_arabic_coordination_meeting(self):
+        # Arabic as Edge (ar-IQ) writes it, with Iraqi speech and spelling variants
+        r = self.run_lines([
+            "شكرا جزيلا، هسه الكلمة للمملكة العربية السعودية تفضلوا",
+            "شكرا سيادة الرئيس، نتحدث باسم المجموعة العربية",
+            "نرفض أي إرشادات جديدة قبل المراجعة",
+            "شكرا، الكلمة الآن لمصر",
+            "مصر تؤيد ما قالته المجموعة",
+            "ننتقل الى الدول النامية المتشابهة التفكير",
+            "نحن لا نقبل هذه الفقرة",
+            "العراق تفضل",
+        ])
+        self.assertEqual([x[0] for x in r], ["Chair", "Arab Group (Saudi Arabia)", "Arab Group (Saudi Arabia)", "Chair", "Egypt", "Chair", "LMDC", "Chair"])
+        self.assertEqual([x[1] for x in r], [None, "arab_group", None, None, None, "lmdc", None, None])
+
+    def test_arabic_words_do_not_trigger(self):
+        r = self.run_lines(["نحتاج لمصر ولكل الدول دعما اكبر", "لكن الفقرة غير مقبولة"])
+        self.assertEqual([x[0] for x in r], [None, None])
+
     def test_garbled_group_names(self):
         t = L.SpeakerTracker()
         self.assertEqual(t.name_at_start("out space"), "AOSIS")

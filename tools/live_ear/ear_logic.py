@@ -221,8 +221,9 @@ class Backfiller:
         return t
 
 
-def whisper_transcriber(model_name="small.en", threads=2):
-    """A transcribe(audio) -> [(offset_seconds, text)] backed by faster-whisper, or None."""
+def whisper_transcriber(model_name="small.en", threads=2, language="en"):
+    """A transcribe(audio) -> [(offset_seconds, text)] backed by faster-whisper, or None.
+    Arabic needs a multilingual model (small, not small.en)."""
     try:
         from faster_whisper import WhisperModel
     except ImportError:
@@ -232,9 +233,21 @@ def whisper_transcriber(model_name="small.en", threads=2):
     def run(audio):
         if "m" not in holder:
             holder["m"] = WhisperModel(model_name, device="cpu", compute_type="int8", cpu_threads=threads)
-        segs, _ = holder["m"].transcribe(audio, language="en", beam_size=1, vad_filter=True,
+        segs, _ = holder["m"].transcribe(audio, language=language, beam_size=1, vad_filter=True,
                                           condition_on_previous_text=False)
         return [(s.start, s.text) for s in segs if s.avg_logprob > -1.5 and s.compression_ratio < 2.4]
+    return run
+
+
+def language_transcriber(session_lang, threads=2):
+    """Backfill model chosen by the session language: small.en for English, small for Arabic."""
+    en = whisper_transcriber("small.en", threads, "en")
+    if en is None:
+        return None
+    ar = whisper_transcriber("small", threads, "ar")
+
+    def run(audio):
+        return (ar if str(session_lang()).startswith("ar") else en)(audio)
     return run
 
 # ---------------------------------------------------------------- speakers
@@ -261,8 +274,35 @@ ALIASES = {
     "Canada": [r"canada"], "India": [r"india"], "Pakistan": [r"pakistan"], "Iraq": [r"iraq"],
     "Iran": [r"iran"], "Bolivia": [r"bolivia"], "Singapore": [r"singapore"], "Germany": [r"germany"],
     "New Zealand": [r"new zealand"], "United States": [r"united states", r"the us", r"usa"],
-    "Secretariat": [r"(?:the )?secretariat"],
+    "Secretariat": [r"(?:the )?secretariat", r"الامانه"],
 }
+# Arabic names, written after norm_ar: alef forms become ا, ة becomes ه, ى becomes ي
+ALIASES_AR = {
+    "Arab Group": [r"المجموعه العربيه", r"مجموعه الدول العربيه", r"المجموعه العربي"],
+    "LMDC": [r"(?:مجموعه )?الدول الناميه المتشابهه(?: التفكير)?", r"(?:الدول )?المتشابهه التفكير", r"المتشابهين"],
+    "G77 and China": [r"مجموعه ال ?77(?: والصين)?", r"مجموعه السبعه والسبعين(?: والصين)?"],
+    "African Group": [r"المجموعه الافريقيه"],
+    "LDC Group": [r"(?:مجموعه )?اقل البلدان نموا"],
+    "EU": [r"الاتحاد الاوروبي"],
+    "Iraq": [r"(?:جمهوريه )?العراق", r"الوفد العراقي"],
+    "Saudi Arabia": [r"(?:المملكه العربيه )?السعوديه"],
+    "UAE": [r"الامارات(?: العربيه المتحده)?"],
+    "Egypt": [r"مصر"], "Jordan": [r"الاردن"], "Kuwait": [r"الكويت"], "Qatar": [r"قطر"],
+    "Oman": [r"(?:سلطنه )?عمان"], "Bahrain": [r"البحرين"], "Algeria": [r"الجزائر"],
+    "Morocco": [r"المغرب"], "Tunisia": [r"تونس"], "Lebanon": [r"لبنان"], "Sudan": [r"السودان"],
+    "Libya": [r"ليبيا"], "Palestine": [r"فلسطين"], "Syria": [r"سوريا"], "Yemen": [r"اليمن"],
+    "China": [r"الصين"], "Iran": [r"ايران"], "Chair": [r"(?:رئيس الجلسه|الرئيس)"],
+}
+for _k, _v in ALIASES_AR.items():
+    ALIASES[_k] = ALIASES.get(_k, []) + _v
+
+
+def norm_ar(s):
+    """One spelling for letters that Arabic speech recognition writes in several ways."""
+    s = re.sub("[ً-ْـ]", "", s)  # diacritics and tatweel
+    return s.translate(str.maketrans("أإآٱةى", "ااااهي"))
+
+
 ALERT_FOR = {"Arab Group": "arab_group", "LMDC": "lmdc"}
 GROUPS = {"Arab Group", "LMDC", "AOSIS", "AILAC", "LDC Group", "African Group", "G77 and China", "CfRN", "EIG", "EU"}
 
@@ -273,9 +313,14 @@ CUE_BEFORE = [  # the name comes after the cue
     r"followed by",
     r"i (?:now )?(?:see|have) (?:a flag (?:from|by) )",
     r"(?:the )?floor (?:goes|now goes) to",
+    # Arabic, including Iraqi speech (هسه = now), after norm_ar
+    r"(?:اعطي |نعطي )?ب?(?:الكلمه|الدور) (?:الان |هسه |هسا )?(?:الي ?|ل)",
+    r"(?:ننتقل|نمر) (?:الان |هسه |هسا )?(?:الي ?|ل)",
+    r"(?:المتحدث|المتكلم) (?:التالي|القادم)(?: هو| هي)?",
+    r"(?:اعطي|نعطي) الكلمه(?: الان| هسه)?(?: الي)?",
 ]
-CUE_AFTER = r"(?:,|\.)?\s*(?:please|you have the floor|the floor is yours|over to you|go ahead)\b"
-BEHALF = r"(?:on behalf of|speaking for|aligns? (?:itself |ourselves |myself )?with(?: the statement (?:delivered |made )?by)?|associates? (?:itself )?with)"
+CUE_AFTER = r"(?:,|\.|،)?\s*(?:please|you have the floor|the floor is yours|over to you|go ahead|تفضل|تفضلي|تفضلوا|الكلمه لكم|الكلمه لك)(?![\w])"
+BEHALF = r"(?:on behalf of|speaking for|aligns? (?:itself |ourselves |myself )?with(?: the statement (?:delivered |made )?by)?|associates? (?:itself )?with|باسم|نيابه عن|بالنيابه عن)"
 
 
 def load_aliases(path=None):
@@ -296,25 +341,30 @@ class SpeakerTracker:
         al = aliases or ALIASES
         pairs = [(c, v) for c, vs in al.items() for v in vs]
         pairs.sort(key=lambda p: -len(p[1]))  # longest spoken form first (united arab emirates before arab)
-        self.names = [(c, re.compile(r"(?<![\w])(?:the )?" + v + r"(?![\w])", re.I)) for c, v in pairs]
-        self.before = [re.compile(r"\b" + c + r"\s+(?:the\s+)?(?P<x>.{1,60})", re.I) for c in CUE_BEFORE]
+        self.names = [(c, re.compile(r"(?<![\w])(?:the )?" + norm_ar(v) + r"(?![\w])", re.I)) for c, v in pairs]
+        self.before = [re.compile(r"(?<![\w])" + c + r"\s*(?:the\s+)?(?P<x>.{1,60})", re.I) for c in CUE_BEFORE]
         self.after = re.compile(r"(?P<x>[\w .'-]{2,45}?)" + CUE_AFTER, re.I)
-        self.behalf = re.compile(r"\b" + BEHALF + r"\s+(?:the\s+)?(?P<x>.{1,60})", re.I)
+        self.behalf = re.compile(r"(?<![\w])" + BEHALF + r"\s+(?:the\s+)?(?P<x>.{1,60})", re.I)
         self.speaker = None
         self.alerted = None
 
     def name_at_start(self, s):
-        s = s.strip(" ,.:;")
-        for canon, rx in self.names:
-            m = rx.match(s)
-            if m:
-                return canon
+        s = norm_ar(s).strip(" ,.:;،")
+        tries = [s]
+        if s.startswith("ل"):  # Arabic (ل) joined to the name: لمصر, للعراق, للمجموعه
+            tries += [s[1:], "ا" + s[1:]]
+        for t in tries:
+            for canon, rx in self.names:
+                if canon != "Chair" and rx.match(t):
+                    return canon
         return None
 
     def name_at_end(self, s):
-        s = s.strip(" ,.:;")
+        s = norm_ar(s).strip(" ,.:;،")
         best = None
         for canon, rx in self.names:
+            if canon == "Chair":
+                continue
             for m in rx.finditer(s):
                 if m.end() >= len(s) - 1 and (best is None or m.start() < best[1]):
                     best = (canon, m.start())
@@ -322,6 +372,7 @@ class SpeakerTracker:
 
     def feed(self, text):
         """Returns (speaker_for_this_line, alert) and updates the speaker for the next lines."""
+        text = norm_ar(text)
         line_speaker, nxt = self.speaker, None
         for rx in self.before:
             for m in rx.finditer(text):
