@@ -8,7 +8,10 @@
 3. Backfiller: when the browser reports a gap caused by the network or a stall, the
    missing stretch is cut from the stored audio and transcribed offline. Its lines carry
    the original times and the mark (تكملة).
-4. SpeakerTracker: reads the chair's cues ("next on my list is the LMDC", "UK, please",
+4. LanguageWatcher: in automatic language mode, checks the last seconds of stored audio
+   and tells the window to switch the recogniser between English and Arabic. The
+   stretch spoken before the switch is recovered from the stored audio.
+5. SpeakerTracker: reads the chair's cues ("next on my list is the LMDC", "UK, please",
    "on behalf of the Arab Group") and tags each line with the current speaker. It raises
    an alert when the Arab Group or the LMDC take the floor.
 
@@ -176,13 +179,15 @@ class Backfiller:
         self.chunk_secs, self.settle, self.sleep, self.clock = chunk_secs, settle, sleep, clock
         self.jobs = queue.Queue()
 
-    def enqueue(self, start, end):
-        self.jobs.put((start, end))
+    def enqueue(self, start, end, lang=None):
+        """lang: "en" or "ar" to force the backfill language (after a language switch)."""
+        self.jobs.put((start, end, lang))
 
     def run_once(self):
         """Process one queued gap. Returns the number of lines written (None when idle)."""
         try:
-            start, end = self.jobs.get_nowait()
+            job = self.jobs.get_nowait()
+            start, end, lang = (job + (None,))[:3]
         except queue.Empty:
             return None
         wait = end + self.settle - self.clock()
@@ -199,7 +204,7 @@ class Backfiller:
         for i in range(0, len(audio), step):
             piece = audio[i:i + step]
             try:
-                segs = self.transcribe(piece) or []
+                segs = (self.transcribe(piece, lang) if lang else self.transcribe(piece)) or []
             except Exception as e:  # keep going whatever happens
                 self.write(f"[{hms(start + i / rate)}] ===== BACKFILL error: {str(e)[:80]} =====")
                 continue
@@ -246,9 +251,81 @@ def language_transcriber(session_lang, threads=2):
         return None
     ar = whisper_transcriber("small", threads, "ar")
 
-    def run(audio):
-        return (ar if str(session_lang()).startswith("ar") else en)(audio)
+    def run(audio, lang=None):
+        lang = lang or session_lang()
+        return (ar if str(lang).startswith("ar") else en)(audio)
     return run
+
+# ---------------------------------------------------------------- automatic language
+
+AUTO_LANGS = {"en": "en-US", "ar": "ar-IQ"}  # recogniser used for each detected language
+
+
+def whisper_language_detector(model_name="base", threads=1):
+    """A detect(audio) -> (language, probability) backed by faster-whisper, or None.
+    Only the language is computed: the transcript is never decoded."""
+    try:
+        from faster_whisper import WhisperModel
+    except ImportError:
+        return None
+    holder = {}
+
+    def run(audio):
+        if "m" not in holder:
+            holder["m"] = WhisperModel(model_name, device="cpu", compute_type="int8", cpu_threads=threads)
+        _, info = holder["m"].transcribe(audio, beam_size=1, vad_filter=False)
+        return info.language, float(info.language_probability)
+    return run
+
+
+class LanguageWatcher:
+    """Decides, from the room audio itself, whether the recogniser should run in English or Arabic.
+
+    step() looks at the last `window` seconds once. The first decision of a session is quick
+    (one confident reading). Later switches need `need` readings in a row, so one English
+    quotation inside an Arabic meeting does not flip the recogniser back and forth.
+    Other languages and silence are ignored."""
+
+    def __init__(self, store, detect, window=8.0, quick_prob=0.8, prob=0.6, need=2, min_rms=0.004, clock=time.time):
+        self.store, self.detect, self.window = store, detect, window
+        self.quick_prob, self.prob, self.need, self.min_rms, self.clock = quick_prob, prob, need, min_rms, clock
+        self.reset("en")
+
+    def reset(self, start_lang="en"):
+        self.current = start_lang
+        self.decided = False
+        self.streak = [None, 0, 0.0]  # language, readings in a row, start of the first reading
+
+    def step(self):
+        """Returns (language, since) when the recogniser should switch, otherwise None."""
+        import numpy as np
+        end = self.clock()
+        start = end - self.window
+        audio = self.store.extract(start, end)
+        if len(audio) < self.window * self.store.rate * 0.6:
+            return None
+        if float(np.sqrt(np.mean(np.square(audio)))) < self.min_rms:
+            return None  # silence tells nothing
+        lang, p = self.detect(audio)
+        if lang not in AUTO_LANGS:
+            self.streak = [None, 0, 0.0]
+            return None
+        if lang == self.current:
+            if p >= self.prob:
+                self.decided = True
+            self.streak = [None, 0, 0.0]
+            return None
+        if self.streak[0] == lang:
+            self.streak[1] += 1
+        else:
+            self.streak = [lang, 1, start]
+        quick = not self.decided and p >= self.quick_prob
+        if quick or (p >= self.prob and self.streak[1] >= self.need):
+            since = self.streak[2]
+            self.current, self.decided = lang, True
+            self.streak = [None, 0, 0.0]
+            return lang, since
+        return None
 
 # ---------------------------------------------------------------- speakers
 

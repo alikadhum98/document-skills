@@ -154,5 +154,67 @@ class SpeakerTests(unittest.TestCase):
         self.assertEqual(t.tag("Thank you, co-facilitators.")[0], "[المتكلم: Japan] Thank you, co-facilitators.")
 
 
+class LanguageTests(unittest.TestCase):
+    """A room that starts in English, turns to Arabic, has a short English quotation, then silence."""
+
+    def make(self, script):
+        d = tempfile.mkdtemp()
+        st = L.AudioStore(d, rate=1600, segment_secs=60)
+        t0 = 1_800_000_000.0
+        lang_at = {}
+        for i, (lang, loud) in enumerate(script):     # one entry per second of room audio
+            st.write(np.full(1600, loud, np.float32), end_time=t0 + i + 1)
+            lang_at[i] = lang
+        clock = {"t": t0}
+
+        def detect(audio):  # what Whisper would say about the last seconds: the language heard last
+            sec = int(clock["t"] - t0) - 1
+            return lang_at[sec], 0.95
+        w = L.LanguageWatcher(st, detect, window=8, clock=lambda: clock["t"])
+        return w, clock, t0
+
+    def run_steps(self, w, clock, t0, until, every=10):
+        out = []
+        for t in range(every, until + 1, every):
+            clock["t"] = t0 + t
+            r = w.step()
+            if r:
+                out.append((t, r[0], int(r[1] - t0)))
+        return out
+
+    def test_switches_and_ignores_short_quotation(self):
+        script = [("en", .1)] * 40 + [("ar", .1)] * 60 + [("en", .1)] * 12 + [("ar", .1)] * 38 + [("ar", 0)] * 30
+        w, clock, t0 = self.make(script)
+        got = self.run_steps(w, clock, t0, 180)
+        # English confirmed first, Arabic adopted after two readings (40 and 50 s, switch from 42 s),
+        # the 12-second English quotation (100 to 111 s) is heard once only and ignored, silence ignored
+        self.assertEqual(got, [(60, "ar", 42)])
+        self.assertEqual(w.current, "ar")
+
+    def test_first_decision_is_quick(self):
+        w, clock, t0 = self.make([("ar", .1)] * 30)
+        self.assertEqual(self.run_steps(w, clock, t0, 30), [(10, "ar", 2)])
+
+    def test_other_languages_and_silence_are_ignored(self):
+        w, clock, t0 = self.make([("fr", .1)] * 30 + [("ar", 0)] * 30)
+        self.assertEqual(self.run_steps(w, clock, t0, 60), [])
+        self.assertEqual(w.current, "en")
+
+    def test_backfill_uses_the_job_language(self):
+        seen = []
+        with tempfile.TemporaryDirectory() as d:
+            st = L.AudioStore(d, rate=1600)
+            for i in range(20):
+                st.write(np.full(1600, .1, np.float32), end_time=1_800_000_000.0 + i + 1)
+            st.close()
+            b = L.Backfiller(st, lambda a, lang=None: seen.append(lang) or [(0, "x")], lambda line: None,
+                             sleep=lambda s: None, clock=lambda: 1_900_000_000.0)
+            b.enqueue(1_800_000_000.0, 1_800_000_010.0, "ar")
+            b.enqueue(1_800_000_010.0, 1_800_000_020.0)
+            b.run_once()
+            b.run_once()
+        self.assertEqual(seen, ["ar", None])
+
+
 if __name__ == "__main__":
     unittest.main()

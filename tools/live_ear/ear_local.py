@@ -19,7 +19,7 @@ except ImportError:
     raise SystemExit("ear_logic.py is missing: copy it next to ear_local.py")
 
 PORT = 8765
-VERSION = "web-2026-11-20b"
+VERSION = "web-2026-11-20c"
 
 
 def find_drive():
@@ -41,6 +41,7 @@ LOCK = threading.Lock()
 TOKEN = "%x" % int(time.time() * 1000)  # pages served by an older copy carry no or another token
 SESS_DIR = os.path.join(os.path.expanduser("~"), "LiveEar_Sessions")
 CURRENT = {"path": None}
+LAST = {"path": None}  # the most recent session file, kept after stop so a late summary can still name it
 PAGE_URL = "https://claude.ai/artifact/9ag5mqwy8LRaGpwUmwi3za"
 
 
@@ -52,7 +53,23 @@ def safe_name(name):
 def new_session(name):
     os.makedirs(SESS_DIR, exist_ok=True)
     stamp = datetime.datetime.now().strftime("%Y-%m-%d_%H%M")
-    CURRENT["path"] = os.path.join(SESS_DIR, f"{stamp}_{safe_name(name)}.txt")
+    CURRENT["path"] = LAST["path"] = os.path.join(SESS_DIR, f"{stamp}_{safe_name(name)}.txt")
+
+
+def rename_session(name):
+    """Give a session started without a name the name the summary inferred from its content."""
+    path = LAST["path"]
+    if not path or not path.endswith("_session.txt") or not os.path.exists(path):
+        return False
+    new = path[:-len("session.txt")] + safe_name(name) + ".txt"
+    try:
+        os.replace(path, new)
+    except OSError:
+        return False
+    if CURRENT["path"] == path:
+        CURRENT["path"] = new
+    LAST["path"] = new
+    return True
 
 
 def to_session(line):
@@ -132,7 +149,7 @@ def start_fallback(why):
         append(f"[{now}] ===== FALLBACK unavailable: live_ear.py not found =====")
         PAGE_STATE["bad_since"] = time.time() + 600  # do not retry for ten minutes
         return
-    arabic = SESSION["lang"].startswith("ar")
+    arabic = rec_lang().startswith("ar")
     model = ["--model", "small", "--lang", "ar"] if arabic else ["--model", "small.en"]
     append(f"[{now}] ===== FALLBACK START ({why}) {model[1]} =====")
     flags = 0x08000000 if os.name == "nt" else 0  # CREATE_NO_WINDOW
@@ -199,11 +216,15 @@ BACKFILL = {"b": None}
 REC = {"on": False, "note": ""}
 
 
-SESSION = {"lang": "en-US"}  # the room language chosen in the window: English or Arabic (ar-IQ)
+SESSION = {"lang": "auto", "cur": "en-US"}  # the language chosen in the window, and the one in use when it is auto
+
+
+def rec_lang():
+    return SESSION["cur"] if SESSION["lang"] == "auto" else SESSION["lang"]
 
 
 def backfill_setup():
-    tr = L.language_transcriber(lambda: SESSION["lang"], threads=2)
+    tr = L.language_transcriber(rec_lang, threads=2)
     if tr is None:
         append(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] ===== BACKFILL unavailable: faster-whisper not installed =====")
         return
@@ -241,6 +262,43 @@ def recorder_loop():
         finally:
             REC["on"] = False
             STORE.close()
+
+
+# ---------- automatic language: the room audio decides English or Arabic ----------
+LANG = {"w": None, "pending": None, "note": None, "noted": False}
+
+
+def lang_loop():
+    detect = L.whisper_language_detector("base", threads=1)
+    if detect is not None:
+        LANG["w"] = L.LanguageWatcher(STORE, detect)
+    while True:
+        time.sleep(10)
+        if not CURRENT["path"] or SESSION["lang"] != "auto":
+            continue
+        if LANG["w"] is None:
+            if not LANG["noted"]:
+                LANG["noted"] = True
+                LANG["note"] = "no-detector"
+                append(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] ===== LANG auto unavailable: faster-whisper not installed, staying on {rec_lang()} =====")
+            continue
+        if not REC["on"]:
+            continue
+        try:
+            r = LANG["w"].step()
+        except Exception as e:
+            append(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] ===== LANG error: {str(e)[:80]} =====")
+            time.sleep(50)
+            continue
+        if not r:
+            continue
+        lang, since = r
+        SESSION["cur"] = L.AUTO_LANGS[lang]
+        LANG["pending"] = SESSION["cur"]
+        append(f"[{L.hms(since)}] ===== LANG {SESSION['cur']} auto =====")
+        if BACKFILL["b"]:
+            # the words spoken before the window switched are recovered from the stored audio
+            BACKFILL["b"].enqueue(since - 2, time.time() + 6, lang)
 
 
 # ---------- speaker tags and the group alert ----------
@@ -293,14 +351,15 @@ select,button{font:inherit;border-radius:8px;border:1px solid var(--line);backgr
 .hrow b{min-width:0;overflow-wrap:anywhere}
 .hrow span{color:var(--muted);font-size:.85rem;white-space:nowrap}
 .back{margin-bottom:6px}
+#sname:focus::placeholder{color:transparent}
 </style></head><body><div class="app">
 <h1>الأذن الحية على الحاسوب</h1>
 <div class="row">
  <label>اسم الجلسة <input id="sname" placeholder="مثلا Article 6.2 informals" style="font:inherit;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--fg);padding:9px 10px;min-width:0;width:15em;max-width:100%"></label>
- <label>لغة القاعة <select id="lang"><option value="en-US">English</option><option value="en-GB">English UK</option><option value="ar-IQ">العربية (العراق)</option><option value="ar-SA">العربية (الفصحى)</option></select></label>
+ <label>لغة القاعة <select id="lang"><option value="auto">تلقائي</option><option value="en-US">English</option><option value="en-GB">English UK</option><option value="ar-IQ">العربية (العراق)</option><option value="ar-SA">العربية (الفصحى)</option></select></label>
 </div>
 <button class="mic" id="mic">ابدأ السماع</button>
-<div class="st">الحالة: <b id="state">متوقفة</b> | الأسطر: <b id="n">0</b> | آخر كلام: <b id="last">لا يوجد</b></div>
+<div class="st">الحالة: <b id="state">متوقفة</b> | الأسطر: <b id="n">0</b> | آخر كلام: <b id="last">لا يوجد</b> | اللغة: <b id="lng">تلقائي</b></div>
 <div class="st warn" id="warn" hidden></div>
 <div class="st">يمكنك تصغير هذه النافذة بعد البدء. النص يكتب في COP31_live.txt على Drive.</div>
 <div class="acts">
@@ -321,8 +380,14 @@ let rec=null, want=false, n=0, partialEl=null, ctx=null, wake=null;
 let phraseStart=null, emitted=0;               // words of the current phrase already written
 let lastResultAt=0, lastStartAt=0, lastRestartAt=0, reasons=[], failingSince=0;
 const EMIT_AFTER_MS=12000, STALL_MS=20000, GAP_LOG_MS=20000;
-try{$("lang").value=localStorage.getItem("lang")||"en-US"}catch(e){}
-$("lang").onchange=()=>{try{localStorage.setItem("lang",$("lang").value)}catch(e){} if(want) forceRestart("lang");};
+// the window always opens on automatic language: a fixed language is chosen per session when wanted
+let autoLang="en-US"; try{autoLang=localStorage.getItem("ear.autoLang")||"en-US"}catch(e){}
+const LANG_NAMES={"en-US":"الإنكليزية","en-GB":"الإنكليزية","ar-IQ":"العربية","ar-SA":"العربية الفصحى"};
+function recLang(){ return $("lang").value==="auto" ? autoLang : $("lang").value; }
+function showLang(){ $("lng").textContent = $("lang").value==="auto" ? (want ? LANG_NAMES[autoLang]+" (تلقائي)" : "تلقائي") : LANG_NAMES[$("lang").value]; }
+$("lang").value="auto";
+$("lang").onchange=()=>{ showLang(); if(want) forceRestart("lang"); };
+$("sname").addEventListener("focus",()=>$("sname").select());
 const pad=x=>String(x).padStart(2,"0");
 const hms=d=>pad(d.getHours())+":"+pad(d.getMinutes())+":"+pad(d.getSeconds());
 const TOKEN="__TOKEN__";
@@ -357,7 +422,7 @@ function writeLine(time,text){
 }
 function build(){
   if(rec){ try{ rec.onend=null; rec.onerror=null; rec.onresult=null; rec.abort(); }catch(e){} }
-  rec=new SR(); rec.continuous=true; rec.interimResults=true; rec.lang=$("lang").value; rec.maxAlternatives=1;
+  rec=new SR(); rec.continuous=true; rec.interimResults=true; rec.lang=recLang(); rec.maxAlternatives=1;
   rec.onstart=()=>{ lastStartAt=Date.now(); $("state").textContent="تسمع الآن"; warn(""); };
   rec.onresult=e=>{
     let interim="";
@@ -394,7 +459,7 @@ function build(){
     $("state").textContent="يعاد التشغيل";
     emitted=0; phraseStart=null;
     // restart at once: timers are slowed down while the window is minimized
-    try{ rec.lang=$("lang").value; rec.start(); }catch(err){ forceRestart("start-failed"); }
+    try{ rec.lang=recLang(); rec.start(); }catch(err){ forceRestart("start-failed"); }
   };
 }
 function forceRestart(why){
@@ -413,12 +478,12 @@ setInterval(()=>{
   if(silentLong && (hard || now-lastStartAt>60000)){ if(!failingSince) failingSince=now; } else failingSince=0;
   if(failingSince && now-failingSince>5000) warn("السماع متعثر منذ أكثر من دقيقة، والبرنامج يشغل التسجيل الاحتياطي.");
 },3000);
-function stopListening(){ if(!want) return; want=false; setUi(); try{rec&&rec.stop()}catch(e){} post("/stop",{}); }
+function stopListening(){ if(!want) return; want=false; setUi(); showLang(); try{rec&&rec.stop()}catch(e){} post("/stop",{}); }
 function startListening(){
   if(!SR || want) return;
   try{ctx=ctx||new AudioContext();ctx.resume()}catch(e){}
   want=true; setUi(); keepAwake();
-  post("/start",{lang:$("lang").value, name:$("sname").value.trim()});
+  post("/start",{lang:$("lang").value, cur:recLang(), name:$("sname").value.trim()}); showLang();
   $("tx").replaceChildren(); n=0; $("n").textContent="0";
   lastResultAt=Date.now(); reasons=[]; failingSince=0; emitted=0; phraseStart=null;
   build(); try{ rec.start(); }catch(e){}
@@ -432,6 +497,8 @@ setInterval(async()=>{
   try{
     const c=await (await fetch("/cmd")).json();
     if(c.alert){ warn(c.alert==="lmdc"?"تتكلم الآن مجموعة البلدان النامية المتشابهة التفكير":"تتكلم الآن المجموعة العربية"); beep(); setTimeout(()=>warn(""),60000); }
+    if(c.lang && $("lang").value==="auto" && c.lang!==autoLang){ autoLang=c.lang; try{localStorage.setItem("ear.autoLang",autoLang)}catch(e){} showLang(); if(want) forceRestart("lang"); }
+    if(c.note==="no-detector") warn("التحديد التلقائي للغة يحتاج برنامج faster-whisper على الحاسوب، فالسماع مستمر بـ"+LANG_NAMES[autoLang]+". إن كانت الجلسة بلغة أخرى فاخترها من القائمة.");
     if(c.cmd==="start"){ if(c.name) $("sname").value=c.name; startListening(); }
     else if(c.cmd==="stop") stopListening();
     else if(c.cmd==="quit"){ want=false; try{rec&&rec.stop()}catch(e){} document.body.innerHTML="<p style='padding:20px'>أغلق البرنامج بأمر من Claude. يمكنك إغلاق هذه النافذة.</p>"; }
@@ -484,6 +551,12 @@ class Handler(BaseHTTPRequestHandler):
         if u.path == "/cmd":
             c = {"cmd": CMD["cmd"], "name": CMD["name"]}
             CMD.update(cmd=None, name="")
+            if LANG["pending"]:
+                c["lang"] = LANG["pending"]
+                LANG["pending"] = None
+            if LANG["note"]:
+                c["note"] = LANG["note"]
+                LANG["note"] = None
             if not ALERT["sent"]:
                 c["alert"] = ALERT["who"]
                 ALERT["sent"] = True
@@ -528,13 +601,18 @@ class Handler(BaseHTTPRequestHandler):
                 start = L.clock_to_ts(when)
                 BACKFILL["b"].enqueue(start, start + secs)
         elif self.path == "/start":
-            new_session(str(data.get("name") or "session"))
-            SESSION["lang"] = str(data.get("lang") or "en-US")
+            name = " ".join(str(data.get("name") or "").split())[:80]
+            new_session(name or "session")
+            SESSION["lang"] = str(data.get("lang") or "auto")
+            SESSION["cur"] = str(data.get("cur") or "en-US")
+            LANG["pending"], LANG["noted"] = None, False
+            if LANG["w"]:
+                LANG["w"].reset("ar" if SESSION["cur"].startswith("ar") else "en")
             TRACKER["t"] = L.SpeakerTracker(L.load_aliases(os.path.join(HERE, "speakers.json")))
             threading.Thread(target=STORE.prune, daemon=True).start()
             AWAKE["on"] = True
             PAGE_STATE.update(ok=True, seen=time.time(), bad_since=0.0, good_since=0.0)
-            append(f"[{now}] ===== START {datetime.date.today()} web lang={data.get('lang', '')} v={VERSION} =====")
+            append(f"[{now}] ===== START {datetime.date.today()} web lang={SESSION['lang']} cur={SESSION['cur']} v={VERSION} name={name} =====")
             status("web-listening")
         elif self.path == "/stop":
             append(f"[{now}] ===== STOP =====")
@@ -569,7 +647,8 @@ class Handler(BaseHTTPRequestHandler):
 
 # ---------- remote control through Drive ----------
 CMD = {"cmd": None, "name": ""}
-CMD_FILES = {"start": "COP31_ear_START.txt", "stop": "COP31_ear_STOP.txt", "quit": "COP31_ear_QUIT.txt"}
+CMD_FILES = {"start": "COP31_ear_START.txt", "stop": "COP31_ear_STOP.txt", "quit": "COP31_ear_QUIT.txt",
+             "name": "COP31_ear_NAME.txt"}  # NAME: written by the summary page for a session started without a name
 
 
 def command_loop(server):
@@ -590,6 +669,10 @@ def command_loop(server):
             except OSError:
                 pass
             now = datetime.datetime.now().strftime("%H:%M:%S")
+            if cmd == "name":
+                if name and rename_session(name):
+                    append(f"[{now}] ===== NAME {name} =====")
+                continue
             append(f"[{now}] ===== COMMAND {cmd.upper()} {name} =====".replace("  ", " "))
             if cmd == "quit":
                 CMD.update(cmd="quit", name="")
@@ -759,6 +842,7 @@ def main():
     WRITER.run_flusher(5.0)
     threading.Thread(target=recorder_loop, daemon=True).start()
     threading.Thread(target=backfill_setup, daemon=True).start()
+    threading.Thread(target=lang_loop, daemon=True).start()
     threading.Timer(1.0, open_window).start()
     try:
         server.serve_forever()
