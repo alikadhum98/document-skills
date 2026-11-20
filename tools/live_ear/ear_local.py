@@ -19,7 +19,7 @@ except ImportError:
     raise SystemExit("ear_logic.py is missing: copy it next to ear_local.py")
 
 PORT = 8765
-VERSION = "web-2026-11-20d"
+VERSION = "web-2026-11-20e"
 
 
 def find_drive():
@@ -265,13 +265,18 @@ def recorder_loop():
 
 
 # ---------- automatic language: the room audio decides English or Arabic ----------
-LANG = {"w": None, "pending": None, "note": None, "noted": False}
+LANG = {"w": None, "pending": None, "note": None, "noted": False, "at": 0.0}
 
 
 def lang_loop():
     detect = L.whisper_language_detector("base", threads=1)
     if detect is not None:
         LANG["w"] = L.LanguageWatcher(STORE, detect)
+        try:  # load the model now, so the first switch in a session is not delayed by loading it
+            import numpy as np
+            detect(np.zeros(STORE.rate, np.float32))
+        except Exception:
+            pass
     while True:
         time.sleep(10)
         if not CURRENT["path"] or SESSION["lang"] != "auto":
@@ -294,7 +299,7 @@ def lang_loop():
             continue
         lang, since = r
         SESSION["cur"] = L.AUTO_LANGS[lang]
-        LANG["pending"] = SESSION["cur"]
+        LANG["pending"], LANG["at"] = SESSION["cur"], time.time()
         append(f"[{L.hms(since)}] ===== LANG {SESSION['cur']} auto =====")
         if BACKFILL["b"]:
             # the words spoken before the window switched are recovered from the stored audio
@@ -386,7 +391,7 @@ const LANG_NAMES={"en-US":"الإنكليزية","en-GB":"الإنكليزية",
 function recLang(){ return $("lang").value==="auto" ? autoLang : $("lang").value; }
 function showLang(){ $("lng").textContent = $("lang").value==="auto" ? (want ? LANG_NAMES[autoLang]+" (تلقائي)" : "تلقائي") : LANG_NAMES[$("lang").value]; }
 $("lang").value="auto";
-$("lang").onchange=()=>{ showLang(); if(want) forceRestart("lang"); };
+$("lang").onchange=()=>{ showLang(); if(want){ post("/lang",{lang:$("lang").value, cur:recLang()}); forceRestart("lang"); } };
 $("sname").addEventListener("focus",()=>$("sname").select());
 const pad=x=>String(x).padStart(2,"0");
 const hms=d=>pad(d.getHours())+":"+pad(d.getMinutes())+":"+pad(d.getSeconds());
@@ -497,7 +502,7 @@ setInterval(async()=>{
   try{
     const c=await (await fetch("/cmd")).json();
     if(c.alert){ warn(c.alert==="lmdc"?"تتكلم الآن مجموعة البلدان النامية المتشابهة التفكير":"تتكلم الآن المجموعة العربية"); beep(); setTimeout(()=>warn(""),60000); }
-    if(c.lang && $("lang").value==="auto" && c.lang!==autoLang){ autoLang=c.lang; try{localStorage.setItem("ear.autoLang",autoLang)}catch(e){} showLang(); if(want) forceRestart("lang"); }
+    if(c.lang && c.lang!==autoLang){ autoLang=c.lang; try{localStorage.setItem("ear.autoLang",autoLang)}catch(e){} showLang(); if(want && $("lang").value==="auto") forceRestart("lang"); }
     if(c.note==="no-detector") warn("التحديد التلقائي للغة يحتاج برنامج faster-whisper على الحاسوب، فالسماع مستمر بـ"+LANG_NAMES[autoLang]+". إن كانت الجلسة بلغة أخرى فاخترها من القائمة.");
     if(c.cmd==="start"){ if(c.name) $("sname").value=c.name; startListening(); }
     else if(c.cmd==="stop") stopListening();
@@ -528,7 +533,7 @@ $("quit").onclick=()=>{ want=false; try{rec&&rec.stop()}catch(e){} post("/quit",
 setInterval(()=>{
   if(!want){ post("/status",{state:"stopped",ok:true}); return; }
   const failing = !!(failingSince && Date.now()-failingSince>0);
-  post("/status",{state: failing?"failing":($("state").textContent==="تسمع الآن"?"listening":"restarting"), ok:!failing});
+  post("/status",{state: failing?"failing":($("state").textContent==="تسمع الآن"?"listening":"restarting"), ok:!failing, cur:recLang()});
 },10000);
 if(!SR) warn("هذا المتصفح لا يدعم التعرف على الكلام. افتح الصفحة في Edge أو Chrome.");
 </script></body></html>"""
@@ -620,8 +625,23 @@ class Handler(BaseHTTPRequestHandler):
             AWAKE["on"] = False
             stop_fallback("stopped")
             status("web-stopped")
+        elif self.path == "/lang":
+            # the language list was changed in the window: follow it, and in auto mode start from the language in use
+            SESSION["lang"] = str(data.get("lang") or "auto")
+            SESSION["cur"] = str(data.get("cur") or SESSION["cur"])
+            if LANG["w"]:
+                LANG["w"].reset("ar" if SESSION["cur"].startswith("ar") else "en")
+            if CURRENT["path"]:
+                append(f"[{now}] ===== LANG {SESSION['lang']} chosen in the window, in use {SESSION['cur']} =====")
         elif self.path == "/status":
             PAGE_STATE["seen"] = time.time()
+            cur = str(data.get("cur") or "")
+            w = LANG["w"]
+            if cur and SESSION["lang"] == "auto" and w and not LANG["pending"] and time.time() - LANG["at"] > 30:
+                fam = "ar" if cur.startswith("ar") else "en"
+                if fam != w.current:  # the window and the watcher disagree: trust what the window really uses
+                    w.current = fam
+                    SESSION["cur"] = cur
             PAGE_STATE["ok"] = data.get("ok", True) is not False
             state = str(data.get("state", "unknown"))[:20]
             if FALLBACK["proc"]:
