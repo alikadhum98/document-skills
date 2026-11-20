@@ -19,7 +19,7 @@ except ImportError:
     raise SystemExit("ear_logic.py is missing: copy it next to ear_local.py")
 
 PORT = 8765
-VERSION = "web-2026-11-20c"
+VERSION = "web-2026-11-20d"
 
 
 def find_drive():
@@ -721,7 +721,8 @@ def pc_setup():
         notes.append("autostart failed: " + str(e)[:60])
     # 2. stop the old standby ear if it is still running
     try:
-        r = ps("$p = Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match 'live_ear\\.py' -and $_.CommandLine -match '--standby' }; "
+        # the restart loop (run_standby.bat) goes first, or it starts the standby again after 15 seconds
+        r = ps("$p = Get-CimInstance Win32_Process | Where-Object { $_.ProcessId -ne $PID -and ($_.CommandLine -match 'run_standby\\.bat' -or ($_.CommandLine -match 'live_ear\\.py' -and $_.CommandLine -match '--standby')) }; "
                "$p | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }; ($p | Measure-Object).Count")
         n = (r.stdout or "0").strip().splitlines()[-1:] or ["0"]
         if n[0] not in ("", "0"):
@@ -797,7 +798,7 @@ def kill_other_copies():
     if os.name != "nt":
         return 0
     try:
-        r = ps("$me = %d; $p = Get-CimInstance Win32_Process | Where-Object { $_.ProcessId -ne $me -and $_.CommandLine -match 'ear_local\\.py' }; "
+        r = ps("$me = %d; $p = Get-CimInstance Win32_Process | Where-Object { $_.ProcessId -ne $me -and $_.ProcessId -ne $PID -and $_.CommandLine -match 'ear_local\\.py' }; "
                "$p | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }; ($p | Measure-Object).Count" % os.getpid())
         n = (r.stdout or "0").strip().splitlines()
         return int(n[-1]) if n and n[-1].isdigit() else 0
