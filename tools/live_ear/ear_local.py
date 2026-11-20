@@ -19,7 +19,7 @@ except ImportError:
     raise SystemExit("ear_logic.py is missing: copy it next to ear_local.py")
 
 PORT = 8765
-VERSION = "web-2026-11-20f"
+VERSION = "web-2026-11-20g"
 
 
 def find_drive():
@@ -216,7 +216,7 @@ BACKFILL = {"b": None}
 REC = {"on": False, "note": ""}
 
 
-SESSION = {"lang": "auto", "cur": "en-US"}  # the language chosen in the window, and the one in use when it is auto
+SESSION = {"lang": "auto", "cur": "en-US", "start": "", "last": ""}  # the language chosen in the window, and the one in use when it is auto
 
 
 def rec_lang():
@@ -265,7 +265,7 @@ def recorder_loop():
 
 
 # ---------- automatic language: the room audio decides English or Arabic ----------
-LANG = {"w": None, "pending": None, "note": None, "noted": False, "at": 0.0}
+LANG = {"w": None, "pending": None, "note": None, "noted": False, "at": 0.0, "logged": 0}
 
 
 def lang_loop():
@@ -295,7 +295,12 @@ def lang_loop():
             append(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] ===== LANG error: {str(e)[:80]} =====")
             time.sleep(50)
             continue
+        last = LANG["w"].last
         if not r:
+            # a reading that disagrees with the language in use is written down (20 per session), to see why no switch came
+            if last and last[0] != LANG["w"].current and LANG["logged"] < 20:
+                LANG["logged"] += 1
+                append(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] ===== LANG? heard {last[0]} {last[1]:.2f}, in use {SESSION['cur']} =====")
             continue
         lang, since = r
         SESSION["cur"] = L.AUTO_LANGS[lang]
@@ -596,6 +601,7 @@ class Handler(BaseHTTPRequestHandler):
             if text:
                 when = data.get("time") or now
                 tagged, alert = TRACKER["t"].tag(text)
+                SESSION["last"] = when
                 append(f"[{when}] {tagged}")
                 if alert:
                     raise_alert(alert, when)
@@ -610,7 +616,8 @@ class Handler(BaseHTTPRequestHandler):
             new_session(name or "session")
             SESSION["lang"] = str(data.get("lang") or "auto")
             SESSION["cur"] = str(data.get("cur") or "en-US")
-            LANG["pending"], LANG["noted"] = None, False
+            LANG["pending"], LANG["noted"], LANG["logged"] = None, False, 0
+            SESSION["start"], SESSION["last"] = now, now
             if LANG["w"]:
                 LANG["w"].reset("ar" if SESSION["cur"].startswith("ar") else "en")
             TRACKER["t"] = L.SpeakerTracker(L.load_aliases(os.path.join(HERE, "speakers.json")))
@@ -649,7 +656,9 @@ class Handler(BaseHTTPRequestHandler):
             status("web-" + state)
         elif self.path == "/open":
             what = "reply" if data.get("what") == "reply" else "summary"
-            webbrowser.open(PAGE_URL + "#" + what)
+            # the page waits until Drive has brought this session up to its last line
+            tag = ("-" + SESSION["start"].replace(":", "") + "-" + SESSION["last"].replace(":", "")) if SESSION["start"] else ""
+            webbrowser.open(PAGE_URL + "#" + what + tag)
         elif self.path == "/folder":
             os.makedirs(SESS_DIR, exist_ok=True)
             try:

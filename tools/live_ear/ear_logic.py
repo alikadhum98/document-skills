@@ -295,6 +295,7 @@ class LanguageWatcher:
         self.current = start_lang
         self.decided = False
         self.streak = [None, 0, 0.0]  # language, readings in a row, start of the first reading
+        self.last = None              # the latest reading: (language, probability)
 
     def step(self):
         """Returns (language, since) when the recogniser should switch, otherwise None."""
@@ -307,6 +308,7 @@ class LanguageWatcher:
         if float(np.sqrt(np.mean(np.square(audio)))) < self.min_rms:
             return None  # silence tells nothing
         lang, p = self.detect(audio)
+        self.last = (lang, p)
         if lang not in AUTO_LANGS:
             self.streak = [None, 0, 0.0]
             return None
