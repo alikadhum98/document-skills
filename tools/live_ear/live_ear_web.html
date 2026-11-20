@@ -133,7 +133,7 @@ button:disabled{opacity:.5;cursor:default}
     <div class="empty" id="empty">
       ١. اختر جلسة أو اكتب اسم جلسة جديدة ثم اضغط (ابدأ السماع).<br>
       ٢. افتح الرابط نفسه على الهاتف في Chrome وضعه قرب المتكلم، واختر الجلسة نفسها، فيكتب الجهازان في نص واحد.<br>
-      ٣. زر (رد) يصوغ مداخلة على آخر ما قيل، وزر (ملخص) يجمع ما قيل حتى الآن.
+      ٣. زر (رد) يقترح ما تقوله الآن، وزر (ملخص) يجمع ما قيل حتى الآن. وكلاهما يتبع نوع الجلسة كما يفهم من الكلام نفسه: مداخلة في التفاوض، وسؤال في الورشة، ونقطة في اجتماع العمل، وجواب في المقابلة.
     </div>
   </div>
 
@@ -492,6 +492,7 @@ button:disabled{opacity:.5;cursor:default}
   5. If a speaker in the room says something that contradicts what the reference records, or adds something new to it, write one Arabic line before the intervention starting with (تنبيه:) naming the speaker and the point.
   6. Never name the Enhanced Transparency Framework or its abbreviation. Describe the idea instead.
   7. The transcript is automatic speech recognition and may contain errors. Infer the meaning, never invent facts.
+  8. If nothing said in the transcript calls for a reply from Iraq, output ONLY one Arabic line saying so. Do not draft a backup or prepared intervention.
 
   Output in this plain-text layout, no markdown symbols:
   <optional تنبيه line>
@@ -528,11 +529,12 @@ button:disabled{opacity:.5;cursor:default}
       ? "At "+n.time+" the room language changed and the recogniser switched to "+n.lang+". Lines just before that time may be garbage from the wrong language: prefer the (تكملة) lines covering the same minutes."
       : "At "+n.time+" recognition stopped for "+n.secs+" seconds"+(n.recovered?" and the stretch was recovered from the stored audio (lines marked (تكملة)).":" and was NOT recovered."));
     const minutes = lines.length>1 ? Math.round((lines[lines.length-1].t-lines[0].t)/60000) : 0;
-    return "Below is a live, imperfect speech-to-text transcript captured by the listening tool of an Iraqi official who works on climate change at Iraq's Ministry of Environment (mitigation, Article 6 of the Paris Agreement, greenhouse gas inventory, climate finance). "
+    return "Below is a live, imperfect speech-to-text transcript captured by the listening tool of an Iraqi government official. "
     + "The session can be of any kind, and you must infer its kind from the content itself, never from habit: a UN negotiation session, a closed coordination meeting of a negotiating group, a workshop or lecture or side event, a work meeting (internal or with another party), an interview or media event, or something else, including a test of the tool.\n"
     + "Session name: "+(name?"("+name+")":"none given")+". Transcript length: about "+lines.length+" lines over "+minutes+" minutes.\n"
     + "Reading the transcript: recognition errors are likely, so infer the meaning and never invent facts. A line starting with [المتكلم: X] names the speaker inferred from the chair's words. A line marked (تكملة) was recovered later from the recorded audio and carries its original time.\n"
     + (notes.length ? "Recording notes:\n"+notes.map((n,i)=>(i+1)+". "+n).join("\n")+"\n" : "")
+    + "Write only about what was said. Never mention subjects the session did not touch, and never list what it did not cover.\n"
     + "\nWrite in Arabic, plain text, no markdown symbols, in this order:\n"
     + "First line: (نوع الجلسة: <kind and topic in a few words>).\n"
     + (name ? "" : "Second line: (اسم مقترح: <a short name for this session from its topic, at most six words, in the language of the session>).\n")
@@ -550,6 +552,35 @@ button:disabled{opacity:.5;cursor:default}
     + "Length follows the content: when the transcript is under about two minutes or under about eight lines, write only the first line(s) and الخلاصة. Do not pad.\n"
     + "Last line, only when a recording note says a stretch was NOT recovered: (فجوة في التسجيل: <from time> لمدة <seconds> ثانية).\n"
     + HOUSE + "\n\nTRANSCRIPT:\n" + lines.map(l=>"["+l.time+"] "+l.text).join("\n");
+  }
+  const KIND_AR={negotiation:"جلسة تفاوضية",coordination:"اجتماع تنسيق",workshop:"ورشة أو محاضرة أو فعالية",work_meeting:"اجتماع عمل",interview:"مقابلة أو لقاء إعلامي",test:"تجربة للأداة",other:"عام"};
+  // what kind of session is this, judged from the words in the room only
+  async function classifySession(tr, name, signal){
+    const v = await sample.json("Classify a live, imperfect speech-to-text transcript. Judge only from what is said in it, never from the listener's job or from the session name alone.\n"
+      + "Return JSON only: {\"kind\": one of \"negotiation\", \"coordination\", \"workshop\", \"work_meeting\", \"interview\", \"test\", \"other\", "
+      + "\"climate_negotiation\": true only when the talk is about an item negotiated in the UN climate process (UNFCCC, Paris Agreement, COP or subsidiary bodies), otherwise false, "
+      + "\"language\": \"ar\" or \"en\" for the main language spoken}.\n"
+      + "kind: negotiation = parties negotiating text or positions with a chair. coordination = a negotiating group agreeing its line among members. workshop = a presentation, lecture, panel or side event. work_meeting = people working on tasks, decisions or plans. interview = questions put to one person, or media. test = someone trying the recording tool or casual talk with no real subject. other = anything else.\n"
+      + "Session name (may be empty or unrelated): ("+(name||"")+")\nTRANSCRIPT:\n"+tr, {modelTier:"quick", signal, cache:false});
+    return (v && typeof v==="object") ? v : {};
+  }
+  // a reply for any session that is not a UN climate negotiation: the kind decides what the official could say
+  function genericReplyPrompt(kindHint, name, tr){
+    return "You help an Iraqi government official take part in a live session. Below is a live, imperfect speech-to-text transcript of its last minutes. Recognition errors are likely: infer the meaning, never invent facts, figures or positions that are not in the transcript.\n"
+    + "Session name: "+(name?"("+name+")":"none given")+". "+(kindHint?"A quick reading classed the session as ("+kindHint+"), but judge from the transcript itself. ":"Infer the kind of session from the transcript itself. ")
+    + "Never draw on the official's job or on any subject that was not discussed.\n"
+    + "Write what the official could say now, fitted to the kind of session:\n"
+    + "1. Workshop, lecture, panel or side event: one short, well aimed question to the speaker, or a short comment that moves the discussion forward.\n"
+    + "2. Work meeting: a practical point to raise, or a response to what was just said.\n"
+    + "3. Interview or media: a suggested answer to the last question, short, cautious and quotable.\n"
+    + "4. A group coordinating its line, or a negotiation outside the UN climate process: a short statement.\n"
+    + "5. A test of the recording tool, casual talk, or nothing that calls for a reply: output ONLY one Arabic line saying that no reply is needed, and nothing else.\n"
+    + "Commit Iraq to nothing, and stay neutral wherever its position is unknown.\n"
+    + "Output in plain text, no markdown symbols:\n"
+    + "الخلاصة: one Arabic line naming the point you react to and who raised it, when identifiable.\n"
+    + "النص: 25 to 80 words in the main language of the session (Modern Standard Arabic when the session is in Arabic), ready to say aloud.\n"
+    + "الترجمة: the Arabic translation, only when النص is not in Arabic.\n"
+    + HOUSE + "\n\nTRANSCRIPT:\n" + tr;
   }
   // a session started without a name takes the name the summary suggests
   async function nameFromSummary(text){
@@ -592,13 +623,21 @@ button:disabled{opacity:.5;cursor:default}
     }
     let refNote="";
     if(kind==="reply"){
-      ui.out.hidden=false; ui.outTitle.textContent="رد"; ui.outText.textContent="أقرأ مرجع المداخلات من Drive..."; ui.outNote.textContent="";
-      try{
+      ui.out.hidden=false; ui.outTitle.textContent="رد"; ui.outText.textContent="أتعرف على نوع الجلسة..."; ui.outNote.textContent="";
+      let cls={};
+      try{ cls = await classifySession(recentText(300), sessName, genCtl.signal); }
+      catch(e){ if(e&&e.code==="cancelled"){ ui.outText.textContent=""; return; } }
+      const climate = cls.climate_negotiation===true && (cls.kind==="negotiation" || cls.kind==="coordination");
+      refNote = cls.kind ? "نوع الجلسة المستنتج: "+(KIND_AR[cls.kind]||cls.kind)+". " : "";
+      if(!climate){
+        prompt = genericReplyPrompt(cls.kind||"", realName(sessName), recentText(300));
+      } else try{
+        ui.outText.textContent="أقرأ مرجع المداخلات من Drive...";
         const ref=await loadReference(mcp);
         const tr=recentText(300), pick=pickReferenceItem(ref,tr);
         prompt=referenceReplyPrompt(ref,pick,tr,sessName);
-        refNote="المرجع "+((ref.meta&&ref.meta.version)||"")+"، "+(pick.item?("البند: "+(pick.item.title||pick.item.id)):"لم يطابق بند، طبقت قاعدة أقرب موقف")+". ";
-      }catch(e){ refNote=referenceErrorText(e)+" "; }
+        refNote+="المرجع "+((ref.meta&&ref.meta.version)||"")+"، "+(pick.item?("البند: "+(pick.item.title||pick.item.id)):"لم يطابق بند، طبقت قاعدة أقرب موقف")+". ";
+      }catch(e){ refNote+=referenceErrorText(e)+" "; }
     }
     ui.out.hidden=false; ui.outTitle.textContent = kind==="reply"?"رد":"ملخص"; ui.outText.textContent="جار الصياغة..."; ui.outNote.textContent=refNote;
     ui.stopGen.hidden=false; ui.reply.disabled=ui.sum.disabled=true;
