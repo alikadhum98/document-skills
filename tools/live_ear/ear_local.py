@@ -19,7 +19,7 @@ except ImportError:
     raise SystemExit("ear_logic.py is missing: copy it next to ear_local.py")
 
 PORT = 8765
-VERSION = "web-2026-11-20e"
+VERSION = "web-2026-11-20f"
 
 
 def find_drive():
@@ -278,7 +278,7 @@ def lang_loop():
         except Exception:
             pass
     while True:
-        time.sleep(10)
+        time.sleep(5)  # two readings in a row decide a switch: about ten seconds
         if not CURRENT["path"] or SESSION["lang"] != "auto":
             continue
         if LANG["w"] is None:
