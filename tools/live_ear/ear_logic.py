@@ -261,9 +261,21 @@ def language_transcriber(session_lang, threads=2):
 AUTO_LANGS = {"en": "en-US", "ar": "ar-IQ"}  # recogniser used for each detected language
 
 
+def two_way(probs, floor=0.15):
+    """English against Arabic only. Whisper spreads its belief over a hundred languages, so accented
+    English can read 0.27 English, 0.05 Arabic and the rest scattered: absolute numbers say little,
+    the ratio of the two candidates says a lot. Returns (language, share of the two) or ("other", 0)
+    when neither is really heard (silence, noise, a third language)."""
+    pe, pa = float(probs.get("en", 0.0)), float(probs.get("ar", 0.0))
+    if pe + pa < floor:
+        return "other", 0.0
+    return ("en", pe / (pe + pa)) if pe >= pa else ("ar", pa / (pe + pa))
+
+
 def whisper_language_detector(model_name="base", threads=1):
     """A detect(audio) -> (language, probability) backed by faster-whisper, or None.
-    Only the language is computed: the transcript is never decoded."""
+    Only the language is computed: the transcript is never decoded. The probability is
+    the two-way share between English and Arabic (see two_way)."""
     try:
         from faster_whisper import WhisperModel
     except ImportError:
@@ -274,7 +286,8 @@ def whisper_language_detector(model_name="base", threads=1):
         if "m" not in holder:
             holder["m"] = WhisperModel(model_name, device="cpu", compute_type="int8", cpu_threads=threads)
         _, info = holder["m"].transcribe(audio, beam_size=1, vad_filter=False)
-        return info.language, float(info.language_probability)
+        probs = dict(getattr(info, "all_language_probs", None) or [(info.language, info.language_probability)])
+        return two_way(probs)
     return run
 
 
@@ -286,7 +299,7 @@ class LanguageWatcher:
     quotation inside an Arabic meeting does not flip the recogniser back and forth.
     Other languages and silence are ignored."""
 
-    def __init__(self, store, detect, window=8.0, quick_prob=0.8, prob=0.6, need=2, min_rms=0.004, clock=time.time):
+    def __init__(self, store, detect, window=8.0, quick_prob=0.85, prob=0.7, need=2, min_rms=0.004, clock=time.time):
         self.store, self.detect, self.window = store, detect, window
         self.quick_prob, self.prob, self.need, self.min_rms, self.clock = quick_prob, prob, need, min_rms, clock
         self.reset("en")

@@ -200,6 +200,13 @@ class LanguageTests(unittest.TestCase):
         self.assertEqual(self.run_steps(w, clock, t0, 60), [])
         self.assertEqual(w.current, "en")
 
+    def test_two_way_reading(self):
+        # what the PC heard on 20/11: accented English read only 0.27 English with Arabic far behind
+        self.assertEqual(L.two_way({"en": 0.27, "ar": 0.04, "nn": 0.1})[0], "en")
+        self.assertGreater(L.two_way({"en": 0.27, "ar": 0.04})[1], 0.85)
+        self.assertEqual(L.two_way({"nn": 0.27, "en": 0.05, "ar": 0.04}), ("other", 0.0))
+        self.assertEqual(L.two_way({"ar": 0.6, "en": 0.2})[0], "ar")
+
     def test_backfill_uses_the_job_language(self):
         seen = []
         with tempfile.TemporaryDirectory() as d:

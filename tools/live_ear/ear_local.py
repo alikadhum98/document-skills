@@ -19,7 +19,7 @@ except ImportError:
     raise SystemExit("ear_logic.py is missing: copy it next to ear_local.py")
 
 PORT = 8765
-VERSION = "web-2026-11-20g"
+VERSION = "web-2026-11-20h"
 
 
 def find_drive():
@@ -300,7 +300,7 @@ def lang_loop():
             # a reading that disagrees with the language in use is written down (20 per session), to see why no switch came
             if last and last[0] != LANG["w"].current and LANG["logged"] < 20:
                 LANG["logged"] += 1
-                append(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] ===== LANG? heard {last[0]} {last[1]:.2f}, in use {SESSION['cur']} =====")
+                append(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] ===== LANG? heard {last[0]} {last[1]:.2f} of English and Arabic, in use {SESSION['cur']} =====")
             continue
         lang, since = r
         SESSION["cur"] = L.AUTO_LANGS[lang]
