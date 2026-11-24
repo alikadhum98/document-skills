@@ -183,6 +183,35 @@ class AudioStore:
                 except OSError:
                     pass
 
+# ---------------------------------------------------------------- shared models and one heavy job at a time
+
+_MODELS, _MODELS_LOCK = {}, threading.Lock()
+HEAVY = threading.Lock()   # gap backfill and accurate pass never run together: the PC had memory for about one model (24/11)
+
+
+def load_model(name, threads=2):
+    """One copy of each Whisper model for the whole program, loaded on first use."""
+    from faster_whisper import WhisperModel
+    with _MODELS_LOCK:
+        m = _MODELS.get(name)
+        if m is None:
+            m = _MODELS[name] = WhisperModel(name, device="cpu", compute_type="int8", cpu_threads=threads)
+        return m
+
+
+def release_models(keep=("base",)):
+    """Frees every model except those named in keep (the small language detector by default)."""
+    with _MODELS_LOCK:
+        for k in [k for k in _MODELS if k not in keep]:
+            del _MODELS[k]
+    import gc
+    gc.collect()
+
+
+def loaded_models():
+    with _MODELS_LOCK:
+        return sorted(_MODELS)
+
 # ---------------------------------------------------------------- backfill
 
 BACKFILL_REASONS = ("network", "stall", "start-failed", "browser")
@@ -209,8 +238,8 @@ def hms(ts):
 class Backfiller:
     """Transcribes stored audio for gaps the browser missed, one gap at a time."""
 
-    def __init__(self, store, transcribe, write, chunk_secs=30, settle=3.0, sleep=time.sleep, clock=time.time):
-        self.store, self.transcribe, self.write = store, transcribe, write
+    def __init__(self, store, transcribe, write, chunk_secs=30, settle=3.0, sleep=time.sleep, clock=time.time, release=None):
+        self.store, self.transcribe, self.write, self.release = store, transcribe, write, release
         self.chunk_secs, self.settle, self.sleep, self.clock = chunk_secs, settle, sleep, clock
         self.jobs = queue.Queue()
 
@@ -228,6 +257,14 @@ class Backfiller:
         wait = end + self.settle - self.clock()
         if wait > 0:
             self.sleep(wait)
+        with HEAVY:
+            try:
+                return self._job(start, end, lang)
+            finally:
+                if self.release:
+                    self.release()
+
+    def _job(self, start, end, lang):
         audio = self.store.extract(start, end)
         rate = self.store.rate
         if not len(audio):
@@ -268,12 +305,8 @@ def whisper_transcriber(model_name="small.en", threads=2, language="en"):
         from faster_whisper import WhisperModel
     except ImportError:
         return None
-    holder = {}
-
     def run(audio):
-        if "m" not in holder:
-            holder["m"] = WhisperModel(model_name, device="cpu", compute_type="int8", cpu_threads=threads)
-        segs, _ = holder["m"].transcribe(audio, language=language, beam_size=1, vad_filter=True,
+        segs, _ = load_model(model_name, threads).transcribe(audio, language=language, beam_size=1, vad_filter=True,
                                           condition_on_previous_text=False)
         return [(s.start, s.text) for s in segs if s.avg_logprob > -1.5 and s.compression_ratio < 2.4]
     return run
@@ -315,12 +348,8 @@ def whisper_language_detector(model_name="base", threads=1):
         from faster_whisper import WhisperModel
     except ImportError:
         return None
-    holder = {}
-
     def run(audio):
-        if "m" not in holder:
-            holder["m"] = WhisperModel(model_name, device="cpu", compute_type="int8", cpu_threads=threads)
-        _, info = holder["m"].transcribe(audio, beam_size=1, vad_filter=False)
+        _, info = load_model(model_name, threads).transcribe(audio, beam_size=1, vad_filter=False)
         probs = dict(getattr(info, "all_language_probs", None) or [(info.language, info.language_probability)])
         return two_way(probs)
     return run
@@ -414,13 +443,10 @@ def accurate_transcriber(model_name=ACCURATE_MODEL, threads=None, fast_en="small
     except ImportError:
         return None
     threads = threads or max(2, os.cpu_count() or 4)
-    holder = {}
     det = whisper_language_detector(detect_model, threads)
 
     def model(name):
-        if name not in holder:
-            holder[name] = WhisperModel(name, device="cpu", compute_type="int8", cpu_threads=threads)
-        return holder[name]
+        return load_model(name, threads)
 
     def run(piece):
         lang, p = det(piece) if det else ("other", 0.0)
@@ -439,13 +465,7 @@ def accurate_transcriber(model_name=ACCURATE_MODEL, threads=None, fast_en="small
         return lang, [(s.start, s.text) for s in segs
                       if s.avg_logprob > -1.0 and s.no_speech_prob < 0.6 and s.compression_ratio < 2.4]
 
-    def release():
-        """Frees the models: kept loaded, the large one left too little memory for the gap
-        backfill on the PC (mkl_malloc: failed to allocate memory, 24/11)."""
-        holder.clear()
-        import gc
-        gc.collect()
-    run.release = release
+    run.release = release_models
     return run
 
 

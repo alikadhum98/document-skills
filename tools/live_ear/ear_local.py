@@ -19,7 +19,7 @@ except ImportError:
     raise SystemExit("ear_logic.py is missing: copy it next to ear_local.py")
 
 PORT = 8765
-VERSION = "web-2026-11-24h"
+VERSION = "web-2026-11-24i"
 
 
 def find_drive():
@@ -236,7 +236,7 @@ def backfill_setup():
     if tr is None:
         append(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] ===== BACKFILL unavailable: faster-whisper not installed =====")
         return
-    BACKFILL["b"] = L.Backfiller(STORE, tr, append)
+    BACKFILL["b"] = L.Backfiller(STORE, tr, append, release=L.release_models)
     BACKFILL["b"].run_forever()
 
 
@@ -334,6 +334,25 @@ def queue_accurate():
     ACCURATE["q"].put(job)
 
 
+def memory_note():
+    """Free and total memory of the PC, written next to the accurate pass to explain failures."""
+    if os.name != "nt":
+        return "memory unknown"
+    try:
+        import ctypes
+
+        class MS(ctypes.Structure):
+            _fields_ = [("len", ctypes.c_ulong), ("load", ctypes.c_ulong), ("total", ctypes.c_ulonglong),
+                        ("free", ctypes.c_ulonglong), ("tp", ctypes.c_ulonglong), ("fp", ctypes.c_ulonglong),
+                        ("tv", ctypes.c_ulonglong), ("fv", ctypes.c_ulonglong), ("fe", ctypes.c_ulonglong)]
+        m = MS()
+        m.len = ctypes.sizeof(MS)
+        ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(m))
+        return f"memory free {m.free / 2**30:.1f} of {m.total / 2**30:.1f} GB"
+    except Exception:
+        return "memory unknown"
+
+
 def background_priority(low):
     """Below-normal priority while the large model works, so Edge, Drive and the window stay responsive."""
     if os.name != "nt":
@@ -352,10 +371,12 @@ def accurate_loop():
         AWAKE["work"] += 1          # the PC must not sleep before the accurate pass ends
         background_priority(True)
         try:
-            accurate_job(job)
+            with L.HEAVY:              # waits for any gap backfill to finish: one model in memory at a time
+                L.release_models()
+                append(f"[{L.hms(time.time())}] ===== ACCURATE begins, {memory_note()} =====")
+                accurate_job(job)
         finally:
-            if ACCURATE["tr"] is not None and hasattr(ACCURATE["tr"], "release"):
-                ACCURATE["tr"].release()   # the models load again for the next pass, in under a minute
+            L.release_models()         # the models load again for the next pass, in under a minute
             AWAKE["work"] -= 1
             background_priority(False)
 
@@ -933,6 +954,7 @@ def kill_other_copies():
 
 def main():
     rotate_transcript()   # first, before any startup line: an earlier day's file is archived under its own date
+    append(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] ===== MEM {memory_note()} =====")
     killed = kill_other_copies()
     if killed:
         time.sleep(1.5)
