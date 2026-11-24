@@ -19,6 +19,7 @@ description: بدء مؤتمر أو دورة تفاوضية وختامها. تش
 ٦. ولد نصي المهمتين:
    `python3 .claude/skills/conference-lifecycle/scripts/conference.py prompts <ID>`
    ثم أنشئ كل مهمة بـ create_trigger بالاسم والنص وسطر الجدولة كما خرجت، مرتبطة بهذه المحادثة. وإن خرج أكثر من سطر جدولة (مؤتمر يمتد على شهرين) فمهمة لكل سطر. واكتب المعرفات في `triggers`.
+٦أ. مهمة ENB على الحاسوب: من الناتج نفسه خذ `enb_desktop`، وأعطه للمستخدم في كتلة code ليلصقه في تطبيق Claude على حاسوبه ويطلب جعله مهمة مجدولة بالسطر المذكور في cron. فالجلسة السحابية لا تفتح موقع ENB ولا تنشئ مهام الحاسوب. واكتب في `triggers.enb_desktop` اسم المهمة وأنها على الحاسوب.
 ٧. افحص: `python3 .claude/skills/conference-lifecycle/scripts/conference.py check <ID>` حتى تكون قائمة missing فارغة.
 ٨. اعرض `playbook/checklist_pre_travel.md` بندا بندا، وسجل ما بقي معلقا في `references/open_items.md`.
 ٩. اجعل `status` active في أول أيام المؤتمر، وcommit ثم push.

@@ -59,6 +59,7 @@ def fill(text, c):
         "coordination_from": scope.get("coordination_from", c["start"]),
         "g77_query": c.get("mail_queries", {}).get("g77", ""),
         "news_mail": " أو ".join(n["mail"] for n in c.get("news_sources", [])) or "لا مصادر",
+        "enb_folder": c["drive"].get("news_folders", {}).get("enb", {}).get("id", "") or "(أنشئ مجلد ENB أولا)",
         "g77_prefix": c.get("calendar_prefixes", {}).get("g77", "G77:"),
         "krisp_tag": c.get("krisp", {}).get("tag", c["id"]),
         "repo_daily": c["repo"]["daily"],
@@ -80,7 +81,10 @@ def prompts(cid):
                     "cron": crons(start, end + dt.timedelta(days=1), *MORNING, tz)},
         "evening": {"name": f"{cid} خلاصة المساء وأوراق الغد", "prompt": fill((PROMPTS / "evening.md").read_text(encoding="utf-8"), c),
                     "cron": crons(start - dt.timedelta(days=1), end, *EVENING, tz)},
-        "note": "cron lines repeat every year: disable both tasks at (اختم المؤتمر).",
+        "enb_desktop": {"name": f"{cid} حفظ تقارير ENB", "prompt": fill((PROMPTS / "enb_desktop.md").read_text(encoding="utf-8"), c),
+                        "cron": crons(start, end + dt.timedelta(days=4), 7, 41, tz),
+                        "where": "Claude desktop app on the user's PC (Cowork scheduled task with Claude in Chrome), not a cloud trigger"},
+        "note": "cron lines repeat every year: disable all tasks at (اختم المؤتمر).",
     }
 
 

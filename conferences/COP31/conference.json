@@ -154,6 +154,11 @@
     "follow_results": {
       "id": "trig_01XmeCzxgVBGSQMxdiMVTwhR",
       "name": "نتائج المتابعة الحية"
+    },
+    "enb_desktop": {
+      "name": "COP31 حفظ تقارير ENB",
+      "where": "تطبيق Claude على حاسوب المستخدم",
+      "status": "لم تنشأ، والتشغيل الآن مرة واحدة لاستدراك تقارير COP31"
     }
   },
   "artifacts": {
