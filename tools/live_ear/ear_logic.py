@@ -402,7 +402,7 @@ def quiet_cuts(audio, rate, target=28.0, search=6.0, win=0.1):
     return cuts
 
 
-def accurate_transcriber(model_name=ACCURATE_MODEL, threads=4):
+def accurate_transcriber(model_name=ACCURATE_MODEL, threads=None):
     """A transcribe(piece) -> (language, [(offset, text)]) for the accurate pass, or None.
     Each piece gets its own language, English or Arabic only (two_way), so a mixed meeting
     is read correctly. Arabic pieces are nudged toward Iraqi speech by an initial prompt."""
@@ -411,12 +411,15 @@ def accurate_transcriber(model_name=ACCURATE_MODEL, threads=4):
     except ImportError:
         return None
     holder = {}
+    threads = threads or max(2, os.cpu_count() or 4)
 
     def run(piece):
         if "m" not in holder:
             holder["m"] = WhisperModel(model_name, device="cpu", compute_type="int8", cpu_threads=threads)
         m = holder["m"]
-        segs, info = m.transcribe(piece, beam_size=1, vad_filter=False)
+        # the large model itself decides the language of each piece: measured on 24/11, a small detector saved no time
+        # and lost speech (9 lines instead of 16 on a minute of far-field English)
+        _, info = m.transcribe(piece, beam_size=1, vad_filter=False)
         probs = dict(getattr(info, "all_language_probs", None) or [(info.language, info.language_probability)])
         lang, _ = two_way(probs)
         if lang == "other":

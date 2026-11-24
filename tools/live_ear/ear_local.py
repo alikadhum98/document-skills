@@ -19,7 +19,7 @@ except ImportError:
     raise SystemExit("ear_logic.py is missing: copy it next to ear_local.py")
 
 PORT = 8765
-VERSION = "web-2026-11-24b"
+VERSION = "web-2026-11-24c"
 
 
 def find_drive():
@@ -273,11 +273,12 @@ def recorder_loop():
 
 
 # ---------- automatic language: the room audio decides English or Arabic ----------
-LANG = {"w": None, "pending": None, "note": None, "noted": False, "at": 0.0, "logged": 0}
+LANG = {"w": None, "pending": None, "note": None, "noted": False, "at": 0.0, "logged": 0, "detect": None}
 
 
 def lang_loop():
     detect = L.whisper_language_detector("base", threads=1)
+    LANG["detect"] = detect
     if detect is not None:
         LANG["w"] = L.LanguageWatcher(STORE, detect)
         try:  # load the model now, so the first switch in a session is not delayed by loading it
@@ -338,7 +339,7 @@ def accurate_loop():
         job = ACCURATE["q"].get()
         if not ACCURATE["tried"]:
             ACCURATE["tried"] = True
-            ACCURATE["tr"] = L.accurate_transcriber(threads=4)
+            ACCURATE["tr"] = L.accurate_transcriber()   # all processor cores
         if ACCURATE["tr"] is None:
             append(f"[{L.hms(time.time())}] ===== ACCURATE unavailable: faster-whisper not installed =====")
             continue
@@ -350,8 +351,9 @@ def accurate_loop():
             append(f"[{L.hms(time.time())}] ===== ACCURATE error: {str(e)[:80]} =====")
             continue
         mins = round((time.time() - t0) / 60)
+        audio_mins = round((job["end"] - job["start"]) / 60, 1)
         block = [f"[{job['hms']}] ===== ACCURATE START session={job['hms']} model={L.ACCURATE_MODEL} ====="] + lines + \
-                [f"[{L.hms(job['end'])}] ===== ACCURATE END session={job['hms']} {len(lines)} سطر في {mins} دقيقة ====="]
+                [f"[{L.hms(job['end'])}] ===== ACCURATE END session={job['hms']} {len(lines)} سطر في {mins} دقيقة لصوت {audio_mins} دقيقة ====="]
         WRITER.append_many(block)   # one block on Drive: no live line of a later session falls inside it
         if job["path"]:
             try:
@@ -891,6 +893,7 @@ def kill_other_copies():
 
 
 def main():
+    rotate_transcript()   # first, before any startup line: an earlier day's file is archived under its own date
     killed = kill_other_copies()
     if killed:
         time.sleep(1.5)
@@ -924,7 +927,6 @@ def main():
     threading.Thread(target=command_loop, args=(server,), daemon=True).start()
     threading.Thread(target=awake_loop, daemon=True).start()
     threading.Thread(target=fallback_loop, daemon=True).start()
-    rotate_transcript()
     WRITER.run_flusher(5.0)
     threading.Thread(target=recorder_loop, daemon=True).start()
     threading.Thread(target=backfill_setup, daemon=True).start()
