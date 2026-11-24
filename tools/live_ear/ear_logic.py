@@ -541,7 +541,7 @@ CUE_BEFORE = [  # the name comes after the cue
     r"i (?:now )?(?:see|have) (?:a flag (?:from|by) )",
     r"(?:the )?floor (?:goes|now goes) to",
     # Arabic, including Iraqi speech (هسه = now), after norm_ar
-    r"(?:اعطي |نعطي )?ب?(?:الكلمه|الدور) (?:الان |هسه |هسا )?(?:الي ?|ل)",
+    r"(?:اعطي |نعطي )?ب?(?:الكلمه|كلمه|الدور) (?:الان |هسه |هسا )?(?:الي ?|ل)",   # كلمه: the article is often lost in speech
     r"(?:ننتقل|نمر) (?:الان |هسه |هسا )?(?:الي ?|ل)",
     r"(?:المتحدث|المتكلم) (?:التالي|القادم)(?: هو| هي)?",
     r"(?:اعطي|نعطي) الكلمه(?: الان| هسه)?(?: الي)?",

@@ -237,6 +237,14 @@ class SpeakerTests(unittest.TestCase):
         r = self.run_lines(["نحتاج لمصر ولكل الدول دعما اكبر", "لكن الفقرة غير مقبولة"])
         self.assertEqual([x[0] for x in r], [None, None])
 
+    def test_cue_without_article_from_the_pc_test(self):
+        # the accurate pass of 24/11 wrote the cue without its article, joined to the speech that followed
+        t = L.SpeakerTracker()
+        t.tag("Thank you. Next on my list is the European Union")
+        line, _ = t.tag("كلمة الان للعراق. نحن الان في هذا الاجتماع نسلم بيانات الجرد قبل 31 آذار")
+        self.assertTrue(line.startswith("[المتكلم: Chair]"))
+        self.assertEqual(t.tag("ولقد انجزنا البلاغ الوطني الثاني")[0][:15], "[المتكلم: Iraq]")
+
     def test_garbled_group_names(self):
         t = L.SpeakerTracker()
         self.assertEqual(t.name_at_start("out space"), "AOSIS")
