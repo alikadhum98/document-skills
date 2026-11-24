@@ -402,31 +402,40 @@ def quiet_cuts(audio, rate, target=28.0, search=6.0, win=0.1):
     return cuts
 
 
-def accurate_transcriber(model_name=ACCURATE_MODEL, threads=None):
+def accurate_transcriber(model_name=ACCURATE_MODEL, threads=None, fast_en="small.en", detect_model="base", sure=0.85):
     """A transcribe(piece) -> (language, [(offset, text)]) for the accurate pass, or None.
-    Each piece gets its own language, English or Arabic only (two_way), so a mixed meeting
-    is read correctly. Arabic pieces are nudged toward Iraqi speech by an initial prompt."""
+    The large model is kept for Arabic, where the live recogniser is weak: measured on the PC on
+    24/11 it takes nine times the length of the audio. English pieces, which the live recogniser
+    already writes well, go to a fast English model. A small detector picks the language first;
+    when it is not sure, the large model decides, so no piece is dropped on a guess.
+    Arabic pieces are nudged toward Iraqi speech by an initial prompt."""
     try:
         from faster_whisper import WhisperModel
     except ImportError:
         return None
-    holder = {}
     threads = threads or max(2, os.cpu_count() or 4)
+    holder = {}
+    det = whisper_language_detector(detect_model, threads)
+
+    def model(name):
+        if name not in holder:
+            holder[name] = WhisperModel(name, device="cpu", compute_type="int8", cpu_threads=threads)
+        return holder[name]
 
     def run(piece):
-        if "m" not in holder:
-            holder["m"] = WhisperModel(model_name, device="cpu", compute_type="int8", cpu_threads=threads)
-        m = holder["m"]
-        # the large model itself decides the language of each piece: measured on 24/11, a small detector saved no time
-        # and lost speech (9 lines instead of 16 on a minute of far-field English)
-        _, info = m.transcribe(piece, beam_size=1, vad_filter=False)
-        probs = dict(getattr(info, "all_language_probs", None) or [(info.language, info.language_probability)])
-        lang, _ = two_way(probs)
+        lang, p = det(piece) if det else ("other", 0.0)
+        if lang == "other" or p < sure:
+            _, info = model(model_name).transcribe(piece, beam_size=1, vad_filter=False)
+            probs = dict(getattr(info, "all_language_probs", None) or [(info.language, info.language_probability)])
+            lang, _ = two_way(probs)
         if lang == "other":
             return lang, []
-        segs, _ = m.transcribe(piece, language=lang, beam_size=2, vad_filter=True,
-                               condition_on_previous_text=False,
-                               initial_prompt=AR_PROMPT if lang == "ar" else None)
+        if lang == "en":
+            segs, _ = model(fast_en).transcribe(piece, language="en", beam_size=2, vad_filter=True,
+                                                condition_on_previous_text=False)
+        else:
+            segs, _ = model(model_name).transcribe(piece, language="ar", beam_size=2, vad_filter=True,
+                                                   condition_on_previous_text=False, initial_prompt=AR_PROMPT)
         return lang, [(s.start, s.text) for s in segs
                       if s.avg_logprob > -1.0 and s.no_speech_prob < 0.6 and s.compression_ratio < 2.4]
     return run
