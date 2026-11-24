@@ -411,8 +411,8 @@ class LanguageWatcher:
 ACCURATE_MODEL = "large-v3-turbo"   # about 1.6 GB, downloaded once on first use
 AR_PROMPT = "اجتماع رسمي باللهجة العراقية والعربية الفصحى، فيه مصطلحات مناخ وطاقة."
 # names the fast English model mishears without help (24/11: "AUB Group" for Arab Group, "Eric" for Iraq)
-EN_PROMPT = ("UN climate negotiations. Thank you, Chair. The Arab Group, the LMDC, the G77 and China, Iraq, "
-             "the European Union, AOSIS, the African Group. Developing countries, adaptation, finance, capacity building.")
+# short on purpose: a long prompt made the English pass 60 % slower and dropped lines on far-field audio
+EN_PROMPT = "Arab Group, LMDC, G77, Iraq, Chair."
 
 
 def quiet_cuts(audio, rate, target=28.0, search=6.0, win=0.1):
@@ -434,6 +434,26 @@ def quiet_cuts(audio, rate, target=28.0, search=6.0, win=0.1):
     return cuts
 
 
+def speech_gaps(piece, spans, rate=16000, min_gap=3.0, min_rms=0.01):
+    """Stretches of a piece longer than min_gap seconds that no transcribed segment covers and
+    that hold sound (not silence). spans: [(start, end)] in seconds."""
+    import numpy as np
+    total = len(piece) / rate
+    edges, pos = [], 0.0
+    for st, en in sorted(spans):
+        if st - pos >= min_gap:
+            edges.append((pos, st))
+        pos = max(pos, en)
+    if total - pos >= min_gap:
+        edges.append((pos, total))
+    out = []
+    for a, b in edges:
+        seg = piece[int(a * rate):int(b * rate)]
+        if len(seg) and float(np.sqrt(np.mean(np.square(seg)))) >= min_rms:
+            out.append((a, b))
+    return out
+
+
 def accurate_transcriber(model_name=ACCURATE_MODEL, threads=None, fast_en="small.en", detect_model="base", sure=0.85):
     """A transcribe(piece) -> (language, [(offset, text)]) for the accurate pass, or None.
     The large model is kept for Arabic, where the live recogniser is weak: measured on the PC on
@@ -451,7 +471,7 @@ def accurate_transcriber(model_name=ACCURATE_MODEL, threads=None, fast_en="small
     def model(name):
         return load_model(name, threads)
 
-    def run(piece):
+    def run(piece, depth=0):
         lang, p = det(piece) if det else ("other", 0.0)
         if lang == "other" or p < sure:
             _, info = model(model_name).transcribe(piece, beam_size=1, vad_filter=False)
@@ -466,8 +486,17 @@ def accurate_transcriber(model_name=ACCURATE_MODEL, threads=None, fast_en="small
             segs, _ = model(model_name).transcribe(piece, language="ar", beam_size=2, vad_filter=True,
                                                    condition_on_previous_text=False, initial_prompt=AR_PROMPT)
         # looser than before: on 24/11 a whole Arabic sentence with two dates was dropped by these filters
-        return lang, [(s.start, s.text) for s in segs
-                      if s.avg_logprob > -1.5 and s.no_speech_prob < 0.8 and s.compression_ratio < 2.4]
+        got = [(s.start, s.end, s.text) for s in segs
+               if s.avg_logprob > -1.5 and s.no_speech_prob < 0.8 and s.compression_ratio < 2.4]
+        if depth == 0:
+            # a piece that holds two languages comes back with holes: on 24/11 an English date before an
+            # Arabic cue, and the Arabic sentence after it, were missing. Each hole with speech in it is
+            # read again on its own, with its own language.
+            for a, b in speech_gaps(piece, [(g[0], g[1]) for g in got], min_gap=4.0)[:2]:   # at most two per piece
+                _, sub = run(piece[int(a * 16000):int(b * 16000)], depth=1)
+                got += [(a + off, a + off, text) for off, text in sub]
+            got.sort()
+        return lang, [(g[0], g[2]) for g in got]
 
     run.release = release_models
     return run

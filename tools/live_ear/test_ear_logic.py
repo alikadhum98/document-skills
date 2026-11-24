@@ -115,6 +115,14 @@ class AccurateTests(unittest.TestCase):
         self.assertTrue(lines[0].startswith(f"[{L.hms(t0 + 1)}] (دقيق) "))
         self.assertIn("[المتكلم: Arab Group]", lines[1])
 
+    def test_speech_gaps(self):
+        piece = np.full(25 * 16000, 0.2, np.float32)
+        piece[20 * 16000:] = 0.0                      # the last five seconds are silence
+        # covered 2 to 6 s: holes 0 to 2 (too short), 6 to 25 of which 20 to 25 is silent but joined
+        self.assertEqual(L.speech_gaps(piece, [(2.0, 6.0)]), [(6.0, 25.0)])
+        self.assertEqual(L.speech_gaps(piece, [(0.0, 20.0)]), [])          # only silence left
+        self.assertEqual(L.speech_gaps(piece, []), [(0.0, 25.0)])
+
     def test_errors_are_reported_not_swallowed(self):
         with tempfile.TemporaryDirectory() as d:
             st = L.AudioStore(d, rate=1000)
