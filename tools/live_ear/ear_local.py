@@ -19,7 +19,7 @@ except ImportError:
     raise SystemExit("ear_logic.py is missing: copy it next to ear_local.py")
 
 PORT = 8765
-VERSION = "web-2026-11-24c"
+VERSION = "web-2026-11-24d"
 
 
 def find_drive():
@@ -104,12 +104,12 @@ def list_sessions():
 
 
 # ---------- keep the PC awake while listening ----------
-AWAKE = {"on": False}
+AWAKE = {"on": False, "work": 0}   # work: background transcription jobs still running after stop
 
 
 def awake_loop():
     while True:
-        if AWAKE["on"] and os.name == "nt":
+        if (AWAKE["on"] or AWAKE["work"] > 0) and os.name == "nt":
             try:
                 import ctypes
                 ctypes.windll.kernel32.SetThreadExecutionState(0x00000001)  # ES_SYSTEM_REQUIRED
@@ -334,33 +334,56 @@ def queue_accurate():
     ACCURATE["q"].put(job)
 
 
+def background_priority(low):
+    """Below-normal priority while the large model works, so Edge, Drive and the window stay responsive."""
+    if os.name != "nt":
+        return
+    try:
+        import ctypes
+        k = ctypes.windll.kernel32
+        k.SetPriorityClass(k.GetCurrentProcess(), 0x00004000 if low else 0x00000020)  # BELOW_NORMAL / NORMAL
+    except Exception:
+        pass
+
+
 def accurate_loop():
     while True:
         job = ACCURATE["q"].get()
-        if not ACCURATE["tried"]:
-            ACCURATE["tried"] = True
-            ACCURATE["tr"] = L.accurate_transcriber()   # all processor cores
-        if ACCURATE["tr"] is None:
-            append(f"[{L.hms(time.time())}] ===== ACCURATE unavailable: faster-whisper not installed =====")
-            continue
-        t0 = time.time()
+        AWAKE["work"] += 1          # the PC must not sleep before the accurate pass ends
+        background_priority(True)
         try:
-            tracker = L.SpeakerTracker(L.load_aliases(os.path.join(HERE, "speakers.json")))
-            lines = L.accurate_pass(STORE, job["start"], job["end"], ACCURATE["tr"], tracker)
-        except Exception as e:
-            append(f"[{L.hms(time.time())}] ===== ACCURATE error: {str(e)[:80]} =====")
-            continue
-        mins = round((time.time() - t0) / 60)
-        audio_mins = round((job["end"] - job["start"]) / 60, 1)
-        block = [f"[{job['hms']}] ===== ACCURATE START session={job['hms']} model={L.ACCURATE_MODEL} ====="] + lines + \
-                [f"[{L.hms(job['end'])}] ===== ACCURATE END session={job['hms']} {len(lines)} سطر في {mins} دقيقة لصوت {audio_mins} دقيقة ====="]
-        WRITER.append_many(block)   # one block on Drive: no live line of a later session falls inside it
-        if job["path"]:
-            try:
-                with open(job["path"][:-4] + "_دقيق.txt", "w", encoding="utf-8") as f:
-                    f.write("\n".join(block) + "\n")
-            except OSError:
-                pass
+            accurate_job(job)
+        finally:
+            AWAKE["work"] -= 1
+            background_priority(False)
+
+
+def accurate_job(job):
+    if not ACCURATE["tried"]:
+        ACCURATE["tried"] = True
+        # half of the logical processors: on 24/11 every core made the PC stop syncing Drive for an hour
+        ACCURATE["tr"] = L.accurate_transcriber(threads=max(2, (os.cpu_count() or 4) // 2))
+    if ACCURATE["tr"] is None:
+        append(f"[{L.hms(time.time())}] ===== ACCURATE unavailable: faster-whisper not installed =====")
+        return
+    t0 = time.time()
+    try:
+        tracker = L.SpeakerTracker(L.load_aliases(os.path.join(HERE, "speakers.json")))
+        lines = L.accurate_pass(STORE, job["start"], job["end"], ACCURATE["tr"], tracker)
+    except Exception as e:
+        append(f"[{L.hms(time.time())}] ===== ACCURATE error: {str(e)[:80]} =====")
+        return
+    mins = round((time.time() - t0) / 60)
+    audio_mins = round((job["end"] - job["start"]) / 60, 1)
+    block = [f"[{job['hms']}] ===== ACCURATE START session={job['hms']} model={L.ACCURATE_MODEL} ====="] + lines + \
+            [f"[{L.hms(job['end'])}] ===== ACCURATE END session={job['hms']} {len(lines)} سطر في {mins} دقيقة لصوت {audio_mins} دقيقة ====="]
+    WRITER.append_many(block)   # one block on Drive: no live line of a later session falls inside it
+    if job["path"]:
+        try:
+            with open(job["path"][:-4] + "_دقيق.txt", "w", encoding="utf-8") as f:
+                f.write("\n".join(block) + "\n")
+        except OSError:
+            pass
 
 
 # ---------- speaker tags and the group alert ----------
