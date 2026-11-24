@@ -2459,6 +2459,438 @@
    "tone": "",
    "tactics": "",
    "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-18-enb-mwp-arab",
+   "date": "2026-11-18",
+   "session": "CMA informal consultations, Mitigation Work Programme",
+   "krisp": "",
+   "source": "ENB daily report 18/11 (Drive COP31/ENB/ENB_COP31_18Nov2026_daily.txt)",
+   "actor": "Arab Group",
+   "attribution": "enb_reported",
+   "attribution_note": "نسبته نشرة ENB، ولم يسمع في تسجيل.",
+   "camp": "ally",
+   "positions": [
+    "توسيع نطاق برنامج عمل التخفيف خط أحمر",
+    "فقرات تمهيدية تذكر المسؤوليات المشتركة المتباينة وأن البرنامج غير توجيهي وغير عقابي ولا يفرض أهدافا جديدة",
+    "خيار مختصر لنتائج الحوارين السابع والثامن يذكر التكنولوجيا والتمويل وبناء القدرات",
+    "رفض تقرير سنوي من الأمانة فيه خلاصة غير توجيهية",
+    "رفض الربط بالعمليات ومسارات العمل الأخرى"
+   ],
+   "formulations_en": [],
+   "tone": "5_red_line",
+   "tactics": "يحصر البرنامج في تبادل الخبرات ويمنع تحوله إلى أداة أهداف.",
+   "use_for_iraq": "موقف العراق في التخفيف يبنى عليه مباشرة، والخط الأحمر في النطاق معلن."
+  },
+  {
+   "id": "2026-11-18-enb-mwp-lmdc",
+   "date": "2026-11-18",
+   "session": "CMA informal consultations, Mitigation Work Programme",
+   "krisp": "",
+   "source": "ENB daily report 18/11 (Drive COP31/ENB/ENB_COP31_18Nov2026_daily.txt)",
+   "actor": "LMDC",
+   "attribution": "enb_reported",
+   "attribution_note": "نسبته نشرة ENB، ولم يسمع في تسجيل.",
+   "camp": "ally",
+   "positions": [
+    "فقرات تمهيدية عن المسؤوليات المشتركة المتباينة والطابع المحدد وطنيا",
+    "رفض توسيع النطاق",
+    "رفض الربط بالعمليات الأخرى",
+    "تأييد الخيار المختصر للنتائج"
+   ],
+   "formulations_en": [],
+   "tone": "4_strong_opposition",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-18-enb-mwp-dev",
+   "date": "2026-11-18",
+   "session": "CMA informal consultations, Mitigation Work Programme",
+   "krisp": "",
+   "source": "ENB daily report 18/11 (Drive COP31/ENB/ENB_COP31_18Nov2026_daily.txt)",
+   "actor": "European Union",
+   "attribution": "enb_reported",
+   "attribution_note": "نسبته نشرة ENB، ولم يسمع في تسجيل.",
+   "camp": "opponent",
+   "positions": [
+    "نطاق أوسع يشير إلى التقرير التقييمي السابع للهيئة الحكومية الدولية",
+    "رفض الخيار المختصر لنتائج الحوارات"
+   ],
+   "formulations_en": [],
+   "tone": "3_soft_opposition",
+   "tactics": "يربط البرنامج بالعلم الأحدث لفتح باب الأهداف.",
+   "use_for_iraq": "يرد عليه بأن الولاية في المقرر 4/CMA.4 لا تتضمن أهدافا ولا تقييما."
+  },
+  {
+   "id": "2026-11-18-enb-mwp-canuk",
+   "date": "2026-11-18",
+   "session": "CMA informal consultations, Mitigation Work Programme",
+   "krisp": "",
+   "source": "ENB daily report 18/11 (Drive COP31/ENB/ENB_COP31_18Nov2026_daily.txt)",
+   "actor": "Canada",
+   "attribution": "enb_reported",
+   "attribution_note": "نسبته نشرة ENB، ولم يسمع في تسجيل.",
+   "camp": "opponent",
+   "positions": [
+    "تقرير سنوي من الأمانة يعكس الحوارات ويتضمن خلاصة غير توجيهية",
+    "الربط بالعمليات ومسارات العمل الأخرى"
+   ],
+   "formulations_en": [],
+   "tone": "2_conditional_openness",
+   "tactics": "المملكة المتحدة والنرويج مع التقرير السنوي، وAOSIS وAILAC مع الربط.",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-19-enb-mwp-6.8-eujp",
+   "date": "2026-11-19",
+   "session": "CMA informal consultations, Article 6.8 review",
+   "krisp": "",
+   "source": "ENB daily report 19/11 (Drive COP31/ENB/ENB_COP31_19Nov2026_daily.txt)",
+   "actor": "European Union",
+   "attribution": "enb_reported",
+   "attribution_note": "نسبته نشرة ENB، ولم يسمع في تسجيل.",
+   "camp": "opponent",
+   "positions": [
+    "التشكيك في وجود ولاية لربط برنامج عمل التخفيف بالمادة 6.8 (ومعه اليابان)"
+   ],
+   "formulations_en": [],
+   "tone": "3_soft_opposition",
+   "tactics": "",
+   "use_for_iraq": "بيان المكتب القانوني للأمانة: المقرر 12/CMA.7 يلزم بالنظر في وظائف إضافية للمنصة وخيارات لها، ولا يلزم بتغييرها، وأي تغيير يحتاج مقررا."
+  },
+  {
+   "id": "2026-11-17-enb-68-arab",
+   "date": "2026-11-17",
+   "session": "CMA informal consultations, Article 6.8 review",
+   "krisp": "",
+   "source": "ENB daily report 17/11 (Drive COP31/ENB/ENB_COP31_17Nov2026_daily.txt)",
+   "actor": "Arab Group",
+   "attribution": "enb_reported",
+   "attribution_note": "نسبته نشرة ENB، ولم يسمع في تسجيل.",
+   "camp": "ally",
+   "positions": [
+    "حسم المسائل المركزية قبل القراءة فقرة فقرة، ومنها مستقبل البرنامج وتنفيذ مقرر برنامج عمل التخفيف",
+    "لا قبول لإنهاء برنامج العمل"
+   ],
+   "formulations_en": [],
+   "tone": "5_red_line",
+   "tactics": "مع المجموعة الأفريقية وLMDC.",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-16-enb-68-arab-16",
+   "date": "2026-11-16",
+   "session": "CMA informal consultations, Article 6.8 review",
+   "krisp": "",
+   "source": "ENB daily report 16/11 (Drive COP31/ENB/ENB_COP31_16Nov2026_daily.txt)",
+   "actor": "Arab Group",
+   "attribution": "enb_reported",
+   "attribution_note": "نسبته نشرة ENB، ولم يسمع في تسجيل.",
+   "camp": "ally",
+   "positions": [
+    "مساحة مخصصة في المنصة لنهج يشارك فيه طرف واحد"
+   ],
+   "formulations_en": [],
+   "tone": "1_support",
+   "tactics": "الأفريقية والبلدان غير الساحلية مع توسيع النطاق، وCfRN اقترحت تسجيله نهجا مقترحا حتى ينضم طرف آخر، والاتحاد الأوروبي مع النطاق الحالي.",
+   "use_for_iraq": "هذه هي مسألة العرض من طرف واحد المنقولة إلى بون."
+  },
+  {
+   "id": "2026-11-19-enb-62f-lmdc",
+   "date": "2026-11-19",
+   "session": "CMA informal consultations, funding arrangements Article 6.2",
+   "krisp": "",
+   "source": "ENB daily report 19/11 (Drive COP31/ENB/ENB_COP31_19Nov2026_daily.txt)",
+   "actor": "LMDC",
+   "attribution": "enb_reported",
+   "attribution_note": "نسبته نشرة ENB، ولم يسمع في تسجيل.",
+   "camp": "ally",
+   "positions": [
+    "رفض إنشاء صندوق استئماني للتبرعات في هذه المرحلة",
+    "نتيجة إجرائية بلا قرارات موضوعية",
+    "رفض دعوة الأطراف (القادرة على ذلك) إلى التبرع",
+    "تقرير فني بخيارات التمويل والإيرادات المتوقعة لخمس سنوات قبل أي قرار في الرسوم (17/11)",
+    "رفض كل عواقب عدم الدفع ورفض ربطه بعدم الاتساق (17/11)"
+   ],
+   "formulations_en": [],
+   "tone": "5_red_line",
+   "tactics": "",
+   "use_for_iraq": "الأطراف طلبت مذكرة معلومات من الأمانة عن مستويات الرسوم والتكاليف والإعفاءات وأثرها، والنص أحيل إلى 2027."
+  },
+  {
+   "id": "2026-11-17-enb-62f-arab",
+   "date": "2026-11-17",
+   "session": "CMA informal consultations, funding arrangements Article 6.2",
+   "krisp": "",
+   "source": "ENB daily report 17/11 (Drive COP31/ENB/ENB_COP31_17Nov2026_daily.txt)",
+   "actor": "Arab Group",
+   "attribution": "enb_reported",
+   "attribution_note": "نسبته نشرة ENB، ولم يسمع في تسجيل.",
+   "camp": "ally",
+   "positions": [
+    "إعفاء كل البلدان النامية من الرسوم",
+    "المشاركة لا تتوقف على القدرة على الدفع"
+   ],
+   "formulations_en": [],
+   "tone": "4_strong_opposition",
+   "tactics": "الاتحاد الأوروبي يحصر الإعفاء في أقل البلدان نموا والدول الجزرية.",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-19-enb-62f-ailac",
+   "date": "2026-11-19",
+   "session": "CMA informal consultations, funding arrangements Article 6.2",
+   "krisp": "",
+   "source": "ENB daily report 19/11 (Drive COP31/ENB/ENB_COP31_19Nov2026_daily.txt)",
+   "actor": "AILAC",
+   "attribution": "enb_reported",
+   "attribution_note": "نسبته نشرة ENB، ولم يسمع في تسجيل.",
+   "camp": "bridge",
+   "positions": [
+    "الاتفاق على هيكل رسوم أولي في هذه الدورة كي لا يتأخر تشغيل السجل الدولي والمراجعات الفنية",
+    "إعفاء كل البلدان النامية (17/11)"
+   ],
+   "formulations_en": [],
+   "tone": "2_conditional_openness",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-19-enb-62f-eu",
+   "date": "2026-11-19",
+   "session": "CMA informal consultations, funding arrangements Article 6.2",
+   "krisp": "",
+   "source": "ENB daily report 19/11 (Drive COP31/ENB/ENB_COP31_19Nov2026_daily.txt)",
+   "actor": "European Union",
+   "attribution": "enb_reported",
+   "attribution_note": "نسبته نشرة ENB، ولم يسمع في تسجيل.",
+   "camp": "opponent",
+   "positions": [
+    "صندوق استئماني للتبرعات وفق القواعد المالية للاتفاقية",
+    "خيارات وجداول زمنية لجعل البنية والعمليات ممولة ذاتيا تدريجيا"
+   ],
+   "formulations_en": [],
+   "tone": "2_conditional_openness",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-18-enb-64-lmdc",
+   "date": "2026-11-18",
+   "session": "CMA informal consultations, Article 6.4 guidance",
+   "krisp": "",
+   "source": "ENB daily report 18/11 (Drive COP31/ENB/ENB_COP31_18Nov2026_daily.txt)",
+   "actor": "LMDC",
+   "attribution": "enb_reported",
+   "attribution_note": "نسبته نشرة ENB، ولم يسمع في تسجيل.",
+   "camp": "ally",
+   "positions": [
+    "أولوية الأنشطة الأعلى جاهزية لا الأعلى إمكانات تخفيف",
+    "الإشارة إلى الآثار (التراكمية) للمنهجيات",
+    "تأجيل حدود مدد الأعضاء إلى مراجعة 2028 مع أولويتها فيها (17/11)",
+    "احترام الطابع المحدد وطنيا وعدم فرض مسارات وطنية أو قطاعية (17/11)"
+   ],
+   "formulations_en": [],
+   "tone": "2_conditional_openness",
+   "tactics": "الاتحاد الأوروبي عد الفقرة الأخيرة توجيها سياسيا لا تشغيليا.",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-18-enb-64-arab",
+   "date": "2026-11-18",
+   "session": "CMA informal consultations, Article 6.4 guidance",
+   "krisp": "",
+   "source": "ENB daily report 18/11 (Drive COP31/ENB/ENB_COP31_18Nov2026_daily.txt)",
+   "actor": "Arab Group",
+   "attribution": "enb_reported",
+   "attribution_note": "نسبته نشرة ENB، ولم يسمع في تسجيل.",
+   "camp": "ally",
+   "positions": [
+    "خيار (لا نص) في تسييل الوحدات المحولة إلى صندوق التكيف"
+   ],
+   "formulations_en": [],
+   "tone": "3_soft_opposition",
+   "tactics": "AOSIS أيدت النص على جواز التسييل وثبات حالة الإذن.",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-16-enb-jt-arab",
+   "date": "2026-11-16",
+   "session": "CMA contact group, Just Transition Work Programme",
+   "krisp": "",
+   "source": "ENB daily report 16/11 (Drive COP31/ENB/ENB_COP31_16Nov2026_daily.txt)",
+   "actor": "Arab Group",
+   "attribution": "enb_reported",
+   "attribution_note": "نسبته نشرة ENB، ولم يسمع في تسجيل.",
+   "camp": "ally",
+   "positions": [
+    "(الزراعة) لا (النظم الغذائية)",
+    "رفض ربط الأمن الغذائي بهدف 1.5 دون ذكر القضاء على الفقر",
+    "رفض لغة تسعير الكربون وإجراءات التسرب",
+    "الآثار السلبية للتدابير التجارية الأحادية",
+    "الآلية بقيادة الأطراف، غير توجيهية وغير عقابية، بلا التزامات إبلاغ جديدة ولا شروط",
+    "الدعم من المتقدمة إلى النامية دون زيادة الديون"
+   ],
+   "formulations_en": [],
+   "tone": "4_strong_opposition",
+   "tactics": "مع نيجيريا وإندونيسيا في طابع الآلية.",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-enb-jt-china",
+   "date": "2026-11-17",
+   "session": "CMA contact group, Just Transition Work Programme",
+   "krisp": "",
+   "source": "ENB daily report 17/11 (Drive COP31/ENB/ENB_COP31_17Nov2026_daily.txt)",
+   "actor": "China",
+   "attribution": "enb_reported",
+   "attribution_note": "نسبته نشرة ENB، ولم يسمع في تسجيل.",
+   "camp": "ally",
+   "positions": [
+    "هيئة منشأة مخصصة للآلية",
+    "الاعتراف بفجوة التنمية بين الشمال والجنوب"
+   ],
+   "formulations_en": [],
+   "tone": "4_strong_opposition",
+   "tactics": "الاتحاد الأوروبي عد الهيئة المنشأة خطا أحمر ورفض إطار تمويل جديد.",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-enb-jt-eu",
+   "date": "2026-11-17",
+   "session": "CMA contact group, Just Transition Work Programme",
+   "krisp": "",
+   "source": "ENB daily report 17/11 (Drive COP31/ENB/ENB_COP31_17Nov2026_daily.txt)",
+   "actor": "European Union",
+   "attribution": "enb_reported",
+   "attribution_note": "نسبته نشرة ENB، ولم يسمع في تسجيل.",
+   "camp": "opponent",
+   "positions": [
+    "هيئة منشأة مخصصة خط أحمر",
+    "رفض إطار تمويل جديد أو التزامات إضافية",
+    "ربط أقوى بهدف 1.5 وحقوق العمال (16/11)"
+   ],
+   "formulations_en": [],
+   "tone": "5_red_line",
+   "tactics": "كندا والمملكة المتحدة واليابان ونيوزيلندا مع دمج البرنامج في الآلية.",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-enb-rm-g77",
+   "date": "2026-11-17",
+   "session": "Contact group, response measures",
+   "krisp": "",
+   "source": "ENB daily report 17/11 (Drive COP31/ENB/ENB_COP31_17Nov2026_daily.txt)",
+   "actor": "G77",
+   "attribution": "enb_reported",
+   "attribution_note": "نسبته نشرة ENB، ولم يسمع في تسجيل.",
+   "camp": "ally",
+   "positions": [
+    "نشاط لتحليل الآثار وتقييمها ومنها الآثار العابرة للحدود",
+    "كل نواتج المنتدى ولجنة كاتوفيتشي تدخل في التقييم الفني للحصيلة الثانية",
+    "حذف الإشارة إلى الآثار في الميزانية",
+    "حذف فقرة العلم (16/11)"
+   ],
+   "formulations_en": [],
+   "tone": "4_strong_opposition",
+   "tactics": "الاتحاد الأوروبي وكندا: هذا يغير وظيفة الحصيلة.",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-16-enb-rm-arab",
+   "date": "2026-11-16",
+   "session": "Contact group, response measures",
+   "krisp": "",
+   "source": "ENB daily report 16/11 (Drive COP31/ENB/ENB_COP31_16Nov2026_daily.txt)",
+   "actor": "Arab Group",
+   "attribution": "enb_reported",
+   "attribution_note": "نسبته نشرة ENB، ولم يسمع في تسجيل.",
+   "camp": "ally",
+   "positions": [
+    "الإبقاء على نشاط المادة 3.5 من الاتفاقية (نظام اقتصادي دولي داعم ومفتوح)"
+   ],
+   "formulations_en": [],
+   "tone": "4_strong_opposition",
+   "tactics": "الاتحاد الأوروبي اقترح حذفه، والمجموعة الأفريقية مع الإبقاء.",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-16-enb-ndc-arab",
+   "date": "2026-11-16",
+   "session": "CMA informal consultations, further guidance on NDC features",
+   "krisp": "",
+   "source": "ENB daily report 16/11 (Drive COP31/ENB/ENB_COP31_16Nov2026_daily.txt)",
+   "actor": "Arab Group",
+   "attribution": "enb_reported",
+   "attribution_note": "نسبته نشرة ENB، ولم يسمع في تسجيل.",
+   "camp": "ally",
+   "positions": [
+    "إنهاء البند، فالإرشادات الإضافية تهدد الإرشادات القائمة",
+    "رفض ورقة غير رسمية من الميسرين"
+   ],
+   "formulations_en": [],
+   "tone": "4_strong_opposition",
+   "tactics": "مع الأفريقية وLMDC، والاتحاد الأوروبي وAOSIS والمملكة المتحدة وكندا مع مناقشة إرشادات إضافية.",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-22-enb-cover-arab",
+   "date": "2026-11-22",
+   "session": "Closing plenary, Antalya Pact cover decisions",
+   "krisp": "",
+   "source": "ENB highlights 22/11 (Drive COP31/ENB/ENB_COP31_22Nov2026_highlights.txt)",
+   "actor": "Arab Group",
+   "attribution": "enb_reported",
+   "attribution_note": "نسبته نشرة ENB، ولم يسمع في تسجيل.",
+   "camp": "ally",
+   "positions": [
+    "أسف لغياب التزامات تمويل واضحة وحذف الحلول الموجهة إلى التنفيذ",
+    "مع ذلك أيدت اعتماد القرارين الشاملين"
+   ],
+   "formulations_en": [],
+   "tone": "2_conditional_openness",
+   "tactics": "لم يعتمد القراران لاعتراض الاتحاد الأوروبي ومجموعة السلامة البيئية والمملكة المتحدة وأقل البلدان نموا والنرويج وبنما وجزر مارشال وفانواتو.",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-17-enb-cover-arab-17",
+   "date": "2026-11-17",
+   "session": "Presidency consultations, cover decision",
+   "krisp": "",
+   "source": "ENB daily report 17/11 (Drive COP31/ENB/ENB_COP31_17Nov2026_daily.txt)",
+   "actor": "Arab Group",
+   "attribution": "enb_reported",
+   "attribution_note": "نسبته نشرة ENB، ولم يسمع في تسجيل.",
+   "camp": "ally",
+   "positions": [
+    "التشكيك في مشروعية العملية",
+    "رفض خرائط الطريق والأهداف القطاعية من أعلى",
+    "رفض الإشارة إلى الرأي الاستشاري لمحكمة العدل الدولية",
+    "رفض هدف الكهربة 35 بالمئة بحلول 2035 واللغة التي تستهدف مصادر طاقة بعينها (16/11)"
+   ],
+   "formulations_en": [],
+   "tone": "5_red_line",
+   "tactics": "",
+   "use_for_iraq": ""
+  },
+  {
+   "id": "2026-11-16-enb-cover-lmdc",
+   "date": "2026-11-16",
+   "session": "Presidency consultations, cover decision",
+   "krisp": "",
+   "source": "ENB daily report 16/11 (Drive COP31/ENB/ENB_COP31_16Nov2026_daily.txt)",
+   "actor": "LMDC",
+   "attribution": "enb_reported",
+   "attribution_note": "نسبته نشرة ENB، ولم يسمع في تسجيل.",
+   "camp": "ally",
+   "positions": [
+    "المسودة تعبر الخطوط الحمراء: هدف الكهربة العالمي 35 بحلول 2035، وخارطة التحول عن الوقود الأحفوري التي تخص الميثان، ودعوة الأطراف إلى خيارات تنفيذ بعينها"
+   ],
+   "formulations_en": [],
+   "tone": "5_red_line",
+   "tactics": "",
+   "use_for_iraq": ""
   }
  ]
 }
