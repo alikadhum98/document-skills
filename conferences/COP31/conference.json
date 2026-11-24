@@ -85,6 +85,12 @@
     "live_ear_folder": {
       "name": "COP31/live_ear",
       "id": "11w0efGwUFi_mKoIV0Q28_deyu9d-GTdW"
+    },
+    "news_folders": {
+      "enb": {
+        "name": "COP31/ENB",
+        "id": "1j5fR6TJ5yoR3Vg17dNFuUaUqxU86B8XY"
+      }
     }
   },
   "files": {
@@ -182,5 +188,7 @@
       ],
       "attribution": "enb_reported"
     }
-  ]
+  ],
+  "end_actual": "2026-11-22",
+  "end_note": "الجلسة العامة الختامية علقت مساء 20/11 واستؤنفت يوم 22/11 بحسب ENB."
 }

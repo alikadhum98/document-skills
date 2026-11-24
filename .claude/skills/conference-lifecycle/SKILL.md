@@ -13,7 +13,7 @@ description: بدء مؤتمر أو دورة تفاوضية وختامها. تش
 ٢. أنشئ الإعداد:
    `python3 .claude/skills/conference-lifecycle/scripts/conference.py new <ID> --title ... --city ... --country ... --start ... --end ... --tz ... --from ...`
    ثم عبئ في الملف `scope.files` و`scope.file_notes` و`scope.coordination` و`mail_queries.scope_terms`.
-٣. Drive: أنشئ مجلد المؤتمر، ثم مجلدا لكل يوم باسم التاريخ، ثم مجلدا مغلقا لكل تحالف له فرعية. واكتب المعرفات في `drive`.
+٣. Drive: أنشئ مجلد المؤتمر، ثم مجلدا لكل يوم باسم التاريخ، ثم مجلدا مغلقا لكل تحالف له فرعية، ثم مجلد ENB لتقارير النشرة. واكتب المعرفات في `drive`، ومعرف مجلد ENB في `drive.news_folders.enb`.
 ٤. أنشئ مرجع المداخلات الأولي على Drive باسم `files.intervention_reference.name`، بالبنية نفسها المستعملة في COP31 (meta وalliances وitems وupdate_log)، وابدأ بنوده من ملف التسليم. ولا يحفظ في المستودع.
 ٥. اكتب `sessions.main` بمعرف هذه المحادثة (get_session دون معرف).
 ٦. ولد نصي المهمتين:
