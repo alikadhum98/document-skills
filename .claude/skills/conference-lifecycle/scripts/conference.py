@@ -58,6 +58,7 @@ def fill(text, c):
         "coordination": "، ".join(ALLIANCE_AR.get(a, a) for a in scope.get("coordination", [])),
         "coordination_from": scope.get("coordination_from", c["start"]),
         "g77_query": c.get("mail_queries", {}).get("g77", ""),
+        "news_mail": " أو ".join(n["mail"] for n in c.get("news_sources", [])) or "لا مصادر",
         "g77_prefix": c.get("calendar_prefixes", {}).get("g77", "G77:"),
         "krisp_tag": c.get("krisp", {}).get("tag", c["id"]),
         "repo_daily": c["repo"]["daily"],

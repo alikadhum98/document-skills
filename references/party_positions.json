@@ -4,7 +4,8 @@
   "named": "سماه رئيس الجلسة أو الميسر صراحة قبل الكلمة أو بعدها",
   "inferred_strong": "استدل عليه من إشارة طرف آخر إليه أو من ترتيب القائمة المعلنة",
   "inferred_weak": "استدل عليه من المضمون وحده",
-  "unclear": "لم يتضح المتكلم"
+  "unclear": "لم يتضح المتكلم",
+  "enb_reported": "نقلته نشرة ENB ولم يسمع في تسجيل Krisp أو الأذن، فهو مصدر ثانوي موثوق في النسبة ولا تؤخذ منه الصيغ الحرفية"
  },
  "tone_scale": {
   "5_red_line": "we cannot accept, we cannot support, non-negotiable, anathema",

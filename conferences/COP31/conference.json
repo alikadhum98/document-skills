@@ -165,5 +165,22 @@
   "krisp": {
     "name_prefix": "COP31",
     "tag": "COP31"
-  }
+  },
+  "news_sources": [
+    {
+      "name": "نشرة مفاوضات الأرض ENB (المعهد الدولي للتنمية المستدامة IISD)",
+      "mail": "from:enb@iisd.org",
+      "mail_extra": "from:media@iisd.org",
+      "site": "enb.iisd.org",
+      "access": "الموقع يحجبه فحص الروبوتات عن الجلسة فلا يجاوز. تقرأ رسائل البريد اليومية (العنوان والخلاصة ورابط اليوم)، والتقرير الكامل يقرأ من مجلد ENB على Drive إن نزله المستخدم.",
+      "watch_files": [
+        "Article6",
+        "GST-JustTransition",
+        "Mitigation",
+        "ResponseMeasures-Trade",
+        "Finance"
+      ],
+      "attribution": "enb_reported"
+    }
+  ]
 }
