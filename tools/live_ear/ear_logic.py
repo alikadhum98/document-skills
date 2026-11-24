@@ -438,6 +438,14 @@ def accurate_transcriber(model_name=ACCURATE_MODEL, threads=None, fast_en="small
                                                    condition_on_previous_text=False, initial_prompt=AR_PROMPT)
         return lang, [(s.start, s.text) for s in segs
                       if s.avg_logprob > -1.0 and s.no_speech_prob < 0.6 and s.compression_ratio < 2.4]
+
+    def release():
+        """Frees the models: kept loaded, the large one left too little memory for the gap
+        backfill on the PC (mkl_malloc: failed to allocate memory, 24/11)."""
+        holder.clear()
+        import gc
+        gc.collect()
+    run.release = release
     return run
 
 
@@ -473,7 +481,7 @@ def accurate_pass(store, start, end, transcribe, tracker=None, progress=None, er
 
 # canonical name -> spoken forms, including recognition errors heard at COP31
 ALIASES = {
-    "Arab Group": [r"arab group", r"group of arab states", r"error\.? group"],
+    "Arab Group": [r"arab group", r"group of arab states", r"error\.? group", r"(?:the )?arabs\b"],
     "LMDC": [r"l\.? ?m\.? ?d\.? ?c", r"like[- ]minded(?: developing countries| group)?", r"lmcc", r"lmpc", r"lmc", r"lms", r"lbc", r"lntc", r"lnmdc"],
     "AOSIS": [r"aosis", r"a\.? ?o\.? ?s\.? ?i\.? ?s", r"alliance of small island states", r"out ?space", r"out ?sis"],
     "AILAC": [r"ailac", r"i ?lac", r"independent alliance of latin america"],

@@ -19,7 +19,7 @@ except ImportError:
     raise SystemExit("ear_logic.py is missing: copy it next to ear_local.py")
 
 PORT = 8765
-VERSION = "web-2026-11-24f"
+VERSION = "web-2026-11-24g"
 
 
 def find_drive():
@@ -354,6 +354,8 @@ def accurate_loop():
         try:
             accurate_job(job)
         finally:
+            if ACCURATE["tr"] is not None and hasattr(ACCURATE["tr"], "release"):
+                ACCURATE["tr"].release()   # the models load again for the next pass, in under a minute
             AWAKE["work"] -= 1
             background_priority(False)
 
