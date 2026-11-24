@@ -19,7 +19,7 @@ except ImportError:
     raise SystemExit("ear_logic.py is missing: copy it next to ear_local.py")
 
 PORT = 8765
-VERSION = "web-2026-11-24d"
+VERSION = "web-2026-11-24e"
 
 
 def find_drive():
@@ -369,10 +369,16 @@ def accurate_job(job):
     t0 = time.time()
     try:
         tracker = L.SpeakerTracker(L.load_aliases(os.path.join(HERE, "speakers.json")))
-        lines = L.accurate_pass(STORE, job["start"], job["end"], ACCURATE["tr"], tracker)
+        errs = []
+        lines = L.accurate_pass(STORE, job["start"], job["end"], ACCURATE["tr"], tracker, errors=errs)
     except Exception as e:
-        append(f"[{L.hms(time.time())}] ===== ACCURATE error: {str(e)[:80]} =====")
+        import traceback
+        traceback.print_exc()
+        append(f"[{L.hms(time.time())}] ===== ACCURATE error: {type(e).__name__}: {str(e)[:160]} =====")
         return
+    if errs:
+        print("ACCURATE errors:", errs[:5], flush=True)   # LiveEar_PC.log in the user folder
+        append(f"[{L.hms(time.time())}] ===== ACCURATE {len(errs)} errors, first: {errs[0][:200]} =====")
     mins = round((time.time() - t0) / 60)
     audio_mins = round((job["end"] - job["start"]) / 60, 1)
     block = [f"[{job['hms']}] ===== ACCURATE START session={job['hms']} model={L.ACCURATE_MODEL} ====="] + lines + \
@@ -757,7 +763,8 @@ class Handler(BaseHTTPRequestHandler):
 # ---------- remote control through Drive ----------
 CMD = {"cmd": None, "name": ""}
 CMD_FILES = {"start": "COP31_ear_START.txt", "stop": "COP31_ear_STOP.txt", "quit": "COP31_ear_QUIT.txt",
-             "name": "COP31_ear_NAME.txt"}  # NAME: written by the summary page for a session started without a name
+             "name": "COP31_ear_NAME.txt",          # written by the summary page for a session started without a name
+             "accurate": "COP31_ear_ACCURATE.txt"}  # content "HH:MM:SS HH:MM:SS": run the accurate pass again on stored audio
 
 
 def command_loop(server):
@@ -778,6 +785,13 @@ def command_loop(server):
             except OSError:
                 pass
             now = datetime.datetime.now().strftime("%H:%M:%S")
+            if cmd == "accurate":
+                parts = name.split()
+                if len(parts) == 2:
+                    job = {"start": L.clock_to_ts(parts[0]), "end": L.clock_to_ts(parts[1]), "hms": parts[0], "path": None}
+                    append(f"[{now}] ===== ACCURATE PENDING session={parts[0]} again =====")
+                    ACCURATE["q"].put(job)
+                continue
             if cmd == "name":
                 if name and rename_session(name):
                     append(f"[{now}] ===== NAME {name} =====")

@@ -115,6 +115,21 @@ class AccurateTests(unittest.TestCase):
         self.assertTrue(lines[0].startswith(f"[{L.hms(t0 + 1)}] (دقيق) "))
         self.assertIn("[المتكلم: Arab Group]", lines[1])
 
+    def test_errors_are_reported_not_swallowed(self):
+        with tempfile.TemporaryDirectory() as d:
+            st = L.AudioStore(d, rate=1000)
+            for i in range(40):
+                st.write(np.full(1000, 0.2, np.float32), end_time=1_800_000_000.0 + i + 1)
+            st.close()
+            def broken(piece):
+                raise RuntimeError("model file not found")
+            errs = []
+            self.assertEqual(L.accurate_pass(st, 1_800_000_000.0, 1_800_000_040.0, broken, errors=errs), [])
+            self.assertEqual(errs[0], "RuntimeError: model file not found")
+            errs = []
+            L.accurate_pass(st, 1_900_000_000.0, 1_900_000_040.0, broken, errors=errs)
+            self.assertEqual(errs[0], "no stored audio for this session")
+
     def test_block_is_written_together(self):
         f = FlakyFile()
         w = L.Writer("x", opener=f)

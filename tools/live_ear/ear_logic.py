@@ -432,18 +432,22 @@ def accurate_transcriber(model_name=ACCURATE_MODEL, threads=None):
     return run
 
 
-def accurate_pass(store, start, end, transcribe, tracker=None, progress=None):
+def accurate_pass(store, start, end, transcribe, tracker=None, progress=None, errors=None):
     """Transcribes a whole session from the stored audio. Returns the lines, each
     "[hh:mm:ss] (دقيق) text", tagged with the speaker when a tracker is given."""
     audio = store.extract(start, end)
     rate = store.rate
+    if errors is not None and not len(audio):
+        errors.append("no stored audio for this session")
     bounds = [0] + quiet_cuts(audio, rate) + [len(audio)]
     out = []
     for k in range(len(bounds) - 1):
         a, b = bounds[k], bounds[k + 1]
         try:
             _, segs = transcribe(audio[a:b])
-        except Exception:
+        except Exception as e:  # keep going, but say why: a silent empty result hides the cause
+            if errors is not None:
+                errors.append(f"{type(e).__name__}: {e}")
             segs = []
         for off, text in segs:
             text = " ".join(str(text).split())
