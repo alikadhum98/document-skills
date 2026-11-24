@@ -245,6 +245,18 @@ class SpeakerTests(unittest.TestCase):
         self.assertTrue(line.startswith("[المتكلم: Chair]"))
         self.assertEqual(t.tag("ولقد انجزنا البلاغ الوطني الثاني")[0][:15], "[المتكلم: Iraq]")
 
+    def test_chair_thanks_the_last_speaker(self):
+        # the accurate pass of 24/11 left the chair's closing words under Iraq
+        t = L.SpeakerTracker()
+        t.tag("كلمة الان للعراق.")
+        self.assertEqual(t.tag("احنا نريد الجرد يخلص")[0][:15], "[المتكلم: Iraq]")
+        self.assertEqual(t.tag("Thank you Eric, I see no other request for the floor")[0][:16], "[المتكلم: Chair]")
+        self.assertEqual(t.tag("We will meet again on Monday at 10 o'clock")[0][:16], "[المتكلم: Chair]")
+        t2 = L.SpeakerTracker()
+        t2.tag("Next on my list is Iraq.")
+        # a delegate thanking the chair stays the delegate (and its alignment is kept)
+        self.assertTrue(t2.tag("Thank you, Chair. Iraq aligns itself with the Arab Group")[0].startswith("[المتكلم: Arab Group (Iraq)]"))
+
     def test_garbled_group_names(self):
         t = L.SpeakerTracker()
         self.assertEqual(t.name_at_start("out space"), "AOSIS")

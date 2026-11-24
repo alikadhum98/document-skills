@@ -410,6 +410,9 @@ class LanguageWatcher:
 
 ACCURATE_MODEL = "large-v3-turbo"   # about 1.6 GB, downloaded once on first use
 AR_PROMPT = "اجتماع رسمي باللهجة العراقية والعربية الفصحى، فيه مصطلحات مناخ وطاقة."
+# names the fast English model mishears without help (24/11: "AUB Group" for Arab Group, "Eric" for Iraq)
+EN_PROMPT = ("UN climate negotiations. Thank you, Chair. The Arab Group, the LMDC, the G77 and China, Iraq, "
+             "the European Union, AOSIS, the African Group. Developing countries, adaptation, finance, capacity building.")
 
 
 def quiet_cuts(audio, rate, target=28.0, search=6.0, win=0.1):
@@ -458,12 +461,13 @@ def accurate_transcriber(model_name=ACCURATE_MODEL, threads=None, fast_en="small
             return lang, []
         if lang == "en":
             segs, _ = model(fast_en).transcribe(piece, language="en", beam_size=2, vad_filter=True,
-                                                condition_on_previous_text=False)
+                                                condition_on_previous_text=False, initial_prompt=EN_PROMPT)
         else:
             segs, _ = model(model_name).transcribe(piece, language="ar", beam_size=2, vad_filter=True,
                                                    condition_on_previous_text=False, initial_prompt=AR_PROMPT)
+        # looser than before: on 24/11 a whole Arabic sentence with two dates was dropped by these filters
         return lang, [(s.start, s.text) for s in segs
-                      if s.avg_logprob > -1.0 and s.no_speech_prob < 0.6 and s.compression_ratio < 2.4]
+                      if s.avg_logprob > -1.5 and s.no_speech_prob < 0.8 and s.compression_ratio < 2.4]
 
     run.release = release_models
     return run
@@ -518,7 +522,7 @@ ALIASES = {
     "Republic of Korea": [r"republic of korea", r"korea"],
     "Japan": [r"japan"], "China": [r"china"], "Brazil": [r"brazil"], "Egypt": [r"egypt"],
     "Switzerland": [r"switzerland"], "Norway": [r"norway"], "Australia": [r"australia"],
-    "Canada": [r"canada"], "India": [r"india"], "Pakistan": [r"pakistan"], "Iraq": [r"iraq"],
+    "Canada": [r"canada"], "India": [r"india"], "Pakistan": [r"pakistan"], "Iraq": [r"iraq", r"eric\b"],
     "Iran": [r"iran"], "Bolivia": [r"bolivia"], "Singapore": [r"singapore"], "Germany": [r"germany"],
     "New Zealand": [r"new zealand"], "United States": [r"united states", r"the us", r"usa"],
     "Secretariat": [r"(?:the )?secretariat", r"الامانه"],
@@ -631,6 +635,11 @@ class SpeakerTracker:
                 who = self.name_at_end(m.group("x"))
                 if who:
                     nxt = who
+        if nxt is None and line_speaker not in (None, "Chair"):
+            m = re.match(r"\s*thank you(?: very much)?,?\s+(?:the )?(?:distinguished )?(?:delegate of )?(?P<x>.{2,40})", text, re.I)
+            who = self.name_at_start(m.group("x")) if m else None
+            if who and who != "Chair":
+                line_speaker = self.speaker = "Chair"   # "Thank you, Iraq": the chair has the floor again
         if nxt is not None:
             line_speaker = "Chair"  # the line that calls the next speaker is the chair's
             self.speaker = nxt
