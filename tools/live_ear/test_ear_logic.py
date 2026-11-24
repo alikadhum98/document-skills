@@ -43,6 +43,50 @@ class WriterTests(unittest.TestCase):
         self.assertEqual(w.pending, [])
 
 
+class RotateTests(unittest.TestCase):
+    def setUp(self):
+        import datetime
+        self.dt = datetime
+        self.d = tempfile.mkdtemp()
+        self.path = os.path.join(self.d, "COP31_live.txt")
+        self.arch = os.path.join(self.d, "COP31_live_archive")
+
+    def write(self, text, days_ago=0):
+        with open(self.path, "w", encoding="utf-8") as f:
+            f.write(text)
+        t = time.time() - days_ago * 86400
+        os.utime(self.path, (t, t))
+
+    def test_earlier_day_is_archived_and_file_emptied_in_place(self):
+        self.write("[18:00:00] old line\n", days_ago=1)
+        ino = os.stat(self.path).st_ino
+        w = L.Writer(self.path)
+        moved = w.rotate(self.arch)
+        day = (self.dt.date.today() - self.dt.timedelta(days=1)).isoformat()
+        self.assertTrue(moved.endswith(f"COP31_live_{day}.txt"))
+        self.assertEqual(open(moved, encoding="utf-8").read(), "[18:00:00] old line\n")
+        self.assertEqual(os.path.getsize(self.path), 0)
+        self.assertEqual(os.stat(self.path).st_ino, ino)   # same file: Drive keeps its id
+        w.append("[09:00:00] new day")
+        self.assertEqual(open(self.path, encoding="utf-8").read(), "[09:00:00] new day\n")
+
+    def test_same_day_small_file_stays(self):
+        self.write("[09:00:00] today\n")
+        self.assertIsNone(L.Writer(self.path).rotate(self.arch))
+        self.assertFalse(os.path.exists(self.arch))
+
+    def test_same_day_large_file_is_archived(self):
+        self.write("x" * 400 + "\n")
+        moved = L.Writer(self.path).rotate(self.arch, max_bytes=100)
+        self.assertTrue(moved)
+        self.assertEqual(os.path.getsize(self.path), 0)
+
+    def test_missing_or_empty_file(self):
+        self.assertIsNone(L.Writer(self.path).rotate(self.arch))
+        self.write("", days_ago=2)
+        self.assertIsNone(L.Writer(self.path).rotate(self.arch))
+
+
 class AudioTests(unittest.TestCase):
     def test_extract_across_segments_and_restart(self):
         with tempfile.TemporaryDirectory() as d:

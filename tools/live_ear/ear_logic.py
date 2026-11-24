@@ -50,6 +50,35 @@ class Writer:
                     self.failing_since = self.clock()
                 return False
 
+    def rotate(self, archive_dir, today=None, max_bytes=300_000):
+        """Starts a fresh transcript each day. Google Drive uploads the whole file on every change,
+        so a file holding every session since the conference began reaches Drive minutes late.
+        When the file was last written on an earlier day, or has grown past max_bytes, its content
+        is appended to archive_dir/<name>_<day>.txt and the file is emptied IN PLACE: it keeps its
+        Drive file id, which the summary pages read. Returns the archive path, or None."""
+        today = today or datetime.date.today()
+        with self.lock:
+            try:
+                st = os.stat(self.path)
+            except OSError:
+                return None
+            day = datetime.date.fromtimestamp(st.st_mtime)
+            if st.st_size == 0 or (day >= today and st.st_size < max_bytes):
+                return None
+            stem = os.path.splitext(os.path.basename(self.path))[0]
+            name = os.path.join(archive_dir, f"{stem}_{day.isoformat()}.txt")
+            try:
+                os.makedirs(archive_dir, exist_ok=True)
+                with open(self.path, encoding="utf-8") as src:
+                    text = src.read()
+                with open(name, "a", encoding="utf-8") as dst:
+                    dst.write(text)
+                with open(self.path, "w", encoding="utf-8"):
+                    pass
+            except OSError:
+                return None  # Drive unavailable: keep the file as it is and try at the next start
+            return name
+
     def run_flusher(self, every=5.0, stop=None):
         def loop():
             while not (stop and stop.is_set()):

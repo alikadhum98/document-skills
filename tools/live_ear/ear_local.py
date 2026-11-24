@@ -19,7 +19,7 @@ except ImportError:
     raise SystemExit("ear_logic.py is missing: copy it next to ear_local.py")
 
 PORT = 8765
-VERSION = "web-2026-11-20h"
+VERSION = "web-2026-11-24a"
 
 
 def find_drive():
@@ -201,6 +201,14 @@ def fallback_loop():
 
 
 WRITER = L.Writer(OUT)  # lines wait here while Drive is unavailable; a flusher retries every 5 s
+ARCHIVE = os.path.join(DRIVE, "COP31_live_archive")
+
+
+def rotate_transcript():
+    """A fresh COP31_live.txt each day: earlier days go to COP31_live_archive on Drive."""
+    moved = WRITER.rotate(ARCHIVE)
+    if moved:
+        append(f"[{datetime.datetime.now().strftime('%H:%M:%S')}] ===== ARCHIVE earlier lines moved to COP31_live_archive/{os.path.basename(moved)} =====")
 
 
 def append(line):
@@ -613,6 +621,7 @@ class Handler(BaseHTTPRequestHandler):
                 BACKFILL["b"].enqueue(start, start + secs)
         elif self.path == "/start":
             name = " ".join(str(data.get("name") or "").split())[:80]
+            rotate_transcript()
             new_session(name or "session")
             SESSION["lang"] = str(data.get("lang") or "auto")
             SESSION["cur"] = str(data.get("cur") or "en-US")
@@ -869,6 +878,7 @@ def main():
     threading.Thread(target=command_loop, args=(server,), daemon=True).start()
     threading.Thread(target=awake_loop, daemon=True).start()
     threading.Thread(target=fallback_loop, daemon=True).start()
+    rotate_transcript()
     WRITER.run_flusher(5.0)
     threading.Thread(target=recorder_loop, daemon=True).start()
     threading.Thread(target=backfill_setup, daemon=True).start()
