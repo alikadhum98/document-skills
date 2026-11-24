@@ -35,6 +35,12 @@ class Writer:
             self.pending.append(line)
         return self.flush()
 
+    def append_many(self, lines):
+        """Several lines kept together: no line from elsewhere can fall between them."""
+        with self.lock:
+            self.pending.extend(lines)
+        return self.flush()
+
     def flush(self):
         with self.lock:
             if not self.pending:
@@ -371,6 +377,82 @@ class LanguageWatcher:
             return lang, since
         return None
 
+# ---------------------------------------------------------------- accurate pass after a session
+
+ACCURATE_MODEL = "large-v3-turbo"   # about 1.6 GB, downloaded once on first use
+AR_PROMPT = "اجتماع رسمي باللهجة العراقية والعربية الفصحى، فيه مصطلحات مناخ وطاقة."
+
+
+def quiet_cuts(audio, rate, target=28.0, search=6.0, win=0.1):
+    """Where to cut a long recording into pieces Whisper can take (under 30 s): near every
+    `target` seconds, at the quietest 0.1 s found in the last `search` seconds, so that words
+    are not cut in half. Returns the sample indices of the cuts (excluding 0 and the end)."""
+    import numpy as np
+    n, cuts, pos = len(audio), [], 0
+    step, w = int(target * rate), max(1, int(win * rate))
+    while pos + step < n:
+        lo, hi = pos + int((target - search) * rate), pos + step
+        best, best_e = hi, None
+        for i in range(lo, hi - w, w):
+            e = float(np.mean(np.square(audio[i:i + w])))
+            if best_e is None or e < best_e:
+                best, best_e = i + w // 2, e
+        cuts.append(best)
+        pos = best
+    return cuts
+
+
+def accurate_transcriber(model_name=ACCURATE_MODEL, threads=4):
+    """A transcribe(piece) -> (language, [(offset, text)]) for the accurate pass, or None.
+    Each piece gets its own language, English or Arabic only (two_way), so a mixed meeting
+    is read correctly. Arabic pieces are nudged toward Iraqi speech by an initial prompt."""
+    try:
+        from faster_whisper import WhisperModel
+    except ImportError:
+        return None
+    holder = {}
+
+    def run(piece):
+        if "m" not in holder:
+            holder["m"] = WhisperModel(model_name, device="cpu", compute_type="int8", cpu_threads=threads)
+        m = holder["m"]
+        segs, info = m.transcribe(piece, beam_size=1, vad_filter=False)
+        probs = dict(getattr(info, "all_language_probs", None) or [(info.language, info.language_probability)])
+        lang, _ = two_way(probs)
+        if lang == "other":
+            return lang, []
+        segs, _ = m.transcribe(piece, language=lang, beam_size=2, vad_filter=True,
+                               condition_on_previous_text=False,
+                               initial_prompt=AR_PROMPT if lang == "ar" else None)
+        return lang, [(s.start, s.text) for s in segs
+                      if s.avg_logprob > -1.0 and s.no_speech_prob < 0.6 and s.compression_ratio < 2.4]
+    return run
+
+
+def accurate_pass(store, start, end, transcribe, tracker=None, progress=None):
+    """Transcribes a whole session from the stored audio. Returns the lines, each
+    "[hh:mm:ss] (دقيق) text", tagged with the speaker when a tracker is given."""
+    audio = store.extract(start, end)
+    rate = store.rate
+    bounds = [0] + quiet_cuts(audio, rate) + [len(audio)]
+    out = []
+    for k in range(len(bounds) - 1):
+        a, b = bounds[k], bounds[k + 1]
+        try:
+            _, segs = transcribe(audio[a:b])
+        except Exception:
+            segs = []
+        for off, text in segs:
+            text = " ".join(str(text).split())
+            if not text:
+                continue
+            if tracker:
+                text, _ = tracker.tag(text)
+            out.append(f"[{hms(start + a / rate + off)}] (دقيق) {text}")
+        if progress:
+            progress(k + 1, len(bounds) - 1)
+    return out
+
 # ---------------------------------------------------------------- speakers
 
 # canonical name -> spoken forms, including recognition errors heard at COP31
@@ -473,7 +555,7 @@ class SpeakerTracker:
         s = norm_ar(s).strip(" ,.:;،")
         tries = [s]
         if s.startswith("ل"):  # Arabic (ل) joined to the name: لمصر, للعراق, للمجموعه
-            tries += [s[1:], "ا" + s[1:]]
+            tries += [s[1:], "ا" + s[1:], "ال" + s[1:]]  # للمجموعه: the cue took one ل, the article lost its alef
         for t in tries:
             for canon, rx in self.names:
                 if canon != "Chair" and rx.match(t):

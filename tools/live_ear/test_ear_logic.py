@@ -87,6 +87,45 @@ class RotateTests(unittest.TestCase):
         self.assertIsNone(L.Writer(self.path).rotate(self.arch))
 
 
+class AccurateTests(unittest.TestCase):
+    def test_cuts_fall_in_the_silences(self):
+        rate = 1000
+        a = np.full(100 * rate, 0.3, np.float32)       # 100 s of speech
+        for s in (25, 51, 77):                          # with short pauses here
+            a[s * rate:(s + 1) * rate] = 0.0
+        cuts = L.quiet_cuts(a, rate)
+        self.assertEqual(len(cuts), 3)
+        for c, s in zip(cuts, (25, 51, 77)):
+            self.assertTrue(s * rate <= c <= (s + 1) * rate, (c, s))
+        pieces = np.diff([0] + cuts + [len(a)])
+        self.assertTrue(all(p <= 30 * rate for p in pieces))
+
+    def test_pass_keeps_times_languages_and_speakers(self):
+        with tempfile.TemporaryDirectory() as d:
+            st = L.AudioStore(d, rate=1000)
+            t0 = 1_800_000_000.0
+            for i in range(60):
+                st.write(np.full(1000, 0.0 if i in (27, 28) else 0.2, np.float32), end_time=t0 + i + 1)
+            st.close()
+            said = iter([("ar", [(1.0, "الكلمة الآن للمجموعة العربية")]),
+                         ("en", [(2.0, "Thank you Chair, the Arab Group supports the phased approach.")]),
+                         ("other", [])])
+            lines = L.accurate_pass(st, t0, t0 + 60, lambda piece: next(said, ("other", [])), L.SpeakerTracker())
+        self.assertEqual(len(lines), 2)
+        self.assertTrue(lines[0].startswith(f"[{L.hms(t0 + 1)}] (دقيق) "))
+        self.assertIn("[المتكلم: Arab Group]", lines[1])
+
+    def test_block_is_written_together(self):
+        f = FlakyFile()
+        w = L.Writer("x", opener=f)
+        f.down = True
+        w.append("[10:00:00] live line")
+        w.append_many(["A", "B", "C"])
+        f.down = False
+        w.flush()
+        self.assertEqual(f.text.splitlines(), ["[10:00:00] live line", "A", "B", "C"])
+
+
 class AudioTests(unittest.TestCase):
     def test_extract_across_segments_and_restart(self):
         with tempfile.TemporaryDirectory() as d:

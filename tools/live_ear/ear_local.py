@@ -19,7 +19,7 @@ except ImportError:
     raise SystemExit("ear_logic.py is missing: copy it next to ear_local.py")
 
 PORT = 8765
-VERSION = "web-2026-11-24a"
+VERSION = "web-2026-11-24b"
 
 
 def find_drive():
@@ -87,7 +87,7 @@ def list_sessions():
     if not os.path.isdir(SESS_DIR):
         return out
     for fn in sorted(os.listdir(SESS_DIR), reverse=True)[:100]:
-        if not fn.endswith(".txt"):
+        if not fn.endswith(".txt") or fn.endswith("_دقيق.txt"):
             continue
         full = os.path.join(SESS_DIR, fn)
         try:
@@ -224,7 +224,7 @@ BACKFILL = {"b": None}
 REC = {"on": False, "note": ""}
 
 
-SESSION = {"lang": "auto", "cur": "en-US", "start": "", "last": ""}  # the language chosen in the window, and the one in use when it is auto
+SESSION = {"lang": "auto", "cur": "en-US", "start": "", "last": "", "arabic": False}  # the language chosen in the window, and the one in use when it is auto
 
 
 def rec_lang():
@@ -312,11 +312,53 @@ def lang_loop():
             continue
         lang, since = r
         SESSION["cur"] = L.AUTO_LANGS[lang]
+        SESSION["arabic"] = SESSION["arabic"] or lang == "ar"
         LANG["pending"], LANG["at"] = SESSION["cur"], time.time()
         append(f"[{L.hms(since)}] ===== LANG {SESSION['cur']} auto =====")
         if BACKFILL["b"]:
             # the words spoken before the window switched are recovered from the stored audio
             BACKFILL["b"].enqueue(since - 2, time.time() + 6, lang)
+
+
+# ---------- accurate pass: after an Arabic session, the whole recording is transcribed again ----------
+ACCURATE = {"q": queue.Queue(), "tr": None, "tried": False}
+
+
+def queue_accurate():
+    """Called at stop: a session in which Arabic was used gets an accurate transcript."""
+    if not (SESSION["arabic"] and SESSION["start"]):
+        return
+    job = {"start": L.clock_to_ts(SESSION["start"]), "end": time.time(), "hms": SESSION["start"], "path": LAST["path"]}
+    append(f"[{L.hms(job['end'])}] ===== ACCURATE PENDING session={job['hms']} =====")
+    ACCURATE["q"].put(job)
+
+
+def accurate_loop():
+    while True:
+        job = ACCURATE["q"].get()
+        if not ACCURATE["tried"]:
+            ACCURATE["tried"] = True
+            ACCURATE["tr"] = L.accurate_transcriber(threads=4)
+        if ACCURATE["tr"] is None:
+            append(f"[{L.hms(time.time())}] ===== ACCURATE unavailable: faster-whisper not installed =====")
+            continue
+        t0 = time.time()
+        try:
+            tracker = L.SpeakerTracker(L.load_aliases(os.path.join(HERE, "speakers.json")))
+            lines = L.accurate_pass(STORE, job["start"], job["end"], ACCURATE["tr"], tracker)
+        except Exception as e:
+            append(f"[{L.hms(time.time())}] ===== ACCURATE error: {str(e)[:80]} =====")
+            continue
+        mins = round((time.time() - t0) / 60)
+        block = [f"[{job['hms']}] ===== ACCURATE START session={job['hms']} model={L.ACCURATE_MODEL} ====="] + lines + \
+                [f"[{L.hms(job['end'])}] ===== ACCURATE END session={job['hms']} {len(lines)} سطر في {mins} دقيقة ====="]
+        WRITER.append_many(block)   # one block on Drive: no live line of a later session falls inside it
+        if job["path"]:
+            try:
+                with open(job["path"][:-4] + "_دقيق.txt", "w", encoding="utf-8") as f:
+                    f.write("\n".join(block) + "\n")
+            except OSError:
+                pass
 
 
 # ---------- speaker tags and the group alert ----------
@@ -626,6 +668,7 @@ class Handler(BaseHTTPRequestHandler):
             SESSION["lang"] = str(data.get("lang") or "auto")
             SESSION["cur"] = str(data.get("cur") or "en-US")
             LANG["pending"], LANG["noted"], LANG["logged"] = None, False, 0
+            SESSION["arabic"] = SESSION["cur"].startswith("ar") or SESSION["lang"].startswith("ar")
             SESSION["start"], SESSION["last"] = now, now
             if LANG["w"]:
                 LANG["w"].reset("ar" if SESSION["cur"].startswith("ar") else "en")
@@ -638,6 +681,8 @@ class Handler(BaseHTTPRequestHandler):
         elif self.path == "/stop":
             append(f"[{now}] ===== STOP =====")
             CURRENT["path"] = None
+            if REC["on"] or STORE.segments():
+                queue_accurate()
             AWAKE["on"] = False
             stop_fallback("stopped")
             status("web-stopped")
@@ -645,6 +690,7 @@ class Handler(BaseHTTPRequestHandler):
             # the language list was changed in the window: follow it, and in auto mode start from the language in use
             SESSION["lang"] = str(data.get("lang") or "auto")
             SESSION["cur"] = str(data.get("cur") or SESSION["cur"])
+            SESSION["arabic"] = SESSION["arabic"] or SESSION["cur"].startswith("ar") or SESSION["lang"].startswith("ar")
             if LANG["w"]:
                 LANG["w"].reset("ar" if SESSION["cur"].startswith("ar") else "en")
             if CURRENT["path"]:
@@ -883,6 +929,7 @@ def main():
     threading.Thread(target=recorder_loop, daemon=True).start()
     threading.Thread(target=backfill_setup, daemon=True).start()
     threading.Thread(target=lang_loop, daemon=True).start()
+    threading.Thread(target=accurate_loop, daemon=True).start()
     threading.Timer(1.0, open_window).start()
     try:
         server.serve_forever()
