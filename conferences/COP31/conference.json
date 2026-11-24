@@ -1,0 +1,169 @@
+{
+  "id": "COP31",
+  "title": "مؤتمر الأطراف الحادي والثلاثين COP31",
+  "city": "Antalya",
+  "country": "Türkiye",
+  "start": "2026-11-09",
+  "end": "2026-11-20",
+  "timezone": "Europe/Istanbul",
+  "status": "closed",
+  "next_conference": "SB66",
+  "scope": {
+    "files": [
+      "Article6"
+    ],
+    "file_notes": "المادة 6.2 و6.4 و6.8، وما يخص المستخدم شخصيا مثل مشاركته متحدثا. التخفيف والتمويل والشفافية والحصيلة خارج النطاق",
+    "coordination": [
+      "arab_group",
+      "lmdc",
+      "opec",
+      "g77"
+    ],
+    "coordination_from": "2026-11-10"
+  },
+  "alliance_priority": [
+    "arab_group",
+    "lmdc",
+    "opec",
+    "g77"
+  ],
+  "calendar_prefixes": {
+    "lmdc": "LMDC:",
+    "opec": "OPEC:",
+    "g77": "G77:"
+  },
+  "mail_queries": {
+    "g77": "from:g77-and-china@lists.unfccc.int",
+    "scope_terms": [
+      "6.2",
+      "6.4",
+      "6.8",
+      "SBSTA",
+      "SBI",
+      "CMA",
+      "PACM",
+      "Arab Group",
+      "Daily Programme"
+    ],
+    "lmdc_terms": [
+      "LMDC",
+      "Like-Minded",
+      "المتشابهة التفكير"
+    ],
+    "opec_terms": [
+      "OPEC",
+      "أوبك"
+    ]
+  },
+  "drive": {
+    "root_folder": {
+      "name": "COP31",
+      "id": "15tiYhgHJVglL4mwh0HMElQfB7fjAfViJ"
+    },
+    "day_folders": {
+      "2026-11-08": "1WKn0QuDPykgt4jRM9q8Z3BMfCA6adxB2",
+      "2026-11-09": "14P5lt5iMV-uapCnBj9aeu8Ub0xIzK4Oe",
+      "2026-11-10": "12dzsqix8TAgFtM5BgvOscZQZnoO1oNGn",
+      "2026-11-11": "1LtHVhQPMelDI0mbD3EBYsN2-O6Cmmy8L",
+      "2026-11-12": "1PBhfKEEdC4m8niLx5zkOsCoBWjYZ70h9",
+      "2026-11-13": "1ja-4LTQsEBrLMJhX6PZlJO7zjCAjMkdR",
+      "2026-11-14": "1d2UDJLzds2eWOzSnHlwK6PloiN1LIdJh",
+      "2026-11-15": "1uG1XQqIa9dv5d0dTNd2rjcUxHiHraGjm",
+      "2026-11-16": "1Ur6b4r14w80Sbm6s7LFFMhAieCvbj-5r",
+      "2026-11-17": "1nqIlH5Efh3UaI6dM4zGfy3BVhPtIzjYn",
+      "2026-11-18": "164h2TPdJCAC7dXHAujsWnbDf0WVgeq3i",
+      "2026-11-19": "1ad2bKf_ZOP8VVWYl1pFyOBbdb6FAuegK",
+      "2026-11-20": "1hYpsCtfaBxLT0WsZJ2PFTQDrb2k7xTud"
+    },
+    "closed_folders": {
+      "lmdc": {
+        "name": "COP31/LMDC",
+        "id": "1PKdC8oCEmj_fhlfHLZWdoiT3G9-HUn24"
+      }
+    },
+    "references_folder_name": "Negotiation-References",
+    "live_ear_folder": {
+      "name": "COP31/live_ear",
+      "id": "11w0efGwUFi_mKoIV0Q28_deyu9d-GTdW"
+    }
+  },
+  "files": {
+    "intervention_reference": {
+      "name": "COP31_intervention_reference.json",
+      "folder": "root_folder",
+      "lookup": "search by name, trashed = false, modifiedTime desc, take the newest",
+      "last_known": "v20 2026-11-20 evening, id 1lsTRnkb4iKjd1f429TEdZ5c6ct75WDY6"
+    },
+    "whatsapp_exports": [
+      {
+        "name": "WhatsApp Chat with Arab Group Article 6 COP 31",
+        "kind": "zip",
+        "folder": "root_folder",
+        "group": "arab_group"
+      }
+    ],
+    "closed_positions": [
+      {
+        "name": "LMDC_positions.json",
+        "folder": "closed_folders.lmdc",
+        "owner_session": "lmdc"
+      }
+    ],
+    "live_text": {
+      "name": "COP31_live.txt",
+      "id": "1oPr3AAXrYMBWpmj0IC5px8bpo42IyTh1"
+    },
+    "live_status": {
+      "name": "COP31_live_status.txt",
+      "id": "12heGAt_UHD4iCM8SYSQhDc7bzmbqwrZJ"
+    },
+    "live_doc": {
+      "name": "COP31 نص حي",
+      "id": "1-GkCU2qV-UwqhraQkqVeEWOOjdQ21vBZCEHxMDJAzP4"
+    },
+    "live_ear_note": "أسماء ملفات الأذن الحية تبقى بالبادئة COP31_ في كل مؤتمر، فهي مكتوبة في البرنامج المعتمد web-2026-11-24k. انظر playbook/live_ear.md."
+  },
+  "sessions": {
+    "main": "session_011WPkSpneZZNUraRrm1kzvT",
+    "subs": [
+      {
+        "name": "LMDC COP31",
+        "id": "session_011WPkSrAVyrhEJVmYHEB1SL",
+        "scope": "lmdc",
+        "created": "2026-11-16"
+      }
+    ]
+  },
+  "triggers": {
+    "morning": {
+      "id": "trig_01VJV79vGCJXD5TWBKY2rj2A",
+      "name": "COP31 موجز الصباح",
+      "cron": "CRON_TZ=Europe/Istanbul 47 6 9-21 11 *"
+    },
+    "evening": {
+      "id": "trig_01MrJ1BvfMBXq4WfVVvtJzHs",
+      "name": "COP31 خلاصة المساء وأوراق الغد",
+      "cron": "CRON_TZ=Europe/Istanbul 53 20 8-20 11 *"
+    },
+    "follow_results": {
+      "id": "trig_01XmeCzxgVBGSQMxdiMVTwhR",
+      "name": "نتائج المتابعة الحية"
+    }
+  },
+  "artifacts": {
+    "drafting_page": "https://claude.ai/artifact/9ag5mqwy8LRaGpwUmwi3za",
+    "follow_page": "https://claude.ai/artifact/EktZM3GwydbyseKXSzEJYX",
+    "positions_dashboard": "https://claude.ai/artifact/CxXmM1Pk1RPE6jHh9jQwuz"
+  },
+  "repo": {
+    "daily": "cop31/daily",
+    "papers": "cop31/papers",
+    "analysis": "cop31/analysis",
+    "final_report": "cop31/2026-11-19_COP31_Article6_Final_Report.docx",
+    "handover": "cop31/BONN_2027_handover.md"
+  },
+  "krisp": {
+    "name_prefix": "COP31",
+    "tag": "COP31"
+  }
+}

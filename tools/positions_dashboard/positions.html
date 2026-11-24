@@ -1,0 +1,254 @@
+<title>لوحة المواقف</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600;700&family=IBM+Plex+Sans+Arabic:wght@500;600&display=swap">
+<style>
+/* Layout: one narrow reading column for the phone, an item per fold, alliances in the agreed priority order */
+:root {
+  --bg: #f6f7f4; --surface: #ffffff; --fg: #1d2420; --muted: #5d6a63; --line: #dde3de;
+  --accent: #1f6f5c; --accent-soft: #e3f0ec;
+  --ally: #1f7a4d; --ally-bg: #e2f3e9; --opp: #a23b2a; --opp-bg: #f7e4df; --mid: #7a5b12; --mid-bg: #f5ecd6;
+  --font-body: "Simplified Arabic", "Noto Naskh Arabic", "Traditional Arabic", serif;
+  --font-ui: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121614; --surface: #1a201d; --fg: #e6ebe8; --muted: #9aa8a0; --line: #2c3531;
+  --accent: #6cc3a8; --accent-soft: #1d332c;
+  --ally: #7fd3a5; --ally-bg: #183026; --opp: #f0a090; --opp-bg: #3a201b; --mid: #e3c47a; --mid-bg: #33291a; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #121614; --surface: #1a201d; --fg: #e6ebe8; --muted: #9aa8a0; --line: #2c3531;
+  --accent: #6cc3a8; --accent-soft: #1d332c;
+  --ally: #7fd3a5; --ally-bg: #183026; --opp: #f0a090; --opp-bg: #3a201b; --mid: #e3c47a; --mid-bg: #33291a; color-scheme: dark }
+html { direction: rtl }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 17px; line-height: 1.75;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 12px 40px }
+main { max-width: 760px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px }
+header { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; min-width: 0 }
+h1 { font-family: var(--font-ui); font-size: 1.35rem; margin: 0; text-wrap: balance }
+.meta { color: var(--muted); font-family: var(--font-ui); font-size: .82rem }
+.bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center }
+.bar input { flex: 1 1 160px; width: 100%; min-width: 0; font: inherit; font-size: .95rem; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--fg) }
+button { font-family: var(--font-ui); font-size: .9rem; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--accent); background: var(--accent); color: var(--surface); cursor: pointer }
+button.ghost { background: transparent; color: var(--accent) }
+button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+.notice { font-family: var(--font-ui); font-size: .9rem; padding: 10px 12px; border-radius: 8px; background: var(--accent-soft) }
+details.item { min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 10px }
+details.item > summary { list-style: none; cursor: pointer; padding: 12px 14px; display: grid; gap: 4px }
+details.item > summary::-webkit-details-marker { display: none }
+.ititle { font-family: var(--font-ui); font-weight: 600; font-size: 1.02rem }
+.agenda { color: var(--muted); font-size: .85rem; font-family: var(--font-ui) }
+.dots { display: flex; gap: 6px; flex-wrap: wrap }
+.body { padding: 0 14px 14px; display: grid; gap: 14px; min-width: 0 }
+.status { border-inline-start: 3px solid var(--accent); padding-inline-start: 10px; color: var(--fg) }
+h3 { font-family: var(--font-ui); font-size: .85rem; letter-spacing: .02em; color: var(--muted); margin: 0 0 4px }
+.alliance { display: grid; gap: 4px; padding-block: 8px; border-top: 1px solid var(--line) }
+.alliance:first-of-type { border-top: 0 }
+.aname { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-family: var(--font-ui); font-weight: 600 }
+ol { margin: 0; padding-inline-start: 22px; list-style-type: arabic-indic }
+li { margin-block: 2px }
+ol.en { padding-inline-start: 22px }
+.en { overflow-wrap: anywhere; direction: ltr; text-align: left; font-family: Georgia, "Times New Roman", serif; font-size: .92rem; color: var(--muted) }
+.chip { font-family: var(--font-ui); font-size: .74rem; padding: 1px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); overflow-wrap: anywhere }
+.chip.ally { background: var(--ally-bg); color: var(--ally) }
+.chip.opp { background: var(--opp-bg); color: var(--opp) }
+.chip.mid { background: var(--mid-bg); color: var(--mid) }
+.actors { display: grid; gap: 6px }
+.actor { display: grid; gap: 2px }
+.actor b { font-family: var(--font-ui); font-weight: 600 }
+details.more > summary { cursor: pointer; font-family: var(--font-ui); font-size: .82rem; color: var(--accent) }
+.arg { display: grid; gap: 2px; padding-block: 6px; border-top: 1px dashed var(--line) }
+.empty { color: var(--muted); font-family: var(--font-ui); font-size: .9rem }
+</style>
+
+<main>
+  <header>
+    <h1>لوحة المواقف</h1>
+    <div class="meta" id="meta">تقرأ مرجع المداخلات من Drive عند الفتح.</div>
+    <div class="bar">
+      <input id="refName" aria-label="اسم ملف المرجع" value="COP31_intervention_reference.json">
+      <button id="load">تحديث</button>
+    </div>
+    <div class="bar">
+      <input id="filter" aria-label="بحث في البنود" placeholder="ابحث في البنود والمواقف">
+      <button class="ghost" id="toggle">افتح الكل</button>
+    </div>
+  </header>
+  <div id="notice" class="notice" hidden></div>
+  <section id="items" aria-live="polite">
+    <p class="empty">ستظهر هنا بنود المرجع، ولكل بند مواقف المجموعة العربية ثم LMDC ثم أوبك ثم مجموعة ال77، والحلفاء والمعارضون، ومداخلات العراق.</p>
+  </section>
+</main>
+
+<script>
+const ORDER = ["arab_group", "lmdc", "opec", "g77"]
+const NAMES = { arab_group: "المجموعة العربية", lmdc: "LMDC", opec: "أوبك", g77: "مجموعة ال77 والصين" }
+const STATUS = {
+  delivered_krisp: ["ألقي، Krisp", "ally"], delivered_reported: ["ألقي، بإفادة", "ally"],
+  draft_whatsapp: ["مسودة واتساب", "mid"], ear_unconfirmed: ["الأذن، غير مؤكد", "mid"],
+  possibly_not_delivered: ["ربما لم يلق", "mid"], archive: ["سابق", ""]
+}
+const $ = id => document.getElementById(id)
+let mcp = null, ref = null, allOpen = false
+
+function el(tag, cls, text) {
+  const e = document.createElement(tag)
+  if (cls) e.className = cls
+  if (text != null) e.textContent = String(text)
+  return e
+}
+function chip(text, kind) { return el("span", "chip" + (kind ? " " + kind : ""), text) }
+function campKind(c) {
+  c = String(c || "")
+  if (/^معارض/.test(c)) return "opp"
+  if (/^(حليف|تحالف)/.test(c)) return "ally"
+  return "mid"
+}
+function list(arr, cls) {
+  const ol = el("ol", cls === "en" ? "en" : null)
+  for (const t of arr || []) ol.append(el("li", null, t))
+  return ol
+}
+function note(text) { const n = $("notice"); n.hidden = !text; n.textContent = text || "" }
+
+function renderAlliance(key, entries) {
+  const box = el("div", "alliance")
+  const sorted = [...entries].sort((a, b) => String(b.date).localeCompare(String(a.date)))
+  const cur = sorted.find(e => e.status !== "archive") || sorted[0]
+  const head = el("div", "aname")
+  head.append(el("span", null, (ref.alliances && ref.alliances[key] && ref.alliances[key].name) || NAMES[key] || key))
+  const st = STATUS[cur.status] || [cur.status || "", ""]
+  if (st[0]) head.append(chip(st[0], st[1]))
+  if (cur.date) head.append(chip(cur.date))
+  box.append(head, list(cur.positions))
+  if ((cur.formulations_en || []).length) {
+    const d = el("details", "more"); d.append(el("summary", null, "الصيغ بالإنكليزية"), list(cur.formulations_en, "en")); box.append(d)
+  }
+  if (sorted.length > 1) {
+    const d = el("details", "more"); d.append(el("summary", null, "مواقف سابقة (" + (sorted.length - 1) + ")"))
+    for (const e of sorted.filter(x => x !== cur)) {
+      d.append(el("div", "meta", (e.date || "") + " " + ((STATUS[e.status] || [e.status])[0] || "")), list(e.positions))
+    }
+    box.append(d)
+  }
+  return box
+}
+
+function renderItem(it) {
+  const d = el("details", "item"); d.dataset.text = JSON.stringify(it).toLowerCase()
+  const s = el("summary")
+  s.append(el("span", "ititle", it.title || it.id))
+  if (it.agenda) s.append(el("span", "agenda", it.agenda))
+  const groups = {}
+  for (const a of it.alliance_positions || []) (groups[a.alliance] = groups[a.alliance] || []).push(a)
+  const keys = [...ORDER.filter(k => groups[k]), ...Object.keys(groups).filter(k => !ORDER.includes(k))]
+  const dots = el("span", "dots")
+  for (const k of keys) dots.append(chip(NAMES[k] || k))
+  if (!keys.length) dots.append(chip("لا موقف تحالف، يبنى على أقرب بند", "mid"))
+  s.append(dots)
+  d.append(s)
+  const b = el("div", "body")
+  if (it.latest_status) b.append(el("div", "status", it.latest_status))
+  if (keys.length) {
+    const sec = el("section"); sec.append(el("h3", null, "مواقف التحالفات بالترتيب المعتمد"))
+    for (const k of keys) sec.append(renderAlliance(k, groups[k]))
+    b.append(sec)
+  }
+  if ((it.allies_and_opponents || []).length) {
+    const sec = el("section"); sec.append(el("h3", null, "الحلفاء والمعارضون"))
+    const wrap = el("div", "actors")
+    const rank = { ally: 0, mid: 1, opp: 2 }
+    for (const o of [...it.allies_and_opponents].sort((x, y) => rank[campKind(x.camp)] - rank[campKind(y.camp)])) {
+      const a = el("div", "actor"), h = el("div", "aname")
+      h.append(el("b", null, o.actor), chip(o.camp, campKind(o.camp)))
+      a.append(h)
+      if (o.concession) a.append(el("div", null, "تنازل: " + o.concession))
+      if ((o.formulations_en || []).length) a.append(el("div", "en", o.formulations_en[0]))
+      wrap.append(a)
+    }
+    sec.append(wrap); b.append(sec)
+  }
+  if ((it.recurring_arguments || []).length) {
+    const sec = el("details", "more"); sec.append(el("summary", null, "الحجج المتكررة وردودها (" + it.recurring_arguments.length + ")"))
+    for (const g of it.recurring_arguments) {
+      const a = el("div", "arg")
+      a.append(el("b", null, g.argument + (g.by ? " (" + g.by + ")" : "")))
+      if (g.reply_ar) a.append(el("div", null, g.reply_ar))
+      if (g.reply_en) a.append(el("div", "en", g.reply_en))
+      sec.append(a)
+    }
+    b.append(sec)
+  }
+  if ((it.iraq_interventions || []).length) {
+    const iv = [...it.iraq_interventions].sort((x, y) => String(y.date).localeCompare(String(x.date)))
+    const sec = el("details", "more"); sec.append(el("summary", null, "مداخلات العراق (" + iv.length + ")"))
+    for (const v of iv) {
+      const a = el("div", "arg")
+      const h = el("div", "aname"); h.append(el("span", null, (v.date || "") + " " + (v.session || "")))
+      const st = STATUS[v.status]; if (st) h.append(chip(st[0], st[1]))
+      a.append(h)
+      if (v.text_en) a.append(el("div", "en", v.text_en))
+      if (v.support) a.append(el("div", null, v.support))
+      sec.append(a)
+    }
+    b.append(sec)
+  }
+  d.append(b)
+  return d
+}
+
+function render() {
+  const box = $("items"); box.replaceChildren()
+  const items = (ref && ref.items) || []
+  if (!items.length) { box.append(el("p", "empty", "لا بنود في المرجع.")); return }
+  for (const it of items) box.append(renderItem(it))
+  applyFilter()
+}
+function applyFilter() {
+  const q = $("filter").value.trim().toLowerCase()
+  for (const d of $("items").querySelectorAll("details.item")) d.hidden = !!q && !d.dataset.text.includes(q)
+}
+
+async function load() {
+  if (!mcp) { note("قراءة Drive غير متاحة هنا. افتح الصفحة داخل Claude واسمح لها بـ Google Drive."); return }
+  const name = $("refName").value.trim()
+  if (!/^[\w.\- ]+\.json$/.test(name)) { note("اكتب اسم ملف المرجع كما هو في Drive، وينتهي بـ .json"); return }
+  try { localStorage.setItem("pd.ref", name) } catch (e) {}
+  $("load").disabled = true; note("أقرأ " + name + " من Drive...")
+  try {
+    const s = await mcp.callTool("Google Drive", "search_files", {
+      query: "title = '" + name + "' and trashed = false", orderBy: "modifiedTime desc", pageSize: 1, excludeContentSnippets: true
+    }, { cache: false })
+    const f = s.payload && s.payload.files && s.payload.files[0]
+    if (!f) { note("لم أجد ملفا بهذا الاسم في Drive."); return }
+    const c = await mcp.callTool("Google Drive", "read_file_content", { fileId: f.id }, { cache: false })
+    let raw = c.payload
+    raw = typeof raw === "string" ? raw : (raw && (raw.fileContent ?? raw.content)) || ""
+    try { ref = JSON.parse(raw) } catch (e) { ref = JSON.parse(raw.replace(/\\([\\\[\]_*#().!`{}+\-])/g, "$1")) }
+    const m = ref.meta || {}
+    $("meta").textContent = (m.title || name) + "، النسخة " + (m.version || "غير مذكورة") + "، قرئت الساعة " + new Date().toTimeString().slice(0, 5)
+    note("")
+    render()
+  } catch (e) {
+    const code = e && e.code
+    note(code === "needs_reauth" || code === "server_not_connected"
+      ? "Google Drive غير متصل. اربطه من إعدادات claude.ai ثم Connectors، ثم اضغط تحديث."
+      : code === "not_granted" ? "لم يسمح للصفحة بقراءة Drive. افتح أذونات الصفحة واسمح بـ Google Drive."
+      : "تعذرت القراءة من Drive، فاضغط تحديث بعد قليل.")
+  } finally { $("load").disabled = false }
+}
+
+$("load").addEventListener("click", load)
+$("filter").addEventListener("input", applyFilter)
+$("toggle").addEventListener("click", () => {
+  allOpen = !allOpen
+  for (const d of $("items").querySelectorAll("details.item")) d.open = allOpen
+  $("toggle").textContent = allOpen ? "أغلق الكل" : "افتح الكل"
+})
+try { const saved = localStorage.getItem("pd.ref"); if (saved) $("refName").value = saved } catch (e) {}
+
+;(async () => {
+  const c = window.claude
+  if (!c || !c.use) { note("افتح الصفحة داخل Claude لتقرأ المرجع من Drive."); return }
+  mcp = await c.use("mcp").catch(() => null)
+  load()
+})()
+</script>

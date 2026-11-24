@@ -1,0 +1,104 @@
+{
+  "id": "SB66",
+  "title": "الدورة السادسة والستون للهيئتين الفرعيتين",
+  "city": "Bonn",
+  "country": "Germany",
+  "start": "YYYY-MM-DD",
+  "end": "YYYY-MM-DD",
+  "timezone": "Europe/Berlin",
+  "status": "planned",
+  "next_conference": "",
+  "scope": {
+    "files": [
+      "Article6"
+    ],
+    "file_notes": "",
+    "coordination": [
+      "arab_group",
+      "lmdc",
+      "opec",
+      "g77"
+    ],
+    "coordination_from": "YYYY-MM-DD"
+  },
+  "alliance_priority": [
+    "arab_group",
+    "lmdc",
+    "opec",
+    "g77"
+  ],
+  "calendar_prefixes": {
+    "lmdc": "LMDC:",
+    "opec": "OPEC:",
+    "g77": "G77:"
+  },
+  "mail_queries": {
+    "g77": "from:g77-and-china@lists.unfccc.int",
+    "scope_terms": [],
+    "lmdc_terms": [
+      "LMDC",
+      "Like-Minded",
+      "المتشابهة التفكير"
+    ],
+    "opec_terms": [
+      "OPEC",
+      "أوبك"
+    ]
+  },
+  "drive": {
+    "root_folder": {
+      "name": "SB66",
+      "id": ""
+    },
+    "day_folders": {},
+    "closed_folders": {},
+    "references_folder_name": "Negotiation-References",
+    "live_ear_folder": {
+      "name": "COP31/live_ear",
+      "id": "11w0efGwUFi_mKoIV0Q28_deyu9d-GTdW"
+    }
+  },
+  "files": {
+    "intervention_reference": {
+      "name": "SB66_intervention_reference.json",
+      "folder": "root_folder",
+      "lookup": "search by name, trashed = false, modifiedTime desc, take the newest"
+    },
+    "whatsapp_exports": [],
+    "closed_positions": [],
+    "live_text": {
+      "name": "COP31_live.txt",
+      "id": "1oPr3AAXrYMBWpmj0IC5px8bpo42IyTh1"
+    },
+    "live_status": {
+      "name": "COP31_live_status.txt",
+      "id": "12heGAt_UHD4iCM8SYSQhDc7bzmbqwrZJ"
+    },
+    "live_doc": {
+      "name": "",
+      "id": ""
+    },
+    "live_ear_note": "أسماء ملفات الأذن الحية تبقى بالبادئة COP31_ في كل مؤتمر. انظر playbook/live_ear.md."
+  },
+  "sessions": {
+    "main": "",
+    "subs": []
+  },
+  "triggers": {},
+  "artifacts": {
+    "drafting_page": "https://claude.ai/artifact/9ag5mqwy8LRaGpwUmwi3za",
+    "follow_page": "https://claude.ai/artifact/EktZM3GwydbyseKXSzEJYX",
+    "positions_dashboard": "https://claude.ai/artifact/CxXmM1Pk1RPE6jHh9jQwuz"
+  },
+  "repo": {
+    "daily": "conferences/SB66/daily",
+    "papers": "conferences/SB66/papers",
+    "analysis": "conferences/SB66/analysis",
+    "final_report": "",
+    "handover": ""
+  },
+  "krisp": {
+    "name_prefix": "SB66",
+    "tag": "SB66"
+  }
+}

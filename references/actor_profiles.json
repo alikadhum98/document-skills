@@ -1,0 +1,4580 @@
+{
+ "about": "ملفات المفاوضين مبنية آليا من references/party_positions.json بالأداة tools/actor_profiles.py. لا تعدل يدويا، بل يعدل السجل ثم يعاد البناء.",
+ "source_entries": 114,
+ "actors": [
+  {
+   "actor": "LMDC",
+   "appearances": [
+    {
+     "date": "2026-11-10",
+     "session": "SBI informal consultations, funding Article 6.2 infrastructure",
+     "tone": "5_red_line",
+     "tone_note": "",
+     "attribution": "inferred_strong",
+     "entry": "2026-11-10-a62fund-lmdc"
+    },
+    {
+     "date": "2026-11-10",
+     "session": "Article 6.8 in-session workshop, round table",
+     "tone": "1_support",
+     "tone_note": "مع خط أحمر على الإلزام",
+     "attribution": "inferred_strong",
+     "entry": "2026-11-10-a68ws-lmdc"
+    },
+    {
+     "date": "2026-11-13",
+     "session": "Informal interactive dialogue on Article 6 technical expert review",
+     "tone": "5_red_line",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-13-ter-lmdc"
+    },
+    {
+     "date": "2026-11-14",
+     "session": "CMA 16(a) informal consultations, implementation of Article 6.2 guidance",
+     "tone": "5_red_line",
+     "tone_note": "",
+     "attribution": "inferred_strong",
+     "entry": "2026-11-14-16a-lmdc"
+    },
+    {
+     "date": "2026-11-14",
+     "session": "CMA 16(b) informal consultations, Article 6.4 mechanism",
+     "tone": "4_strong_opposition",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-14-16b-lmdc"
+    },
+    {
+     "date": "2026-11-16",
+     "session": "CMA 18 informal consultations, arrangements for funding Article 6.2 infrastructure, processes and capacity-building",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "supplied_unverified",
+     "entry": "2026-11-16-cma18-lmdc"
+    },
+    {
+     "date": "2026-11-16",
+     "session": "CMA 16(a) informal consultations, first reading of draft DT.CMA8.i16a.1",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "uncertain_actor",
+     "entry": "2026-11-16-16a-lmdc"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(c) informal consultations 17/11 morning, draft DT.CMA8.i16c.1 (16/11 23:00)",
+     "tone": "5_red_line",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-17-16c-lmdc"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(b) informal consultations 17/11 morning, second iteration (17/11 01:00)",
+     "tone": "4_strong_opposition",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-17-16b-lmdc"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(a) informal consultations 17/11 noon, second iteration (16/11 23:45)",
+     "tone": "5_red_line",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-17-16a-lmdc"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(a) final round 17/11 evening",
+     "tone": "4_firm_opposition",
+     "tone_note": "",
+     "attribution": "content",
+     "entry": "2026-11-17-16a-eve-lmdc"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(c) evening informal huddle 17/11",
+     "tone": "4_firm_opposition",
+     "tone_note": "",
+     "attribution": "content",
+     "entry": "2026-11-17-68-eve-lmdc"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 18 informal consultations 17/11",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "content",
+     "entry": "2026-11-17-18-lmdc"
+    },
+    {
+     "date": "2026-11-19",
+     "session": "CMA 16(a) forwarding session 19/11",
+     "tone": "5_rejection",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-19-16a-lmdc"
+    },
+    {
+     "date": "2026-11-19",
+     "session": "CMA 16(c) final 19/11",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-19-68-lmdc-eve"
+    }
+   ],
+   "camps": {
+    "developing": 5,
+    "ally": 5,
+    "budget_only": 3,
+    "budget": 2
+   },
+   "positions": [
+    {
+     "text": "رفض رسوم المستخدمين وأي التزامات مالية خارج الميزانية",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-lmdc"
+    },
+    {
+     "text": "سابقة تمس الاتفاقية واتفاق باريس",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-lmdc"
+    },
+    {
+     "text": "الميزانية مع التبرعات",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-lmdc"
+    },
+    {
+     "text": "تبسيط المراجعة الفنية لخفض كلفتها",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-lmdc"
+    },
+    {
+     "text": "السجل الدولي أنشئ لمن لا يقدر على سجله",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-lmdc"
+    },
+    {
+     "text": "أولوية بناء القدرات",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-lmdc"
+    },
+    {
+     "text": "حذف لغة في الديباجة توحي بحتمية نهج المستخدم",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-lmdc"
+    },
+    {
+     "text": "إبقاء كل الخيارات في هذه المرحلة",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-lmdc"
+    },
+    {
+     "text": "بناء القدرات وجاهزية البيانات",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68ws-lmdc"
+    },
+    {
+     "text": "دعم مستدام بالقدرات ونقل التكنولوجيا والموارد",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68ws-lmdc"
+    },
+    {
+     "text": "رفض فرض نماذج إبلاغ أو حوكمة",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68ws-lmdc"
+    },
+    {
+     "text": "التنسيق مع نقطة الاتصال بحسب التفضيل الوطني",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68ws-lmdc"
+    },
+    {
+     "text": "قيمة في عرض مبادرة الطرف الواحد نهجا مقترحا",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68ws-lmdc"
+    },
+    {
+     "text": "الإرشادات لا تنشئ مراجعة مستقلة للكفاية",
+     "date": "2026-11-13",
+     "entry": "2026-11-13-ter-lmdc"
+    },
+    {
+     "text": "الفقرة 24 من تقرير التوليف خلطت بين (قد يؤثر) و(يؤثر)",
+     "date": "2026-11-13",
+     "entry": "2026-11-13-ter-lmdc"
+    },
+    {
+     "text": "تعليقات الأطراف لا تقصر على الدقة الوقائعية",
+     "date": "2026-11-13",
+     "entry": "2026-11-13-ter-lmdc"
+    },
+    {
+     "text": "لا تقرير ولا نتيجة من الحوار",
+     "date": "2026-11-13",
+     "entry": "2026-11-13-ter-lmdc"
+    },
+    {
+     "text": "مراجعة الإرشادات تستند إلى تقرير التوليف وحده",
+     "date": "2026-11-13",
+     "entry": "2026-11-13-ter-lmdc"
+    },
+    {
+     "text": "المراجعة انحرفت عن الإرشادات وتدخلت بطلب معلومات وطنية",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-lmdc"
+    },
+    {
+     "text": "رفض تعريف جديد للجسامة",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-lmdc"
+    },
+    {
+     "text": "لا إرشادات إضافية هذا العام ولو سميت توضيحا",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-lmdc"
+    },
+    {
+     "text": "المسودة تحيط علما بالحوار فقط ولا حوار في العام القادم",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-lmdc"
+    },
+    {
+     "text": "تحفظ على الإحاطة بتقرير التوليف",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-lmdc"
+    },
+    {
+     "text": "أي تحسين يتطلب طرائق بولاية وتفاوض",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-lmdc"
+    },
+    {
+     "text": "تأييد مداخلة العراق في بناء القدرات",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-lmdc"
+    },
+    {
+     "text": "تحفيز الطلب على الوحدات وتقرير عنه في CMA 9",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-lmdc"
+    },
+    {
+     "text": "تمديد المدد",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-lmdc"
+    },
+    {
+     "text": "التحفظ لا يساوي النزاهة",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-lmdc"
+    },
+    {
+     "text": "الآلية لا تفرض مسارات وطنية لصافي الصفر",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-lmdc"
+    },
+    {
+     "text": "لا تقديم لمراجعة القواعد قبل 2028",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-lmdc"
+    },
+    {
+     "text": "الميزانية الأساسية مع التبرعات",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-lmdc"
+    },
+    {
+     "text": "الإعفاء والتنازل للبلدان النامية في أي رسوم",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-lmdc"
+    },
+    {
+     "text": "رفض آليات عدم الدفع",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-lmdc"
+    },
+    {
+     "text": "الرسوم للمادة 6.2 وحدها",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-lmdc"
+    },
+    {
+     "text": "تحفظ على رسوم وحدات SMO",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-lmdc"
+    },
+    {
+     "text": "حذف 11",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-lmdc"
+    },
+    {
+     "text": "استبدال 13 و14 بلغة تلزم المراجعين بالإرشادات",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-lmdc"
+    },
+    {
+     "text": "لا ترحيب بتقرير التوليف",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-lmdc"
+    },
+    {
+     "text": "لا إرشاد إضافي",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-lmdc"
+    },
+    {
+     "text": "لا نتيجة للحوار ولا حوار في حزيران",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-lmdc"
+    },
+    {
+     "text": "قرار بسيط جدا",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-lmdc"
+    },
+    {
+     "text": "خيبة أمل من مسار النقاش واختلاف فهم الولاية",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-lmdc"
+    },
+    {
+     "text": "رفض إنهاء برنامج عمل 6.8",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-lmdc"
+    },
+    {
+     "text": "النهج غير السوقية جوهر التعاون وتوازن المادة السادسة",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-lmdc"
+    },
+    {
+     "text": "تفضيل مواصلة النقاش العام القادم على نتيجة متعجلة",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-lmdc"
+    },
+    {
+     "text": "القسم الثاني معطل حتى تحسم مراجعة البرنامج وولاية برنامج عمل التخفيف",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-lmdc"
+    },
+    {
+     "text": "فقرات غير مقوسة تعترض عليها جوهريا",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16b-lmdc"
+    },
+    {
+     "text": "تقبل عدم تمديد المدد بشرط الأولوية في مراجعة 2028",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16b-lmdc"
+    },
+    {
+     "text": "تعترض على فقرة شفافية أولويات المنهجيات",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16b-lmdc"
+    },
+    {
+     "text": "الطبيعة الوطنية وعدم فرض المسارات مهمة جدا، ثم أبقتها حتى نهاية النقاش للعودة إليها",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16b-lmdc"
+    },
+    {
+     "text": "تسأل عن الحاجة إلى معايير جديدة لتضارب المصالح",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16b-lmdc"
+    },
+    {
+     "text": "تتمسك بفقرة تشجيع استخدام الآلية مع تقرير عن الهدف الخامس",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16b-lmdc"
+    },
+    {
+     "text": "فقرة عدم الاتساق تنتهي عند reviews conducted to date",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-lmdc"
+    },
+    {
+     "text": "حذف فقرات التنسيق وتكرار الشرح واستيراد نهج 6.4 واستنتاجات رؤساء المراجعين وطلبات الأمانة",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-lmdc"
+    },
+    {
+     "text": "استبدال فقرة نطاق المراجعة بطلب التزام فرق المراجعة بمتطلبات الإبلاغ",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-lmdc"
+    },
+    {
+     "text": "الحوار في CMA القادم بلا نتيجة ولا مذكرة",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-lmdc"
+    },
+    {
+     "text": "أغلب طلباتها لم يدرج",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-lmdc"
+    },
+    {
+     "text": "لا إبلاغ مفصل عن الإسهام",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-eve-lmdc"
+    },
+    {
+     "text": "حذف التتبع على المنصة",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-eve-lmdc"
+    },
+    {
+     "text": "الشطر الأول من التسميات المشتركة",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-eve-lmdc"
+    },
+    {
+     "text": "رفض التحضير لمراجعة 2028",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-eve-lmdc"
+    },
+    {
+     "text": "الحوار بلا نتيجة وإلا فلا حوار",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-eve-lmdc"
+    },
+    {
+     "text": "تقديم النهج من طرف واحد لمشاريع تحتاج دعما وللمشاريع الوطنية",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-68-eve-lmdc"
+    },
+    {
+     "text": "رفض أن يحل المنتدى محل المنصة",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-68-eve-lmdc"
+    },
+    {
+     "text": "طلب إيقاف النقاش في آخره",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-68-eve-lmdc"
+    },
+    {
+     "text": "ورقة فنية بتوقعات لخمس سنوات",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-18-lmdc"
+    },
+    {
+     "text": "النهج الأول",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-18-lmdc"
+    },
+    {
+     "text": "إعفاء البلدان النامية وجهاتها",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-18-lmdc"
+    },
+    {
+     "text": "لا ربط لعدم الدفع بالاتساق",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-18-lmdc"
+    },
+    {
+     "text": "رفض النص بسبب فقرة تحليل المواعيد",
+     "date": "2026-11-19",
+     "entry": "2026-11-19-16a-lmdc"
+    },
+    {
+     "text": "لا إرشاد إضافي قبل 2028",
+     "date": "2026-11-19",
+     "entry": "2026-11-19-16a-lmdc"
+    },
+    {
+     "text": "الإحاطة بتقرير لجنة غلاسكو بدل الترحيب",
+     "date": "2026-11-19",
+     "entry": "2026-11-19-68-lmdc-eve"
+    }
+   ],
+   "formulations_en": [
+    {
+     "text": "establishing mandatory funding regimes outside the established budgetary framework would create precedents with implications across the Convention and its Paris Agreement",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-lmdc"
+    },
+    {
+     "text": "these are reasons that we defend consistently across other groups, so it does not make sense that we do not defend it here",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-lmdc"
+    },
+    {
+     "text": "we cannot accept user fees or other financing obligations outside the established budgetary framework",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-lmdc"
+    },
+    {
+     "text": "we warned it would be very expensive, and here we are saying that it is very expensive",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-lmdc"
+    },
+    {
+     "text": "making them pay for it is just defeating the purpose of developing the international registry in the first place",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-lmdc"
+    },
+    {
+     "text": "the preamble has elements under paragraph 11 that might be understood as predetermining the user or usage-based system as inevitable",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-lmdc"
+    },
+    {
+     "text": "this reinforces the need for sustained support, including capacity-building, technology transfer and access to appropriate resources",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68ws-lmdc"
+    },
+    {
+     "text": "this does not suggest or imply that we should be prescribing reporting, governance models or institutional structures",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68ws-lmdc"
+    },
+    {
+     "text": "rather than become an additional requirement or barrier to participation",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68ws-lmdc"
+    },
+    {
+     "text": "we see merit in this approach as it would provide visibility to projects to be recorded as proposed NMAs",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68ws-lmdc"
+    },
+    {
+     "text": "our guidance does not establish a separate sufficiency of information review",
+     "date": "2026-11-13",
+     "entry": "2026-11-13-ter-lmdc"
+    },
+    {
+     "text": "it is the LMDC's expectation that no report or outcome comes from this dialogue",
+     "date": "2026-11-13",
+     "entry": "2026-11-13-ter-lmdc"
+    },
+    {
+     "text": "we're very firm that no additional guidance will be included this year",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-lmdc"
+    },
+    {
+     "text": "trust is built on what you demonstrate and actually do",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-lmdc"
+    },
+    {
+     "text": "We should not assume that greater conservativeness automatically means greater integrity",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-lmdc"
+    },
+    {
+     "text": "Article 6.4 should not become a vehicle for prescribing national net zero pathways",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-lmdc"
+    },
+    {
+     "text": "We also can't accept non-payment mechanisms across all.",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-lmdc"
+    },
+    {
+     "text": "we will not accept any additional guidance whatsoever",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-lmdc"
+    },
+    {
+     "text": "I would like the entire room to follow the path of ourselves and the CDM room and just have a very simple outcome",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-lmdc"
+    },
+    {
+     "text": "the proposed closure of the work programme under Article 6.8 is not acceptable to us. We cannot support closing the work programme",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-lmdc"
+    },
+    {
+     "text": "comfortable continuing these discussions next year rather than rushing towards an outcome in the absence of consensus",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-lmdc"
+    },
+    {
+     "text": "We are okay not having a decision on extension of the term limits, but we insist that it's very important for us to just prioritize and review of 2028",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16b-lmdc"
+    },
+    {
+     "text": "we would like to keep paragraph 14 until we've proceeded with discussing the entirety of the text",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16b-lmdc"
+    },
+    {
+     "text": "it shall not have an outcome",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-lmdc"
+    },
+    {
+     "text": "not every outcome is a progress",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-eve-lmdc"
+    },
+    {
+     "text": "We will not accept guidance that puts us in negotiation mode when we are in an implementation mode",
+     "date": "2026-11-19",
+     "entry": "2026-11-19-16a-lmdc"
+    }
+   ],
+   "tactics": [
+    {
+     "text": "حجة الاتساق عبر الغرف، والتذكير بالتحذير السابق، والدعوة الساخرة إلى التبرع ممن أصر على المراجعات.",
+     "date": "2026-11-10"
+    },
+    {
+     "text": "يجمع الدعم والسيادة في جملة واحدة.",
+     "date": "2026-11-10"
+    },
+    {
+     "text": "تفكيك تقرير المراجعين فقرة فقرة، وإغلاق باب أي نتيجة.",
+     "date": "2026-11-13"
+    },
+    {
+     "text": "لهجة حادة تتهم بعض الأطراف بعرقلة التنفيذ.",
+     "date": "2026-11-14"
+    },
+    {
+     "text": "يربط الصرامة بغياب الاستثمار في البلدان النامية.",
+     "date": "2026-11-14"
+    },
+    {
+     "text": "تأجيل بدل إنهاء",
+     "date": "2026-11-17"
+    },
+    {
+     "text": "إبقاء الفقرة 14 ورقة للمساومة في آخر الجولة",
+     "date": "2026-11-17"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "الموقف مطابق للمسودة الصفرية. حجة (السابقة) يرد عليها الميسر بسابقة ITL، فيلزم ربطها بالتمييز بين المرفق باء والبلدان النامية.",
+     "date": "2026-11-10"
+    },
+    {
+     "text": "موقف LMDC المعلن في عرض النهج المقترحة، يسند التوصية العراقية.",
+     "date": "2026-11-10"
+    },
+    {
+     "text": "حليف رئيسي. تنبيه: المقرر 4/CMA.6 الفقرة 41 بحسب INF.2 يعرف الجسامة بما (could have an impact)، فلا تكرر حجة (قد يؤثر).",
+     "date": "2026-11-13"
+    },
+    {
+     "text": "حليف رئيسي. أيدت مداخلة العراق في بناء القدرات، وسمعها المفاوض العراقي تذكر العراق بالاسم، وسجلها Krisp (our colleagues).",
+     "date": "2026-11-14"
+    },
+    {
+     "text": "حليف.",
+     "date": "2026-11-14"
+    },
+    {
+     "text": "تأييد رفض الإنهاء، وصياغة التأجيل تفضيلا على الإنهاء فقط حفاظا على موقف المجموعة العربية",
+     "date": "2026-11-17"
+    },
+    {
+     "text": "تقديم لغة الحصيلة العالمية بديلا عن حذف عبارة المسارات",
+     "date": "2026-11-17"
+    }
+   ],
+   "tone_first_last": [
+    "5_red_line",
+    "5_red_line"
+   ],
+   "tone_average": 4.0,
+   "count": 15
+  },
+  {
+   "actor": "European Union",
+   "appearances": [
+    {
+     "date": "2026-11-10",
+     "session": "SBI informal consultations, funding Article 6.2 infrastructure",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-10-a62fund-eu"
+    },
+    {
+     "date": "2026-11-10",
+     "session": "SBSTA informal consultations, review of the Article 6.8 work programme",
+     "tone": "3_soft_opposition",
+     "tone_note": "للتوسيع، 1_support للاختتام",
+     "attribution": "named",
+     "entry": "2026-11-10-a68rev-eu"
+    },
+    {
+     "date": "2026-11-13",
+     "session": "Informal interactive dialogue on Article 6 technical expert review",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-13-ter-eu"
+    },
+    {
+     "date": "2026-11-14",
+     "session": "CMA 16(b) informal consultations, Article 6.4 mechanism",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-14-16b-eu"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(c) informal consultations 17/11 morning, draft DT.CMA8.i16c.1 (16/11 23:00)",
+     "tone": "3_soft_opposition",
+     "tone_note": "",
+     "attribution": "inferred_strong",
+     "entry": "2026-11-17-16c-eu"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(b) informal consultations 17/11 morning, second iteration (17/11 01:00)",
+     "tone": "4_strong_opposition",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-17-16b-eu"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(c) evening informal huddle 17/11",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "reported",
+     "entry": "2026-11-17-68-eve-eu-uk-jp"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 18 informal consultations 17/11",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "uncertain_actor",
+     "entry": "2026-11-17-18-eu"
+    },
+    {
+     "date": "2026-11-19",
+     "session": "CMA 16(a) forwarding session 19/11",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-19-16a-eu"
+    },
+    {
+     "date": "2026-11-19",
+     "session": "CMA 16(c) 19/11 noon",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-19-68-eu"
+    }
+   ],
+   "camps": {
+    "opponent": 4,
+    "minimalist_conclude": 2,
+    "integrity": 2,
+    "user_pays": 1,
+    "reformist": 1
+   },
+   "positions": [
+    {
+     "text": "مبدأ إسهام المستعملين",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-eu"
+    },
+    {
+     "text": "تقاسم عادل بين الأطراف والجهات المشاركة",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-eu"
+    },
+    {
+     "text": "الاعتماد على الميزانية يقلل اليقين",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-eu"
+    },
+    {
+     "text": "عناصر النزاهة التي تخدم الجميع يمكن تمويلها من الميزانية مبدئيا",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-eu"
+    },
+    {
+     "text": "أعمال التطوير لا تناسب الرسوم",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-eu"
+    },
+    {
+     "text": "الجهات المستعملة للسجل ومنها لأغراض دولية أخرى تسهم",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-eu"
+    },
+    {
+     "text": "اختتام برنامج العمل خيار منطقي",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-eu"
+    },
+    {
+     "text": "تقوية نقاط الاتصال الوطنية",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-eu"
+    },
+    {
+     "text": "المنصة طوعية غير سوقية لا وساطة ولا مطابقة استثمار ولا تمويل",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-eu"
+    },
+    {
+     "text": "أي وظيفة إضافية في حدود 4/CMA.3",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-eu"
+    },
+    {
+     "text": "الربط دون تجميع بيانات",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-eu"
+    },
+    {
+     "text": "تقدير الكلفة مع أي طلب للأمانة",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-eu"
+    },
+    {
+     "text": "مقرر في أنطاليا للتقرير الأولي المعدل وأنواع النهج",
+     "date": "2026-11-13",
+     "entry": "2026-11-13-ter-eu"
+    },
+    {
+     "text": "قلق من التقارير غير المنشورة",
+     "date": "2026-11-13",
+     "entry": "2026-11-13-ter-eu"
+    },
+    {
+     "text": "تأييد طريقة المراجعين في تصنيف عدم الاتساق",
+     "date": "2026-11-13",
+     "entry": "2026-11-13-ter-eu"
+    },
+    {
+     "text": "التحفظ في القيم الافتراضية للانعكاس",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-eu"
+    },
+    {
+     "text": "مراجعة أداة التنمية المستدامة",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-eu"
+    },
+    {
+     "text": "زيادة مؤقتة في بعض الرسوم",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-eu"
+    },
+    {
+     "text": "انفتاح على المساهمات النقدية لحصة التكيف",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-eu"
+    },
+    {
+     "text": "قلة النهج المسجلة تعكس الطبيعة الطوعية",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-eu"
+    },
+    {
+     "text": "لا يمكن إجبار أي طرف على استخدام المنصة",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-eu"
+    },
+    {
+     "text": "قبول عبارة النمو بوتيرة متواضعة ورفض بقية الأقواس",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-eu"
+    },
+    {
+     "text": "سأل LMDC هل تبحث المسائل الكبرى في ساعة المساء",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-eu"
+    },
+    {
+     "text": "لم يؤخذ بمقترحاته ومنها تضارب المصالح",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16b-eu"
+    },
+    {
+     "text": "حذف المعايير والمبررات من فقرة شفافية المنهجيات",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16b-eu"
+    },
+    {
+     "text": "فقرة الطبيعة الوطنية تأكيد سياسي خارج نطاق الآلية",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16b-eu"
+    },
+    {
+     "text": "ضد عرض المبادرات من طرف واحد على المنصة",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-68-eve-eu-uk-jp"
+    },
+    {
+     "text": "إعفاء أقل البلدان نموا والدول الجزرية وحدها",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-18-eu"
+    },
+    {
+     "text": "قبول الحذف على مضض",
+     "date": "2026-11-19",
+     "entry": "2026-11-19-16a-eu"
+    },
+    {
+     "text": "مسألة المواعيد ثغرة في إرشادات غلاسكو يجب بحثها",
+     "date": "2026-11-19",
+     "entry": "2026-11-19-16a-eu"
+    },
+    {
+     "text": "الولاية تلزم بالنظر لا بالتغيير",
+     "date": "2026-11-19",
+     "entry": "2026-11-19-68-eu"
+    },
+    {
+     "text": "مقترح AILAC ليس جسرا",
+     "date": "2026-11-19",
+     "entry": "2026-11-19-68-eu"
+    }
+   ],
+   "formulations_en": [
+    {
+     "text": "as participation in Article 6.2 is voluntary, the EU supports in principle an approach whereby the users of the infrastructure and processes contribute financially",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-eu"
+    },
+    {
+     "text": "the more Article 6.2 functioning relies on the core budget, the less certainty we would have",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-eu"
+    },
+    {
+     "text": "some elements that are of interest to all Parties, in particular elements that ensure integrity, could as a matter of principle be based on the programme budget",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-eu"
+    },
+    {
+     "text": "open to discuss a combination of approaches as long as they are fair, manageable and ensure stable funding",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-eu"
+    },
+    {
+     "text": "development work may be difficult to cover with fee-based structures",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-eu"
+    },
+    {
+     "text": "concluding the current work programme is one of the logical options to emerge from this review",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-eu"
+    },
+    {
+     "text": "we should not assume that the continuation of the work programme is necessary",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-eu"
+    },
+    {
+     "text": "it should facilitate cooperation rather than evolve into a formal project brokering, investment matchmaking or funding mechanism",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-eu"
+    },
+    {
+     "text": "preserve the distinction between initiatives that meet the criteria for non-market approaches and other projects",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-eu"
+    },
+    {
+     "text": "without creating a new data aggregation system or project pipeline",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-eu"
+    },
+    {
+     "text": "we don't see why we couldn't agree maybe here in Antalya on some decision that would really improve the process",
+     "date": "2026-11-13",
+     "entry": "2026-11-13-ter-eu"
+    },
+    {
+     "text": "we think that this decision needs to focus on the operational provisions",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16b-eu"
+    },
+    {
+     "text": "it's a gap in our guidance",
+     "date": "2026-11-19",
+     "entry": "2026-11-19-16a-eu"
+    }
+   ],
+   "tactics": [
+    {
+     "text": "مبدئي منظم، يقرن الانفتاح بشروط، ويترك بابا للميزانية في عناصر النزاهة.",
+     "date": "2026-11-10"
+    },
+    {
+     "text": "خطوط حمراء واضحة على الوساطة والتمويل، بلغة قانونية تستند إلى 4/CMA.3.",
+     "date": "2026-11-10"
+    },
+    {
+     "text": "يطلب قرارا توضيحيا محدودا.",
+     "date": "2026-11-13"
+    },
+    {
+     "text": "يربط التمويل بالرسوم.",
+     "date": "2026-11-14"
+    },
+    {
+     "text": "تفسير ضعف المنصة بالطوعية لخدمة الإنهاء",
+     "date": "2026-11-17"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "اقتباس كلامه نفسه: المراجعة الفنية من عناصر النزاهة التي قال إنها تمول من الميزانية، وأعمال التطوير كذلك.",
+     "date": "2026-11-10"
+    },
+    {
+     "text": "رفض الاتحاد ربط المنصة بالتمويل يعني أن الفقرة 27 تحتاج سندا من نص المادة 6.8 نفسها.",
+     "date": "2026-11-10"
+    },
+    {
+     "text": "يواجه بأن أكثر القاعة رفضت المتطلبات الجديدة.",
+     "date": "2026-11-13"
+    },
+    {
+     "text": "زيادة الرسوم ترفض، والانفتاح على المساهمة النقدية يبنى عليه.",
+     "date": "2026-11-14"
+    },
+    {
+     "text": "الرد: ضعف المشاركة يدل على الحاجة إلى التواصل وبناء القدرات",
+     "date": "2026-11-17"
+    },
+    {
+     "text": "الرد: القرار يستذكر المادة 6.1 عن تنفيذ المساهمات المحددة وطنيا",
+     "date": "2026-11-17"
+    }
+   ],
+   "tone_first_last": [
+    "2_conditional_openness",
+    "4_strong_opposition"
+   ],
+   "tone_average": 2.7,
+   "count": 10
+  },
+  {
+   "actor": "Arab Group",
+   "appearances": [
+    {
+     "date": "2026-11-11",
+     "session": "SBI informal consultations, funding Article 6.2 infrastructure",
+     "tone": "4_strong_opposition",
+     "tone_note": "مع تأطير التسوية",
+     "attribution": "named",
+     "entry": "2026-11-11-a62fund-arabgroup"
+    },
+    {
+     "date": "2026-11-11",
+     "session": "SBI informal consultations, funding Article 6.2 infrastructure, second meeting",
+     "tone": "4_strong_opposition",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-11-a62fund2-arabgroup"
+    },
+    {
+     "date": "2026-11-14",
+     "session": "CMA 16(a) informal consultations, implementation of Article 6.2 guidance",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-14-16a-arabgroup"
+    },
+    {
+     "date": "2026-11-14",
+     "session": "CMA 16(b) informal consultations, Article 6.4 mechanism",
+     "tone": "1_support",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-14-16b-arabgroup"
+    },
+    {
+     "date": "2026-11-16",
+     "session": "CMA 16(c) informal consultations, work programme under the framework for non-market approaches",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-16-16c-arabgroup"
+    },
+    {
+     "date": "2026-11-16",
+     "session": "CMA 18 informal consultations, arrangements for funding Article 6.2 infrastructure, processes and capacity-building",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "supplied_unverified",
+     "entry": "2026-11-16-cma18-arabgroup"
+    },
+    {
+     "date": "2026-11-16",
+     "session": "CMA 16(a) informal consultations, first reading of draft DT.CMA8.i16a.1",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "uncertain_actor",
+     "entry": "2026-11-16-16a-arabgroup"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(b) final round 17/11 afternoon",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "content",
+     "entry": "2026-11-17-64-pm-arab"
+    },
+    {
+     "date": "2026-11-19",
+     "session": "CMA 18 19/11",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-19-18-uae"
+    }
+   ],
+   "camps": {
+    "budget": 7,
+    "ally": 2
+   },
+   "positions": [
+    {
+     "text": "النهج الأول مع التبرعات في الفقرتين 3 و4",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund-arabgroup"
+    },
+    {
+     "text": "مخاوف جدية من النهجين الثاني والثالث",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund-arabgroup"
+    },
+    {
+     "text": "رفض الوسم بعدم الاتساق وتعليق النفاذ",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund-arabgroup"
+    },
+    {
+     "text": "حذف الفقرة 1(e) والإبقاء على 1(c) و1(d) و1(f)",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund-arabgroup"
+    },
+    {
+     "text": "لا تقييم للتمويل الذاتي في الفقرة 49",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund-arabgroup"
+    },
+    {
+     "text": "ألقيت الكلمة المعدة كما هي تقريبا",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-arabgroup"
+    },
+    {
+     "text": "مسودة مختصرة تحيط علما بالتقرير وترحب بالتقدم",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-arabgroup"
+    },
+    {
+     "text": "لا نتيجة منفصلة للحوار",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-arabgroup"
+    },
+    {
+     "text": "لا إرشاد إضافي",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-arabgroup"
+    },
+    {
+     "text": "تأييد مداخلة العراق في بناء القدرات",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-arabgroup"
+    },
+    {
+     "text": "تمديد مدد عضوية هيئة الإشراف للحفاظ على الذاكرة المؤسسية",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-arabgroup"
+    },
+    {
+     "text": "النهج غير السوقية ليست مسارا ثانويا، واستمرار البرنامج وتقويته",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16c-arabgroup"
+    },
+    {
+     "text": "القسم A الخيار الثاني بلا قيود الوقت والقدرات",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16c-arabgroup"
+    },
+    {
+     "text": "البديل 12، والفقرة 14 الخيار الثاني، وحذف good practices من 16(b)",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16c-arabgroup"
+    },
+    {
+     "text": "رفض 37 و38، وتأييد 39 و40 بقسم مخصص",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16c-arabgroup"
+    },
+    {
+     "text": "الترتيبات المؤسسية الخيار الرابع بلا نص، ورفض الخيار الأول ومنه 45",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16c-arabgroup"
+    },
+    {
+     "text": "تنفيذ 13/CMA.7 كما اعتمد ضمن إطار المادة 6.8",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16c-arabgroup"
+    },
+    {
+     "text": "استمرار بناء قدرات نقاط الاتصال",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16c-arabgroup"
+    },
+    {
+     "text": "الميزانية الأساسية مع التبرعات",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-arabgroup"
+    },
+    {
+     "text": "رسوم السجل الدولي مع إعفاء البلدان النامية",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-arabgroup"
+    },
+    {
+     "text": "الرسوم للمادة 6.2 وحدها",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-arabgroup"
+    },
+    {
+     "text": "قرار قصير",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-arabgroup"
+    },
+    {
+     "text": "إحاطة بالتقارير لا ترحيب",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-arabgroup"
+    },
+    {
+     "text": "المراجعة في حدود متطلبات الإبلاغ",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-arabgroup"
+    },
+    {
+     "text": "لا إرشاد ولا حوار جديد",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-arabgroup"
+    },
+    {
+     "text": "حذف 23",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-arabgroup"
+    },
+    {
+     "text": "لا تقرير توليف محدث",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-arabgroup"
+    },
+    {
+     "text": "استبدال فقرة أولويات المنهجيات",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-64-pm-arab"
+    },
+    {
+     "text": "تأييد تجنب تراكم التحفظ",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-64-pm-arab"
+    },
+    {
+     "text": "حذف التفويض بعد الإصدار",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-64-pm-arab"
+    },
+    {
+     "text": "الميزانية والتبرعات",
+     "date": "2026-11-19",
+     "entry": "2026-11-19-18-uae"
+    },
+    {
+     "text": "النهجان الثالث والرابع بين قوسين",
+     "date": "2026-11-19",
+     "entry": "2026-11-19-18-uae"
+    }
+   ],
+   "formulations_en": [
+    {
+     "text": "this represents, in our view, the closest landing zone in this room",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund-arabgroup"
+    },
+    {
+     "text": "would create new mechanisms and new precedents under the Paris Agreement",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund-arabgroup"
+    },
+    {
+     "text": "access to the Article 6.2 infrastructure should not be made conditional in this way",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund-arabgroup"
+    },
+    {
+     "text": "a streamlined text built on Approach 1 and voluntary contributions",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund-arabgroup"
+    },
+    {
+     "text": "the closest landing zone in this room",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-arabgroup"
+    },
+    {
+     "text": "we also support the intervention made by our colleague from the Iraqi delegation on enhanced capacity-building",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-arabgroup"
+    },
+    {
+     "text": "Non-market approaches are not a secondary track.",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16c-arabgroup"
+    },
+    {
+     "text": "Parties already agreed to consider this in 2027. Option 4, with no text in this decision, respects that.",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16c-arabgroup"
+    },
+    {
+     "text": "Any early discussion must also consider strengthening Article 6.8.",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16c-arabgroup"
+    },
+    {
+     "text": "we support the introduction of fees, provided that exemptions or waivers are granted to developing countries",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-arabgroup"
+    }
+   ],
+   "tactics": [
+    {
+     "text": "يقدم النهج الأول منطقة هبوط لا موقفا متطرفا.",
+     "date": "2026-11-11"
+    },
+    {
+     "text": "تأطير التسوية.",
+     "date": "2026-11-11"
+    },
+    {
+     "text": "قصيرة داعمة.",
+     "date": "2026-11-14"
+    },
+    {
+     "text": "تكرار الموقف لترجيح الكفة.",
+     "date": "2026-11-14"
+    },
+    {
+     "text": "تأييد انتقائي للخيارات بأرقامها، والإحالة إلى ما اتفق عليه سابقا.",
+     "date": "2026-11-16"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "يبني العراق عليه ولا يكرره.",
+     "date": "2026-11-11"
+    },
+    {
+     "text": "الاتساق معها في جلسة المساء.",
+     "date": "2026-11-11"
+    },
+    {
+     "text": "سند مباشر للعراق.",
+     "date": "2026-11-14"
+    },
+    {
+     "text": "أيدها LMDC وسويسرا.",
+     "date": "2026-11-14"
+    },
+    {
+     "text": "يبني عليه العراق بنقاط الدعم وتيسير المنصة دون تكرار.",
+     "date": "2026-11-16"
+    }
+   ],
+   "tone_first_last": [
+    "4_strong_opposition",
+    "2_conditional_openness"
+   ],
+   "tone_average": 2.5,
+   "count": 9
+  },
+  {
+   "actor": "United Kingdom",
+   "appearances": [
+    {
+     "date": "2026-11-10",
+     "session": "SBI informal consultations, funding Article 6.2 infrastructure",
+     "tone": "1_support",
+     "tone_note": "(لنهجه) مع ضغط الاستعجال",
+     "attribution": "uncertain_actor",
+     "entry": "2026-11-10-a62fund-uk"
+    },
+    {
+     "date": "2026-11-10",
+     "session": "SBSTA informal consultations, review of the Article 6.8 work programme",
+     "tone": "3_soft_opposition",
+     "tone_note": "بصياغة مهذبة مقللة",
+     "attribution": "inferred_strong",
+     "entry": "2026-11-10-a68rev-uk"
+    },
+    {
+     "date": "2026-11-14",
+     "session": "CMA 16(a) informal consultations, implementation of Article 6.2 guidance",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "inferred_strong",
+     "entry": "2026-11-14-16a-uk"
+    },
+    {
+     "date": "2026-11-16",
+     "session": "CMA 16(a) informal consultations, first reading of draft DT.CMA8.i16a.1",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "uncertain_actor",
+     "entry": "2026-11-16-16a-uk"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(b) informal consultations 17/11 morning, second iteration (17/11 01:00)",
+     "tone": "3_soft_opposition",
+     "tone_note": "",
+     "attribution": "uncertain_actor",
+     "entry": "2026-11-17-16b-uk"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(a) informal consultations 17/11 noon",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-17-16a-noon-uk"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(c) evening informal huddle 17/11",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "reported",
+     "entry": "2026-11-17-68-eve-eu-uk-jp"
+    },
+    {
+     "date": "2026-11-19",
+     "session": "CMA 16(c) 19/11 noon",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-19-68-uk"
+    },
+    {
+     "date": "2026-11-19",
+     "session": "CMA 18 19/11",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-19-18-uk"
+    }
+   ],
+   "camps": {
+    "opponent": 4,
+    "user_pays_lead": 1,
+    "minimalist_conclude": 1,
+    "reformist": 1,
+    "fee": 1,
+    "practical_minimalist": 1
+   },
+   "positions": [
+    {
+     "text": "رسوم الاستعمال هي الإضافة الحاسمة لتمويل ذاتي جزئي",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-uk"
+    },
+    {
+     "text": "رسم لكل نهج تعاوني لتمويل المراجعات وقاعدة البيانات",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-uk"
+    },
+    {
+     "text": "رسوم السجل الدولي ومنها على الجهات غير الأطراف",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-uk"
+    },
+    {
+     "text": "بناء القدرات من الميزانية والتبرعات",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-uk"
+    },
+    {
+     "text": "مراجعة دورية للرسوم ورد الزائد وإعفاءات جزئية أو كاملة لفئات",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-uk"
+    },
+    {
+     "text": "تدابير الامتثال مثل تعليق النفاذ والوسم بعدم الاتساق متناسبة",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-uk"
+    },
+    {
+     "text": "المقرر توسع في تفسير الولاية ويحتاج تبسيطا كبيرا",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-uk"
+    },
+    {
+     "text": "تأييد الفقرات 3 و4 و5 و9",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-uk"
+    },
+    {
+     "text": "الاعتراض على 13 و14 و18",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-uk"
+    },
+    {
+     "text": "تأييد التدريب بلغات غير الإنكليزية",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-uk"
+    },
+    {
+     "text": "لا توسيع للمنصة ولا نص عن النطاق",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-uk"
+    },
+    {
+     "text": "حوكمة كبند CMA على غرار 6.2 و6.4",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-uk"
+    },
+    {
+     "text": "السكوت عن موعد المراجعة القادمة",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-uk"
+    },
+    {
+     "text": "إدخال أداة الانعكاس من آلية 6.4 في مراجعات 6.2",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-uk"
+    },
+    {
+     "text": "تقنين معايير الجسامة وإرشاد مستوى الأدلة",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-uk"
+    },
+    {
+     "text": "نهج لمراجعة 2028 إلى 2030",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-uk"
+    },
+    {
+     "text": "إعادة توزيع الميزانية لشراء المنصة",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-uk"
+    },
+    {
+     "text": "إبقاء الفقرة 16",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-uk"
+    },
+    {
+     "text": "حذف الإشارة إلى 5.2",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-uk"
+    },
+    {
+     "text": "حوار سنوي",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-uk"
+    },
+    {
+     "text": "حذف إشارة البلدان النامية في 26 و27",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-uk"
+    },
+    {
+     "text": "حذف 39",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-uk"
+    },
+    {
+     "text": "تقرير الأمانة قبل SB 66 في 41",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-uk"
+    },
+    {
+     "text": "الخيار الأول في المدد",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16b-uk"
+    },
+    {
+     "text": "إعادة فقرة مواد تعريف الأعضاء الجدد",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16b-uk"
+    },
+    {
+     "text": "في الطبيعة الوطنية لغة متفق عليها بدل لغة جديدة",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16b-uk"
+    },
+    {
+     "text": "فقرة استيراد نهج 6.4 مرجعا عند غموض الإرشادات",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-noon-uk"
+    },
+    {
+     "text": "الحوار كل سنة",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-noon-uk"
+    },
+    {
+     "text": "ضد عرض المبادرات من طرف واحد على المنصة",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-68-eve-eu-uk-jp"
+    },
+    {
+     "text": "المراجعة أنجزت",
+     "date": "2026-11-19",
+     "entry": "2026-11-19-68-uk"
+    },
+    {
+     "text": "إعادة تسمية منتدى النقاش للنهج المقترحة",
+     "date": "2026-11-19",
+     "entry": "2026-11-19-68-uk"
+    },
+    {
+     "text": "مذكرة معلومات عن الرسوم على الجهات",
+     "date": "2026-11-19",
+     "entry": "2026-11-19-18-uk"
+    }
+   ],
+   "formulations_en": [
+    {
+     "text": "for us to do nothing is not an option in this session",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-uk"
+    },
+    {
+     "text": "the game-changing addition needs to be the introduction of a regime that raises revenues, principally from usage-based fees, so Article 6.2 can partially self-finance itself",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-uk"
+    },
+    {
+     "text": "it moves the system to a fairer way of distributing the cost",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-uk"
+    },
+    {
+     "text": "the user-pays principle and administrative feasibility are key principles",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-uk"
+    },
+    {
+     "text": "just because a Party may pay a fee on paper, it has the ability to collect those revenues from other actors",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-uk"
+    },
+    {
+     "text": "the approach is not about penalizing or putting barriers to parties",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-uk"
+    },
+    {
+     "text": "capacity-building should be funded through approach 1, core budget and voluntary contributions",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-uk"
+    },
+    {
+     "text": "maybe a bit of an overinterpretation",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-uk"
+    },
+    {
+     "text": "it would be significantly streamlined",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-uk"
+    },
+    {
+     "text": "paragraph 18 tries to reinvent what Article 6.8 is",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-uk"
+    },
+    {
+     "text": "offering training in languages other than English is really practical",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-uk"
+    },
+    {
+     "text": "we don't want to get in a circle of just iterating the website and never being able to use it",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-uk"
+    },
+    {
+     "text": "asking for new IT solutions at this stage where there are other parts of Article 6 we haven't been able to deliver",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-uk"
+    },
+    {
+     "text": "we prefer to be silent on this issue rather than setting an arbitrary deadline",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-uk"
+    },
+    {
+     "text": "if there's language that we can recall perhaps from the RMPs on this point",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16b-uk"
+    }
+   ],
+   "tactics": [
+    {
+     "text": "يؤطر الرسوم عدالة لا عبئا، ويقدم محليات (إعفاءات، رد الزائد، بناء القدرات من الميزانية)، ويستعمل حجة تحميل الكلفة على الجهات المنفذة.",
+     "date": "2026-11-10"
+    },
+    {
+     "text": "نقد إجرائي لتجاوز الرئاسة، وحجة الكلفة، وتشخيص بديل (المشكلة ضعف الاستعمال لا نقص الأدوات).",
+     "date": "2026-11-10"
+    },
+    {
+     "text": "يدفع إلى إرشاد إضافي بلغة التوضيح.",
+     "date": "2026-11-14"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "قبوله تمويل بناء القدرات من الميزانية نقطة التقاء يجب تثبيتها. وحجة الاسترداد لا تصح لبلد في مرحلة الاستعداد.",
+     "date": "2026-11-10"
+    },
+    {
+     "text": "تأييده التدريب بغير الإنكليزية يجعل طلب التدريب بالعربية مكسبا منخفض الكلفة.",
+     "date": "2026-11-10"
+    },
+    {
+     "text": "يرد عليه بفصل المادتين 6.2 و6.4 كما قالت غانا.",
+     "date": "2026-11-14"
+    },
+    {
+     "text": "لغة الحصيلة العالمية 1/CMA.5 الفقرة 28 جواب على طلبه",
+     "date": "2026-11-17"
+    }
+   ],
+   "tone_first_last": [
+    "1_support",
+    "3_soft_opposition"
+   ],
+   "tone_average": 2.2,
+   "count": 9
+  },
+  {
+   "actor": "Japan",
+   "appearances": [
+    {
+     "date": "2026-11-10",
+     "session": "SBI informal consultations, funding Article 6.2 infrastructure",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "inferred_strong",
+     "entry": "2026-11-10-a62fund-japan"
+    },
+    {
+     "date": "2026-11-10",
+     "session": "SBSTA informal consultations, review of the Article 6.8 work programme",
+     "tone": "3_soft_opposition",
+     "tone_note": "في الفقرة 27، 1_support للتبسيط",
+     "attribution": "named",
+     "entry": "2026-11-10-a68rev-japan"
+    },
+    {
+     "date": "2026-11-16",
+     "session": "CMA 18 informal consultations, arrangements for funding Article 6.2 infrastructure, processes and capacity-building",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-16-cma18-japan"
+    },
+    {
+     "date": "2026-11-16",
+     "session": "CMA 16(a) informal consultations, first reading of draft DT.CMA8.i16a.1",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-16-16a-japan"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(c) informal consultations 17/11 morning, draft DT.CMA8.i16c.1 (16/11 23:00)",
+     "tone": "4_strong_opposition",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-17-16c-japan"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(a) final round 17/11 evening",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-17-16a-eve-japan"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(c) evening informal huddle 17/11",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "reported",
+     "entry": "2026-11-17-68-eve-eu-uk-jp"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 18 informal consultations 17/11",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "content",
+     "entry": "2026-11-17-18-japan"
+    }
+   ],
+   "camps": {
+    "bridge": 5,
+    "practical_minimalist": 1,
+    "minimalist": 1,
+    "opponent": 1
+   },
+   "positions": [
+    {
+     "text": "الفصل بين الحاجة العاجلة والترتيب الطويل الأمد",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-japan"
+    },
+    {
+     "text": "فحص الكفاءة وتبسيط المراجعة قبل أي تمويل إضافي",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-japan"
+    },
+    {
+     "text": "الحذر من ترتيبات دائمة جديدة",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-japan"
+    },
+    {
+     "text": "تجنب الحواجز ودراسة أثر رسوم الاستعمال على الراغبين في المشاركة",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-japan"
+    },
+    {
+     "text": "الاستعداد لتضييق الخيارات",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-japan"
+    },
+    {
+     "text": "تبسيط التسجيل في الفقرة 13",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-japan"
+    },
+    {
+     "text": "إرشاد عملي لنقاط الاتصال",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-japan"
+    },
+    {
+     "text": "التعاون بين بلدين على الأقل",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-japan"
+    },
+    {
+     "text": "البحث عن الشركاء خارج المنصة",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-japan"
+    },
+    {
+     "text": "الخيار الثاني في الفقرة 27 لأن التمويل مكانه بنود التمويل",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-japan"
+    },
+    {
+     "text": "لا يستبق القرار إدخال رسوم على السجل الدولي",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-japan"
+    },
+    {
+     "text": "تحليل الكلفة والإيرادات وأثر المشاركة أولا، وقيمة الفقرة 57",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-japan"
+    },
+    {
+     "text": "الفقرة 24 لها آثار في الميزانية، فتدمج في حوارات قائمة أو تعقد عن بعد",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-japan"
+    },
+    {
+     "text": "الفقرة 38 مهمة",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-japan"
+    },
+    {
+     "text": "حذف 40 و41",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-japan"
+    },
+    {
+     "text": "تؤيد الاتحاد الأوروبي",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-japan"
+    },
+    {
+     "text": "حذف فقرة القيود",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-japan"
+    },
+    {
+     "text": "رفض القوس الأخير عن الدعم المالي والتكنولوجي وبناء القدرات",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-japan"
+    },
+    {
+     "text": "أقواس النمو والانخراط تكرار بلا قيمة",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-japan"
+    },
+    {
+     "text": "لا يلزم مراجعة كل عناصر القرار السابق",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-eve-japan"
+    },
+    {
+     "text": "محايدة في فقرة عدم الاتساق، وإن بقيت فتشجيع المعالجة وفق المقررات ذات الصلة",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-eve-japan"
+    },
+    {
+     "text": "ضد عرض المبادرات من طرف واحد على المنصة",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-68-eve-eu-uk-jp"
+    },
+    {
+     "text": "التحليل قبل أي رسم",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-18-japan"
+    },
+    {
+     "text": "مواصلة النقاش حتى CMA 9",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-18-japan"
+    }
+   ],
+   "formulations_en": [
+    {
+     "text": "we should distinguish between short-term funding needs and long-term funding arrangements",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-japan"
+    },
+    {
+     "text": "before considering additional and continued funding, examine whether these activities can be delivered more efficiently and cost-effectively",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-japan"
+    },
+    {
+     "text": "we should be careful about establishing a permanent funding arrangement",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-japan"
+    },
+    {
+     "text": "avoid creating unintended barriers",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-japan"
+    },
+    {
+     "text": "we need to carefully consider the implications of approaches based on user fees or usage-based fees, including the possible impact on the parties who are wishing to participate",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-japan"
+    },
+    {
+     "text": "ready to engage constructively in discussions on narrowing down the current options",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-japan"
+    },
+    {
+     "text": "this complexity is creating a barrier to registration",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-japan"
+    },
+    {
+     "text": "many of the national focal points we contacted did not seem to have a clear understanding of what action they were expected to take",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-japan"
+    },
+    {
+     "text": "cooperation should involve at least two countries",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-japan"
+    },
+    {
+     "text": "it's better to avoid language that links Article 6.8 cooperation with finance or capacity-building in a compulsory manner",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-japan"
+    },
+    {
+     "text": "finance-related issues should be discussed under the dedicated finance agenda items",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-japan"
+    },
+    {
+     "text": "we should not prejudge in this decision whether a fee will be introduced for the international registry",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-japan"
+    },
+    {
+     "text": "we should not redact the scope or priority of mandate review or create a new negotiation process",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-japan"
+    },
+    {
+     "text": "encourage Parties concerned to make efforts to address them in accordance with relevant CMA decisions",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-eve-japan"
+    }
+   ],
+   "tactics": [
+    {
+     "text": "تقني حذر، يطرح إطارا وسطا (عاجل مقابل دائم) يسمح بتأجيل الخلاف على الرسوم.",
+     "date": "2026-11-10"
+    },
+    {
+     "text": "يستند إلى تجربته العملية مع نقاط الاتصال.",
+     "date": "2026-11-10"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "حليف ممكن في رفض الحواجز والرسم المسبق، وفي تبسيط المراجعة لخفض الكلفة.",
+     "date": "2026-11-10"
+    },
+    {
+     "text": "يتفق مع العراق في تبسيط التسجيل. والرد على فصل التمويل: المادة 6.8 نفسها تذكر التمويل ونقل التكنولوجيا وبناء القدرات.",
+     "date": "2026-11-10"
+    },
+    {
+     "text": "العراق أيد عبارة الدعم في مداخلته الثانية",
+     "date": "2026-11-17"
+    },
+    {
+     "text": "جسر يغني عن القائمة.",
+     "date": "2026-11-17"
+    }
+   ],
+   "tone_first_last": [
+    "2_conditional_openness",
+    "4_strong_opposition"
+   ],
+   "tone_average": 2.8,
+   "count": 8
+  },
+  {
+   "actor": "AILAC",
+   "appearances": [
+    {
+     "date": "2026-11-10",
+     "session": "SBSTA informal consultations, review of the Article 6.8 work programme",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "uncertain_actor",
+     "entry": "2026-11-10-a68rev-ailac"
+    },
+    {
+     "date": "2026-11-11",
+     "session": "SBI informal consultations, funding Article 6.2 infrastructure, second meeting",
+     "tone": "4_strong_opposition",
+     "tone_note": "مع بدائل",
+     "attribution": "named",
+     "entry": "2026-11-11-a62fund2-ailac"
+    },
+    {
+     "date": "2026-11-14",
+     "session": "CMA 16(b) informal consultations, Article 6.4 mechanism",
+     "tone": "3_soft_opposition",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-14-16b-ailac"
+    },
+    {
+     "date": "2026-11-16",
+     "session": "CMA 18 informal consultations, arrangements for funding Article 6.2 infrastructure, processes and capacity-building",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "likely",
+     "entry": "2026-11-16-cma18-ailac"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(a) informal consultations 17/11 noon",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-17-16a-noon-ailac"
+    },
+    {
+     "date": "2026-11-19",
+     "session": "CMA 16(c) 19/11 noon",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-19-68-ailac"
+    }
+   ],
+   "camps": {
+    "ally": 2,
+    "preserve_space": 1,
+    "budget_functional": 1,
+    "practical_reformist": 1,
+    "budget": 1
+   },
+   "positions": [
+    {
+     "text": "الحفاظ على غرض المنصة أداة تيسير لا مستودع معلومات",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-ailac"
+    },
+    {
+     "text": "عدم توسيع الوظائف أو النطاق",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-ailac"
+    },
+    {
+     "text": "إبقاء مساحة للنهج الباحثة عن شريك (الخيار الثاني في النطاق)",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-ailac"
+    },
+    {
+     "text": "النهج الأول للوظائف الأساسية",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-ailac"
+    },
+    {
+     "text": "تصنيف الوظائف على الفئات الأربع في المستند",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-ailac"
+    },
+    {
+     "text": "بناء القدرات من الميزانية والتبرعات",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-ailac"
+    },
+    {
+     "text": "نفاذ مجاني إلى السجل لمن لا سجل وطني له مع رسوم لخدمات إضافية مثل ربط السجلات",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-ailac"
+    },
+    {
+     "text": "رفض رسم الحجم إن وقع على البلدان النامية وبحثه على الجهة المشترية",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-ailac"
+    },
+    {
+     "text": "رفض رسم كل نهج تعاوني",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-ailac"
+    },
+    {
+     "text": "الحواجز والكلفة صدت المطورين، حتى 1000 إلى 2000 دولار للطن",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-ailac"
+    },
+    {
+     "text": "تحليل جدوى المنهجيات",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-ailac"
+    },
+    {
+     "text": "حدود المدد فرصة لتوسيع المشاركة",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-ailac"
+    },
+    {
+     "text": "النهج الأول ونهج ثان موسع",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-ailac"
+    },
+    {
+     "text": "لا رسوم على البلدان النامية في السجل الدولي",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-ailac"
+    },
+    {
+     "text": "ضد النهجين الثالث والرابع ما لم تعف البلدان النامية",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-ailac"
+    },
+    {
+     "text": "حذف القائمة في فقرة عدم الاتساق",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-noon-ailac"
+    },
+    {
+     "text": "المراجعة في حدود الولاية المتفق عليها",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-noon-ailac"
+    },
+    {
+     "text": "حذف فقرة استيراد نهج 6.4",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-noon-ailac"
+    },
+    {
+     "text": "قسم على المنصة للنهج المقترحة",
+     "date": "2026-11-19",
+     "entry": "2026-11-19-68-ailac"
+    },
+    {
+     "text": "تسجيل جهات الدعم",
+     "date": "2026-11-19",
+     "entry": "2026-11-19-68-ailac"
+    }
+   ],
+   "formulations_en": [
+    {
+     "text": "preserve the core purpose and functions of the platform, not only as an information repository but also as a tool to facilitate cooperation",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-ailac"
+    },
+    {
+     "text": "it is important to keep the space for those that want to find a party",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-ailac"
+    },
+    {
+     "text": "without imposing additional financial burdens on developing countries",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-ailac"
+    },
+    {
+     "text": "fees should not be imposed on developing countries under any of the proposed approaches or options",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-ailac"
+    },
+    {
+     "text": "it may be more practical to proceed with acquiring or receiving entities, whether a Party or a private entity",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-ailac"
+    }
+   ],
+   "tactics": [
+    {
+     "text": "وسطي بين التوسيع والتجميد.",
+     "date": "2026-11-10"
+    },
+    {
+     "text": "يقدم بدائل فنية محددة (الفئات الأربع، الجهة المشترية).",
+     "date": "2026-11-11"
+    },
+    {
+     "text": "يقدم الجدوى الاقتصادية دون المساس بالنزاهة.",
+     "date": "2026-11-14"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "سند لخيار عرض النهج المقترحة دون تغيير النطاق.",
+     "date": "2026-11-10"
+    },
+    {
+     "text": "فكرة نقل الرسم إلى الجهة المشترية لا تمس البلد المضيف، وتحتاج قرار رئيس الوفد.",
+     "date": "2026-11-11"
+    },
+    {
+     "text": "معارض في المدد، حليف في الجدوى.",
+     "date": "2026-11-14"
+    }
+   ],
+   "tone_first_last": [
+    "2_conditional_openness",
+    "2_conditional_openness"
+   ],
+   "tone_average": 2.8,
+   "count": 6
+  },
+  {
+   "actor": "AOSIS",
+   "appearances": [
+    {
+     "date": "2026-11-14",
+     "session": "CMA 16(b) informal consultations, Article 6.4 mechanism",
+     "tone": "5_red_line",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-14-16b-aosis"
+    },
+    {
+     "date": "2026-11-16",
+     "session": "CMA 16(a) informal consultations, first reading of draft DT.CMA8.i16a.1",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "uncertain_actor",
+     "entry": "2026-11-16-16a-aosis"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(a) informal consultations 17/11 noon",
+     "tone": "4_firm_opposition",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-17-16a-noon-aosis"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(a) final round 17/11 evening",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "content",
+     "entry": "2026-11-17-16a-eve-aosis"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(b) final round 17/11 afternoon",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "content",
+     "entry": "2026-11-17-64-pm-aosis-korea"
+    },
+    {
+     "date": "2026-11-19",
+     "session": "CMA 18 19/11",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-19-18-aosis"
+    }
+   ],
+   "camps": {
+    "opponent": 4,
+    "integrity": 1,
+    "fee": 1
+   },
+   "positions": [
+    {
+     "text": "لا إلغاء لإعفاء أقل البلدان نموا والدول الجزرية",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-aosis"
+    },
+    {
+     "text": "يبيع صندوق التكيف الوحدات لأي استعمال وتبقى وحدات الآلية",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-aosis"
+    },
+    {
+     "text": "التقييم بولاية قائمة",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-aosis"
+    },
+    {
+     "text": "استمرار الحوار",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-aosis"
+    },
+    {
+     "text": "الشفافية في 31 إلى 33",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-aosis"
+    },
+    {
+     "text": "عدم الاتساق في حصة التكيف سهل الجواب",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-aosis"
+    },
+    {
+     "text": "الإبقاء على القائمة في فقرة عدم الاتساق",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-noon-aosis"
+    },
+    {
+     "text": "اعتراض على خلاصة التوافق قبل سماعها",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-noon-aosis"
+    },
+    {
+     "text": "الإبقاء على القائمة",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-eve-aosis"
+    },
+    {
+     "text": "الحوار مع مذكرة غير رسمية",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-eve-aosis"
+    },
+    {
+     "text": "الإبقاء على فقرات الإسهام بوصفها لغة متفقا عليها",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-eve-aosis"
+    },
+    {
+     "text": "علامة مميزة للحصة والتخفيف الشامل في معرف الوحدة",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-eve-aosis"
+    },
+    {
+     "text": "الإبقاء على قسم التفويض بعد الإصدار",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-64-pm-aosis-korea"
+    },
+    {
+     "text": "رسوم الاستخدام",
+     "date": "2026-11-19",
+     "entry": "2026-11-19-18-aosis"
+    },
+    {
+     "text": "لا كلفة على غير المشاركين",
+     "date": "2026-11-19",
+     "entry": "2026-11-19-18-aosis"
+    },
+    {
+     "text": "مراعاة الحجم",
+     "date": "2026-11-19",
+     "entry": "2026-11-19-18-aosis"
+    }
+   ],
+   "formulations_en": [
+    {
+     "text": "we don't reverse an exemption for LDCs and SIDS, absolutely clear",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-aosis"
+    }
+   ],
+   "tactics": [
+    {
+     "text": "حلول تقنية بسيطة لحصة التكيف.",
+     "date": "2026-11-14"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "حليف في الإعفاءات.",
+     "date": "2026-11-14"
+    }
+   ],
+   "tone_first_last": [
+    "5_red_line",
+    "5_red_line"
+   ],
+   "tone_average": 5.0,
+   "count": 6
+  },
+  {
+   "actor": "Coalition for Rainforest Nations",
+   "appearances": [
+    {
+     "date": "2026-11-10",
+     "session": "SBSTA informal consultations, review of the Article 6.8 work programme",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-10-a68rev-cfrn"
+    },
+    {
+     "date": "2026-11-10",
+     "session": "Article 6.8 in-session workshop, round table",
+     "tone": "3_soft_opposition",
+     "tone_note": "لتغيير الشرط",
+     "attribution": "named",
+     "entry": "2026-11-10-a68ws-cfrn"
+    },
+    {
+     "date": "2026-11-11",
+     "session": "SBI informal consultations, funding Article 6.2 infrastructure, second meeting",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "uncertain_actor",
+     "entry": "2026-11-11-a62fund2-cfrn"
+    },
+    {
+     "date": "2026-11-11",
+     "session": "GCNMA 10 spin-off group on NMA platform functionalities (SBSTA 11(a))",
+     "tone": "1_support",
+     "tone_note": "بنبرة احتجاجية",
+     "attribution": "uncertain_actor",
+     "entry": "2026-11-11-gcnma-cfrn"
+    },
+    {
+     "date": "2026-11-19",
+     "session": "CMA 18 19/11",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-19-18-cfrn"
+    }
+   ],
+   "camps": {
+    "conditional_space": 3,
+    "mixed_market": 1,
+    "ally": 1
+   },
+   "positions": [
+    {
+     "text": "عرض مبادرة الطرف الواحد دون تسجيل حتى يوجد طرف ثان أو ممول",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-cfrn"
+    },
+    {
+     "text": "مشاريع برنامج عمل التخفيف كغيرها دون قناة خاصة",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-cfrn"
+    },
+    {
+     "text": "الربط بالروابط لا بتجميع البيانات وبأقل كلفة",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-cfrn"
+    },
+    {
+     "text": "تأييد قوي لنص يختتم المراجعة مع آلية تحسين للمنصة",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-cfrn"
+    },
+    {
+     "text": "غياب مصدر تمويل مخصص لإعداد النهج",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68ws-cfrn"
+    },
+    {
+     "text": "ربط المشاريع المعروضة بالمساهمات المحددة وطنيا",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68ws-cfrn"
+    },
+    {
+     "text": "عرض ثم تسجيل على خطوتين",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68ws-cfrn"
+    },
+    {
+     "text": "لا تغيير في شرط الطرفين لأنه قد يمس 6.2 و6.4",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68ws-cfrn"
+    },
+    {
+     "text": "الميزانية ليست الخيار الوحيد والتبرعات جزء من المزيج",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-cfrn"
+    },
+    {
+     "text": "قبول رسم الحجم لأنه يستحق بعد وقوع المعاملة",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-cfrn"
+    },
+    {
+     "text": "رفض رسم كل نهج تعاوني عند التقرير الأولي لأنه عبء على البلدان النامية",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-cfrn"
+    },
+    {
+     "text": "رسم أدنى على السجل عند وقوع المعاملة",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-cfrn"
+    },
+    {
+     "text": "المراجعة مستقلة عن الرسوم",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-cfrn"
+    },
+    {
+     "text": "الترحيب بجدول الرسوم والصندوق الاستئماني",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-cfrn"
+    },
+    {
+     "text": "العرض لا التسجيل في الفقرة 31(a)",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-gcnma-cfrn"
+    },
+    {
+     "text": "أقل تعديل للوظائف",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-gcnma-cfrn"
+    },
+    {
+     "text": "أكثر من 600 مشروع من الصناديق تستوفي المعايير ولا تسجل",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-gcnma-cfrn"
+    },
+    {
+     "text": "6.8 ليست آلية تمويل",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-gcnma-cfrn"
+    },
+    {
+     "text": "رسوم المستخدم باستثناء البلدان النامية",
+     "date": "2026-11-19",
+     "entry": "2026-11-19-18-cfrn"
+    },
+    {
+     "text": "المراجعات من الميزانية الأساسية",
+     "date": "2026-11-19",
+     "entry": "2026-11-19-18-cfrn"
+    }
+   ],
+   "formulations_en": [
+    {
+     "text": "a single-party NMA is allowed to be displayed and not recorded on the platform until it identifies a second party or a funder",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-cfrn"
+    },
+    {
+     "text": "there cannot be any separate channel",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-cfrn"
+    },
+    {
+     "text": "not allowing the platform to become an aggregator",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-cfrn"
+    },
+    {
+     "text": "very strongly supports text referring to the conclusion of the review",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-cfrn"
+    },
+    {
+     "text": "the absence of a dedicated source of finance remains a challenge",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68ws-cfrn"
+    },
+    {
+     "text": "we don't feel very comfortable in making any changes to the requirement of two parties because it could impact Article 6.2 and 6.4",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68ws-cfrn"
+    },
+    {
+     "text": "voluntary contributions should be part of the mix, it cannot be the only one",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-cfrn"
+    },
+    {
+     "text": "the fee is charged at the moment of the submission of the annual information, when the transaction has already happened",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-cfrn"
+    },
+    {
+     "text": "especially for developing countries that will be an issue",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-cfrn"
+    },
+    {
+     "text": "we are against recording, it should be displaying",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-gcnma-cfrn"
+    },
+    {
+     "text": "even the UNFCCC's own projects cannot be registered in its own platform, where are we and why",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-gcnma-cfrn"
+    },
+    {
+     "text": "nobody here thinks of 6.8 as another climate finance mechanism",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-gcnma-cfrn"
+    },
+    {
+     "text": "transformative processes will not be funded by the private sector",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-gcnma-cfrn"
+    }
+   ],
+   "tactics": [
+    {
+     "text": "يقبل بشرط ويرسم حدا دقيقا (عرض لا تسجيل).",
+     "date": "2026-11-10"
+    },
+    {
+     "text": "حجة الأثر المتعدي على بقية المادة 6.",
+     "date": "2026-11-10"
+    },
+    {
+     "text": "يقبل الرسوم المرتبطة بالمعاملة ويرفض الرسوم السابقة لها.",
+     "date": "2026-11-11"
+    },
+    {
+     "text": "يستعمل مفارقة (مشاريع الاتفاقية لا تسجل على منصتها) لإحراج المعترضين.",
+     "date": "2026-11-11"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "صيغة (العرض لا التسجيل) منطقة هبوط في مسألة الطرف الواحد.",
+     "date": "2026-11-10"
+    },
+    {
+     "text": "حجة غياب التمويل المخصص تسند الفقرة 27.",
+     "date": "2026-11-10"
+    },
+    {
+     "text": "سند في رفض رسم الفقرة 14.",
+     "date": "2026-11-11"
+    },
+    {
+     "text": "حجة المشاريع الممولة من الصناديق تفتح باب عرض مشاريع عراقية.",
+     "date": "2026-11-11"
+    }
+   ],
+   "tone_first_last": [
+    "2_conditional_openness",
+    "1_support"
+   ],
+   "tone_average": 2.0,
+   "count": 5
+  },
+  {
+   "actor": "Brazil",
+   "appearances": [
+    {
+     "date": "2026-11-09",
+     "session": "Article 6.2 Ambition Dialogue (authorization)",
+     "tone": "",
+     "tone_note": "تبادل خبرات",
+     "attribution": "named",
+     "entry": "2026-11-09-a62ad-authorization"
+    },
+    {
+     "date": "2026-11-11",
+     "session": "SBI informal consultations, funding Article 6.2 infrastructure, second meeting",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "uncertain_actor",
+     "entry": "2026-11-11-a62fund2-brazil"
+    },
+    {
+     "date": "2026-11-11",
+     "session": "GCNMA 10 spin-off group on NMA platform functionalities (SBSTA 11(a))",
+     "tone": "1_support",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-11-gcnma-brazil"
+    }
+   ],
+   "camps": {
+    "experience_sharing": 1,
+    "budget_plus_fees": 1,
+    "reformist": 1
+   },
+   "positions": [
+    {
+     "text": "البرازيل: يأذن بنسبة 50% ويحسب الباقي لمساهمته لضمان أثر محايد",
+     "date": "2026-11-09",
+     "entry": "2026-11-09-a62ad-authorization"
+    },
+    {
+     "text": "ماليزيا: الإذن قرار سياسة وطنية يحمي المساهمة الحالية والمقبلة",
+     "date": "2026-11-09",
+     "entry": "2026-11-09-a62ad-authorization"
+    },
+    {
+     "text": "إندونيسيا: الإذن بما يزيد عن حاجة المساهمة فقط، والضمانات شرط قبل الإذن لا بعده",
+     "date": "2026-11-09",
+     "entry": "2026-11-09-a62ad-authorization"
+    },
+    {
+     "text": "دولة جزرية صغيرة: الإذن لما يتجاوز حدود مساهمتها فقط",
+     "date": "2026-11-09",
+     "entry": "2026-11-09-a62ad-authorization"
+    },
+    {
+     "text": "متحدث نام: يجب احترام مبادئ المادة 6.1 وقد ظهرت تناقضات في التقارير الأولية",
+     "date": "2026-11-09",
+     "entry": "2026-11-09-a62ad-authorization"
+    },
+    {
+     "text": "المراجعة وبناء القدرات والتشغيل الأساسي من الميزانية لأنها تخدم نزاهة المنظومة",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-brazil"
+    },
+    {
+     "text": "الرسوم مكمل لا بديل",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-brazil"
+    },
+    {
+     "text": "الوضع المؤقت لا يحدد الترتيب الدائم",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-brazil"
+    },
+    {
+     "text": "نمذجة سيناريوهات الرسوم",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-brazil"
+    },
+    {
+     "text": "عدم الدفع لا يمنع النفاذ إلى وظائف المحاسبة",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-brazil"
+    },
+    {
+     "text": "المادة 6.8 ينقصها الطموح والمنصة راكدة",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-gcnma-brazil"
+    },
+    {
+     "text": "تأييد عرض النهج المقترحة",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-gcnma-brazil"
+    },
+    {
+     "text": "الكلفة بضعة آلاف بحسب الورقة الفنية",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-gcnma-brazil"
+    },
+    {
+     "text": "تجربة التعاون بين بلدان الجنوب لا تعرض لغياب الفائدة",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-gcnma-brazil"
+    }
+   ],
+   "formulations_en": [
+    {
+     "text": "authorization is not merely an administrative process but an important national policy decision",
+     "date": "2026-11-09",
+     "entry": "2026-11-09-a62ad-authorization"
+    },
+    {
+     "text": "environmental integrity and safeguards should be conditions for authorization, not after",
+     "date": "2026-11-09",
+     "entry": "2026-11-09-a62ad-authorization"
+    },
+    {
+     "text": "Article 6.2 should serve as an accelerator, not a substitute for robust domestic mitigation",
+     "date": "2026-11-09",
+     "entry": "2026-11-09-a62ad-authorization"
+    },
+    {
+     "text": "any fees should always be combined with other sources of funding and should not replace a stable budgetary base for functions that serve the system as a whole",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-brazil"
+    },
+    {
+     "text": "we should not allow a temporary budget situation to determine permanent long-term arrangements",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-brazil"
+    },
+    {
+     "text": "non-payment should not prevent access to the functions necessary to meet accounting requirements",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-brazil"
+    },
+    {
+     "text": "we are really lacking ambition in 6.8",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-gcnma-brazil"
+    },
+    {
+     "text": "we need some creativity on how we can unblock this platform, which really for us seems to be stagnated",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-gcnma-brazil"
+    },
+    {
+     "text": "Brazil has a long history of South-South cooperation, a lot of what we do could work as NMAs",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-gcnma-brazil"
+    }
+   ],
+   "tactics": [
+    {
+     "text": "لا تفاوض فيه، وتظهر نماذج وطنية للإذن.",
+     "date": "2026-11-09"
+    },
+    {
+     "text": "يقبل الرسوم بشروط تحمي الوظائف الأساسية.",
+     "date": "2026-11-11"
+    },
+    {
+     "text": "يربط 6.8 بحوار الطموح في 6.2.",
+     "date": "2026-11-11"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "مرجع لتصميم سياسة الإذن العراقية: نسبة محجوزة للمساهمة، وضمانات قبل الإذن.",
+     "date": "2026-11-09"
+    },
+    {
+     "text": "عبارته عن الوضع المؤقت ترد على حجة ضغط الميزانية.",
+     "date": "2026-11-11"
+    },
+    {
+     "text": "حليف في خيار العرض.",
+     "date": "2026-11-11"
+    }
+   ],
+   "tone_first_last": [
+    "2_conditional_openness",
+    "1_support"
+   ],
+   "tone_average": 1.5,
+   "count": 3
+  },
+  {
+   "actor": "Iraq",
+   "appearances": [
+    {
+     "date": "2026-11-14",
+     "session": "CMA 16(a) informal consultations, implementation of Article 6.2 guidance",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-14-16a-iraq"
+    },
+    {
+     "date": "2026-11-16",
+     "session": "CMA 18 informal consultations, arrangements for funding Article 6.2 infrastructure, processes and capacity-building",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-16-cma18-iraq"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(c) informal consultations 17/11 morning, draft DT.CMA8.i16c.1 (16/11 23:00)",
+     "tone": "5_red_line",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-17-16c-iraq"
+    }
+   ],
+   "camps": {
+    "budget": 2,
+    "developing": 1
+   },
+   "positions": [
+    {
+     "text": "الاتساق مع المجموعة العربية وLMDC",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-iraq"
+    },
+    {
+     "text": "التعلم بالممارسة",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-iraq"
+    },
+    {
+     "text": "أولوية بناء القدرات في تحديد الجسامة (INF.2 الفقرة 64) وتوجيه الموارد المتبقية (الفقرة 78) إلى البلدان المضيفة",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-iraq"
+    },
+    {
+     "text": "بقاء المراجعة تيسيرية (الفقرة 41)",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-iraq"
+    },
+    {
+     "text": "الوضوح عبر الدليل لا متطلبات جديدة قبل 2028",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-iraq"
+    },
+    {
+     "text": "الإعفاء يشمل فتح قسم الطرف في السجل الدولي وتشغيله",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-iraq"
+    },
+    {
+     "text": "عدم دفع الرسم لا يربط باتساق النتائج، ورفض الفقرة 14",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-iraq"
+    },
+    {
+     "text": "يؤيد LMDC ولا يقبل إنهاء برنامج العمل",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-iraq"
+    },
+    {
+     "text": "المراجعة أظهرت أن العمل لم يكتمل",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-iraq"
+    },
+    {
+     "text": "يفضل مواصلة النقاش العام القادم على الإنهاء",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-iraq"
+    },
+    {
+     "text": "المداخلة الثانية: تأييد عبارة الدعم، حذف فقرة قيمة المنصة مستودعا، تأييد توسيع الاستخدام وإزالة العوائق، وأن تدعم المنصة تطوير النهج",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-iraq"
+    }
+   ],
+   "formulations_en": [
+    {
+     "text": "clarity should come through the reviewer manual and practical examples, not new requirements before the 2028 review",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-iraq"
+    },
+    {
+     "text": "Consistency checks concern environmental integrity, not financial compliance.",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-iraq"
+    },
+    {
+     "text": "This review has shown that the work is unfinished, not that it is done",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-iraq"
+    }
+   ],
+   "tactics": [
+    {
+     "text": "بناء على التقرير الرسمي بأرقام فقراته.",
+     "date": "2026-11-14"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "أيدتها المجموعة العربية بالاسم وLMDC.",
+     "date": "2026-11-14"
+    }
+   ],
+   "tone_first_last": [
+    "2_conditional_openness",
+    "5_red_line"
+   ],
+   "tone_average": 3.0,
+   "count": 3
+  },
+  {
+   "actor": "African Group",
+   "appearances": [
+    {
+     "date": "2026-11-10",
+     "session": "SBSTA informal consultations, review of the Article 6.8 work programme",
+     "tone": "",
+     "tone_note": "مداخلة أولية لم تكتمل",
+     "attribution": "uncertain_actor",
+     "entry": "2026-11-10-a68rev-agn"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(c) informal consultations 17/11 morning, draft DT.CMA8.i16c.1 (16/11 23:00)",
+     "tone": "3_soft_opposition",
+     "tone_note": "",
+     "attribution": "inferred_strong",
+     "entry": "2026-11-17-16c-agn"
+    }
+   ],
+   "camps": {
+    "developing": 2
+   },
+   "positions": [
+    {
+     "text": "تحتاج المجموعة إلى تنسيق داخلي إضافي",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-agn"
+    },
+    {
+     "text": "البرنامج حقق الكثير ولم يبلغ غرضه",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-agn"
+    },
+    {
+     "text": "النقاش فقرة بفقرة لا يحقق المطلوب",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-agn"
+    },
+    {
+     "text": "يجب معالجة جوهر برنامج العمل",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-agn"
+    }
+   ],
+   "formulations_en": [
+    {
+     "text": "we have done much but we have not achieved what the programme was intended for",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a68rev-agn"
+    }
+   ],
+   "tactics": [
+    {
+     "text": "حجز موقع للعودة لاحقا.",
+     "date": "2026-11-10"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "حجة (لم يبلغ غرضه) ترد على دعوة الاختتام.",
+     "date": "2026-11-10"
+    }
+   ],
+   "tone_first_last": [
+    "3_soft_opposition",
+    "3_soft_opposition"
+   ],
+   "tone_average": 3.0,
+   "count": 2
+  },
+  {
+   "actor": "Canada",
+   "appearances": [
+    {
+     "date": "2026-11-13",
+     "session": "Informal interactive dialogue on Article 6 technical expert review",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-13-ter-canada"
+    },
+    {
+     "date": "2026-11-16",
+     "session": "CMA 16(a) informal consultations, first reading of draft DT.CMA8.i16a.1",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-16-16a-canada"
+    }
+   ],
+   "camps": {
+    "bridge": 2
+   },
+   "positions": [
+    {
+     "text": "العملية تعمل وليست كاملة",
+     "date": "2026-11-13",
+     "entry": "2026-11-13-ter-canada"
+    },
+    {
+     "text": "لا مقرر بمتطلبات جديدة الآن",
+     "date": "2026-11-13",
+     "entry": "2026-11-13-ter-canada"
+    },
+    {
+     "text": "المراجعة الشاملة في 2028",
+     "date": "2026-11-13",
+     "entry": "2026-11-13-ter-canada"
+    },
+    {
+     "text": "أمثلة لإجابات مقبولة، والمعلومات الإضافية في متن التقرير",
+     "date": "2026-11-13",
+     "entry": "2026-11-13-ter-canada"
+    },
+    {
+     "text": "حذف ما يكرر",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-canada"
+    },
+    {
+     "text": "دمج الحوار مع فعاليات 6.2 القائمة",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-canada"
+    },
+    {
+     "text": "حذف 39 إن كررت 38",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-canada"
+    },
+    {
+     "text": "تأخير المدخلات إلى تموز",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-canada"
+    }
+   ],
+   "formulations_en": [
+    {
+     "text": "We do not think that a CMA decision creating new requirements is in the best interest of the process at this time",
+     "date": "2026-11-13",
+     "entry": "2026-11-13-ter-canada"
+    }
+   ],
+   "tactics": [
+    {
+     "text": "يقدم نفسه وسيطا عمليا.",
+     "date": "2026-11-13"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "تنازل يقتبس ضد طلب الاتحاد الأوروبي إصدار مقرر.",
+     "date": "2026-11-13"
+    }
+   ],
+   "tone_first_last": [
+    "2_conditional_openness",
+    "2_conditional_openness"
+   ],
+   "tone_average": 2.0,
+   "count": 2
+  },
+  {
+   "actor": "China",
+   "appearances": [
+    {
+     "date": "2026-11-11",
+     "session": "SBI informal consultations, funding Article 6.2 infrastructure, second meeting",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "uncertain_actor",
+     "entry": "2026-11-11-a62fund2-china"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(a) informal consultations 17/11 noon, second iteration (16/11 23:45)",
+     "tone": "3_soft_opposition",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-17-16a-china"
+    }
+   ],
+   "camps": {
+    "cautious": 1,
+    "developing": 1
+   },
+   "positions": [
+    {
+     "text": "احترام الطابع الطوعي",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-china"
+    },
+    {
+     "text": "الجمع بين الخيارات",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-china"
+    },
+    {
+     "text": "إعلام الأطراف بالجدول الزمني لأي رسوم",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-china"
+    },
+    {
+     "text": "لا استعمال لإرشادات آليات أخرى",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-china"
+    },
+    {
+     "text": "معايير موحدة للمراجعين",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-china"
+    },
+    {
+     "text": "الحوار العام القادم",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-china"
+    }
+   ],
+   "formulations_en": [
+    {
+     "text": "respect the voluntary nature of participating in Article 6.2",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-china"
+    }
+   ],
+   "tactics": [
+    {
+     "text": "حذر لم يحسم.",
+     "date": "2026-11-11"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "يتابع.",
+     "date": "2026-11-11"
+    }
+   ],
+   "tone_first_last": [
+    "2_conditional_openness",
+    "3_soft_opposition"
+   ],
+   "tone_average": 2.5,
+   "count": 2
+  },
+  {
+   "actor": "Pakistan",
+   "appearances": [
+    {
+     "date": "2026-11-11",
+     "session": "SBI informal consultations, funding Article 6.2 infrastructure, second meeting",
+     "tone": "5_red_line",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-11-a62fund2-pakistan"
+    },
+    {
+     "date": "2026-11-16",
+     "session": "CMA 18 informal consultations, arrangements for funding Article 6.2 infrastructure, processes and capacity-building",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-16-cma18-pakistan"
+    }
+   ],
+   "camps": {
+    "budget_only": 1,
+    "budget": 1
+   },
+   "positions": [
+    {
+     "text": "معارضة شديدة لأي رسوم على الأطراف لاستعمال السجل أو على النهج",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-pakistan"
+    },
+    {
+     "text": "السجل خدمة لمن لا سجل له",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-pakistan"
+    },
+    {
+     "text": "رسالة الأمانة المؤرخة 12 تموز 2024 لم تذكر رسما لفتح حساب",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-pakistan"
+    },
+    {
+     "text": "إعفاء كامل للبلدان النامية",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-pakistan"
+    },
+    {
+     "text": "الرسوم إن وجدت على الجهات الخاصة وحدها",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-pakistan"
+    },
+    {
+     "text": "التقارير ومراجعتها التزام لا يحصل عليه رسم",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-pakistan"
+    },
+    {
+     "text": "الميزانيات الوطنية تقر مسبقا",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-pakistan"
+    },
+    {
+     "text": "النهج الأول",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-pakistan"
+    },
+    {
+     "text": "إعفاء البلدان النامية وجهاتها",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-pakistan"
+    },
+    {
+     "text": "لا آلية لعدم الدفع",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-pakistan"
+    },
+    {
+     "text": "الرسوم للمادة 6.2 وحدها",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-pakistan"
+    }
+   ],
+   "formulations_en": [
+    {
+     "text": "I strongly oppose any fees on parties for using the international registry or cooperative approaches",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-pakistan"
+    },
+    {
+     "text": "the registry was intended to facilitate, not burden, participation",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-pakistan"
+    },
+    {
+     "text": "fulfillment of parties' obligations cannot be [charged]",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-pakistan"
+    },
+    {
+     "text": "developing countries were promised access to the international registry without strings attached",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-pakistan"
+    }
+   ],
+   "tactics": [
+    {
+     "text": "يستند إلى وثيقة الأمانة نفسها (رسالة 12 تموز 2024) لإثبات أن السجل بلا رسم.",
+     "date": "2026-11-11"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "رسالة الأمانة المؤرخة 12 تموز 2024 مرجع يطلب ويطابق.",
+     "date": "2026-11-11"
+    }
+   ],
+   "tone_first_last": [
+    "5_red_line",
+    "2_conditional_openness"
+   ],
+   "tone_average": 3.5,
+   "count": 2
+  },
+  {
+   "actor": "Republic of Korea",
+   "appearances": [
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(a) informal consultations 17/11 noon",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-17-16a-noon-korea"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(b) final round 17/11 afternoon",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "content",
+     "entry": "2026-11-17-64-pm-aosis-korea"
+    }
+   ],
+   "camps": {
+    "bridge": 1,
+    "opponent": 1
+   },
+   "positions": [
+    {
+     "text": "المراجعة في حدود إرشادات 6.2 دون تقييم الكفاية خارج متطلبات الإبلاغ",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-noon-korea"
+    },
+    {
+     "text": "حذف فقرة استيراد نهج 6.4",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-noon-korea"
+    },
+    {
+     "text": "الإبقاء على قسم التفويض بعد الإصدار",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-64-pm-aosis-korea"
+    }
+   ],
+   "formulations_en": [],
+   "tactics": [],
+   "use_for_iraq": [
+    {
+     "text": "يسند طلب LMDC في نطاق المراجعة.",
+     "date": "2026-11-17"
+    }
+   ],
+   "tone_first_last": [
+    "",
+    ""
+   ],
+   "tone_average": null,
+   "count": 2
+  },
+  {
+   "actor": "Russian Federation",
+   "appearances": [
+    {
+     "date": "2026-11-11",
+     "session": "SBI informal consultations, funding Article 6.2 infrastructure, second meeting",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "uncertain_actor",
+     "entry": "2026-11-11-a62fund2-russia"
+    },
+    {
+     "date": "2026-11-16",
+     "session": "CMA 18 informal consultations, arrangements for funding Article 6.2 infrastructure, processes and capacity-building",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-16-cma18-russia"
+    }
+   ],
+   "camps": {
+    "user_pays_nonparticipant": 1,
+    "budget": 1
+   },
+   "positions": [
+    {
+     "text": "لا يعتمد على الميزانية لأن غير المشاركين لا يتحملون الكلفة",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-russia"
+    },
+    {
+     "text": "التركيز على رسوم المستخدمين والاستعمال مع التبرعات",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-russia"
+    },
+    {
+     "text": "الترحيب بإعفاء أقل البلدان نموا والدول الجزرية",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-russia"
+    },
+    {
+     "text": "بناء القدرات تموله البلدان المتقدمة",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-russia"
+    },
+    {
+     "text": "ضد رسوم الحجم في النهج الثالث",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-russia"
+    },
+    {
+     "text": "الوظائف الأساسية من الميزانية",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-russia"
+    },
+    {
+     "text": "ضد رسم فتح قسم الطرف",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-russia"
+    },
+    {
+     "text": "منفتح على رسوم المعاملات للجهات",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-russia"
+    }
+   ],
+   "formulations_en": [
+    {
+     "text": "funding should not be looked to [the core budget] to support Article 6.2",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-russia"
+    },
+    {
+     "text": "states choosing not to participate may not bear related cost",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-russia"
+    },
+    {
+     "text": "capacity-building support will be funded by developed countries",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-russia"
+    }
+   ],
+   "tactics": [
+    {
+     "text": "حجة عدم المشارك لا يدفع، مع رمي بناء القدرات على المتقدمين.",
+     "date": "2026-11-11"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "يتفق معنا في بناء القدرات ويخالفنا في الميزانية.",
+     "date": "2026-11-11"
+    }
+   ],
+   "tone_first_last": [
+    "2_conditional_openness",
+    "2_conditional_openness"
+   ],
+   "tone_average": 2.0,
+   "count": 2
+  },
+  {
+   "actor": "Switzerland",
+   "appearances": [
+    {
+     "date": "2026-11-14",
+     "session": "CMA 16(b) informal consultations, Article 6.4 mechanism",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "inferred_strong",
+     "entry": "2026-11-14-16b-switzerland"
+    },
+    {
+     "date": "2026-11-16",
+     "session": "CMA 18 informal consultations, arrangements for funding Article 6.2 infrastructure, processes and capacity-building",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-16-cma18-switzerland"
+    }
+   ],
+   "camps": {
+    "integrity": 1,
+    "fee": 1
+   },
+   "positions": [
+    {
+     "text": "تأييد تغيير حدود المدد",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-switzerland"
+    },
+    {
+     "text": "المنهجيات شأن الهيئة وCMA تعطي توجيها استراتيجيا",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-switzerland"
+    },
+    {
+     "text": "تسييل حصة التكيف بعد رأي الهيئة",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-switzerland"
+    },
+    {
+     "text": "زيادة الرسوم تدخل في التفاصيل",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-switzerland"
+    },
+    {
+     "text": "الرسوم على الجهات المأذونة عند تقديم المعلومات الأولية",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-switzerland"
+    },
+    {
+     "text": "ربط الرسم بكل نهج تعاوني جديد لا بالحجم",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-cma18-switzerland"
+    }
+   ],
+   "formulations_en": [],
+   "tactics": [
+    {
+     "text": "وسيط.",
+     "date": "2026-11-14"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "حليف في المدد وضد زيادة الرسوم.",
+     "date": "2026-11-14"
+    }
+   ],
+   "tone_first_last": [
+    "2_conditional_openness",
+    "2_conditional_openness"
+   ],
+   "tone_average": 2.0,
+   "count": 2
+  },
+  {
+   "actor": "Ukraine",
+   "appearances": [
+    {
+     "date": "2026-11-16",
+     "session": "CMA 16(a) informal consultations, first reading of draft DT.CMA8.i16a.1",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-16-16a-ukraine"
+    },
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(c) informal consultations 17/11 morning, draft DT.CMA8.i16c.1 (16/11 23:00)",
+     "tone": "3_soft_opposition",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-17-16c-ukraine"
+    }
+   ],
+   "camps": {
+    "mixed": 1,
+    "minimalist": 1
+   },
+   "positions": [
+    {
+     "text": "الفقرة 14 لا تحتاج إرشادا",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-ukraine"
+    },
+    {
+     "text": "لا إشارة إلى أطر أخرى",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-ukraine"
+    },
+    {
+     "text": "معايير 20 علنية",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-ukraine"
+    },
+    {
+     "text": "سؤال عن اتساق 31 مع مقرر باكو",
+     "date": "2026-11-16",
+     "entry": "2026-11-16-16a-ukraine"
+    },
+    {
+     "text": "حذف فقرتي القيود",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-ukraine"
+    },
+    {
+     "text": "رفع القوسين عن interested وحذف central",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-ukraine"
+    },
+    {
+     "text": "حذف التقييمات وفقرتي الإمكانات غير المحققة والانخراط الضعيف",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-ukraine"
+    },
+    {
+     "text": "رفض تقييم أداء نقاط الاتصال",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16c-ukraine"
+    }
+   ],
+   "formulations_en": [],
+   "tactics": [],
+   "use_for_iraq": [],
+   "tone_first_last": [
+    "3_soft_opposition",
+    "3_soft_opposition"
+   ],
+   "tone_average": 3.0,
+   "count": 2
+  },
+  {
+   "actor": "Chile",
+   "appearances": [
+    {
+     "date": "2026-11-11",
+     "session": "GCNMA 10 spin-off group on NMA platform functionalities (SBSTA 11(a))",
+     "tone": "1_support",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-11-gcnma-chile"
+    }
+   ],
+   "camps": {
+    "practical_reformist": 1
+   },
+   "positions": [
+    {
+     "text": "عرضت مع كندا برنامجا ولم يأت داعم",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-gcnma-chile"
+    },
+    {
+     "text": "المنتدى لم يرد عليها",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-gcnma-chile"
+    },
+    {
+     "text": "تأييد العرض دون التسجيل بتعديل بسيط مثل لون مختلف",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-gcnma-chile"
+    },
+    {
+     "text": "دون توسيع التعريف",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-gcnma-chile"
+    }
+   ],
+   "formulations_en": [
+    {
+     "text": "we used the forum, we haven't received answers in the forum",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-gcnma-chile"
+    },
+    {
+     "text": "not changing the NMA as a whole, but at least have an option to upload new ones",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-gcnma-chile"
+    },
+    {
+     "text": "maybe a different color, that's the difference",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-gcnma-chile"
+    }
+   ],
+   "tactics": [
+    {
+     "text": "تجربة فعلية تسقط حجة كفاية المنتدى.",
+     "date": "2026-11-11"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "أقوى شاهد على فشل المنتدى.",
+     "date": "2026-11-11"
+    }
+   ],
+   "tone_first_last": [
+    "1_support",
+    "1_support"
+   ],
+   "tone_average": 1.0,
+   "count": 1
+  },
+  {
+   "actor": "EIG",
+   "appearances": [
+    {
+     "date": "2026-11-14",
+     "session": "CMA 16(a) informal consultations, implementation of Article 6.2 guidance",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "uncertain_actor",
+     "entry": "2026-11-14-16a-eig"
+    }
+   ],
+   "camps": {
+    "reformist": 1
+   },
+   "positions": [
+    {
+     "text": "مسار تحضيري لمراجعة 2028 بمساهمات وورقة وبند",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-eig"
+    },
+    {
+     "text": "تقرير التوليف القادم قبل دورة بون",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-eig"
+    },
+    {
+     "text": "موعد نهائي للتقرير الأولي المعدل",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-eig"
+    },
+    {
+     "text": "تاريخ نهائي للحساب",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-eig"
+    },
+    {
+     "text": "تضارب المصالح",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-eig"
+    },
+    {
+     "text": "أولوية المنصة وقاعدة البيانات",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-eig"
+    }
+   ],
+   "formulations_en": [
+    {
+     "text": "we can do some fine-tuning to the review process without changing any decisions",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16a-eig"
+    }
+   ],
+   "tactics": [
+    {
+     "text": "ضبط تحت مسمى التوضيح.",
+     "date": "2026-11-14"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "LMDC ترد بأن كل ضبط إرشاد إضافي.",
+     "date": "2026-11-14"
+    }
+   ],
+   "tone_first_last": [
+    "2_conditional_openness",
+    "2_conditional_openness"
+   ],
+   "tone_average": 2.0,
+   "count": 1
+  },
+  {
+   "actor": "Egypt",
+   "appearances": [
+    {
+     "date": "2026-11-19",
+     "session": "CMA 16(c) 19/11 noon",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-19-68-egypt"
+    }
+   ],
+   "camps": {
+    "ally": 1
+   },
+   "positions": [
+    {
+     "text": "التنفيذ غير اختياري",
+     "date": "2026-11-19",
+     "entry": "2026-11-19-68-egypt"
+    },
+    {
+     "text": "اجتماع المستشارين مع الشؤون القانونية",
+     "date": "2026-11-19",
+     "entry": "2026-11-19-68-egypt"
+    }
+   ],
+   "formulations_en": [],
+   "tactics": [],
+   "use_for_iraq": [],
+   "tone_first_last": [
+    "",
+    ""
+   ],
+   "tone_average": null,
+   "count": 1
+  },
+  {
+   "actor": "Ghana",
+   "appearances": [
+    {
+     "date": "2026-11-14",
+     "session": "CMA 16(b) informal consultations, Article 6.4 mechanism",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-14-16b-ghana"
+    }
+   ],
+   "camps": {
+    "developing": 1
+   },
+   "positions": [
+    {
+     "text": "قرارات الهيئة على مستوى المشروع ليست سوابق",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-ghana"
+    },
+    {
+     "text": "متطلبات آلية 6.4 لا تعد شروطا لنهج 6.2 ولا للمراجعة الفنية",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-ghana"
+    }
+   ],
+   "formulations_en": [
+    {
+     "text": "requirements developed under 6.4 should not be interpreted as conditions for cooperative approaches under 6.2, including the technical expert review process",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-ghana"
+    }
+   ],
+   "tactics": [
+    {
+     "text": "فصل بين المادتين.",
+     "date": "2026-11-14"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "يقتبس ضد مقترح المملكة المتحدة في 16(a).",
+     "date": "2026-11-14"
+    }
+   ],
+   "tone_first_last": [
+    "2_conditional_openness",
+    "2_conditional_openness"
+   ],
+   "tone_average": 2.0,
+   "count": 1
+  },
+  {
+   "actor": "India",
+   "appearances": [
+    {
+     "date": "2026-11-14",
+     "session": "CMA 16(b) informal consultations, Article 6.4 mechanism",
+     "tone": "3_soft_opposition",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-14-16b-india"
+    }
+   ],
+   "camps": {
+    "developing": 1
+   },
+   "positions": [
+    {
+     "text": "الاستدامة المالية لا تكون بأعباء إضافية على البلدان النامية",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-india"
+    },
+    {
+     "text": "تخفيف التعقيد الإجرائي",
+     "date": "2026-11-14",
+     "entry": "2026-11-14-16b-india"
+    }
+   ],
+   "formulations_en": [],
+   "tactics": [],
+   "use_for_iraq": [
+    {
+     "text": "حليف في رفض الأعباء.",
+     "date": "2026-11-14"
+    }
+   ],
+   "tone_first_last": [
+    "3_soft_opposition",
+    "3_soft_opposition"
+   ],
+   "tone_average": 3.0,
+   "count": 1
+  },
+  {
+   "actor": "Indonesia",
+   "appearances": [
+    {
+     "date": "2026-11-09",
+     "session": "Article 6.2 Ambition Dialogue (authorization)",
+     "tone": "",
+     "tone_note": "تبادل خبرات",
+     "attribution": "named",
+     "entry": "2026-11-09-a62ad-authorization"
+    }
+   ],
+   "camps": {
+    "experience_sharing": 1
+   },
+   "positions": [
+    {
+     "text": "البرازيل: يأذن بنسبة 50% ويحسب الباقي لمساهمته لضمان أثر محايد",
+     "date": "2026-11-09",
+     "entry": "2026-11-09-a62ad-authorization"
+    },
+    {
+     "text": "ماليزيا: الإذن قرار سياسة وطنية يحمي المساهمة الحالية والمقبلة",
+     "date": "2026-11-09",
+     "entry": "2026-11-09-a62ad-authorization"
+    },
+    {
+     "text": "إندونيسيا: الإذن بما يزيد عن حاجة المساهمة فقط، والضمانات شرط قبل الإذن لا بعده",
+     "date": "2026-11-09",
+     "entry": "2026-11-09-a62ad-authorization"
+    },
+    {
+     "text": "دولة جزرية صغيرة: الإذن لما يتجاوز حدود مساهمتها فقط",
+     "date": "2026-11-09",
+     "entry": "2026-11-09-a62ad-authorization"
+    },
+    {
+     "text": "متحدث نام: يجب احترام مبادئ المادة 6.1 وقد ظهرت تناقضات في التقارير الأولية",
+     "date": "2026-11-09",
+     "entry": "2026-11-09-a62ad-authorization"
+    }
+   ],
+   "formulations_en": [
+    {
+     "text": "authorization is not merely an administrative process but an important national policy decision",
+     "date": "2026-11-09",
+     "entry": "2026-11-09-a62ad-authorization"
+    },
+    {
+     "text": "environmental integrity and safeguards should be conditions for authorization, not after",
+     "date": "2026-11-09",
+     "entry": "2026-11-09-a62ad-authorization"
+    },
+    {
+     "text": "Article 6.2 should serve as an accelerator, not a substitute for robust domestic mitigation",
+     "date": "2026-11-09",
+     "entry": "2026-11-09-a62ad-authorization"
+    }
+   ],
+   "tactics": [
+    {
+     "text": "لا تفاوض فيه، وتظهر نماذج وطنية للإذن.",
+     "date": "2026-11-09"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "مرجع لتصميم سياسة الإذن العراقية: نسبة محجوزة للمساهمة، وضمانات قبل الإذن.",
+     "date": "2026-11-09"
+    }
+   ],
+   "tone_first_last": [
+    "",
+    ""
+   ],
+   "tone_average": null,
+   "count": 1
+  },
+  {
+   "actor": "LDC Group",
+   "appearances": [
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(a) informal consultations 17/11 noon",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-17-16a-noon-ldc"
+    }
+   ],
+   "camps": {
+    "opponent": 1
+   },
+   "positions": [
+    {
+     "text": "تسجيل تشغيل السجل الدولي",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-noon-ldc"
+    },
+    {
+     "text": "إبراز نتائج المراجعة",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-noon-ldc"
+    },
+    {
+     "text": "رفض تضييق نظر فرق المراجعة",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-noon-ldc"
+    },
+    {
+     "text": "الإبقاء على فقرتي شرح النتائج واستيراد نهج 6.4",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-noon-ldc"
+    }
+   ],
+   "formulations_en": [],
+   "tactics": [],
+   "use_for_iraq": [],
+   "tone_first_last": [
+    "",
+    ""
+   ],
+   "tone_average": null,
+   "count": 1
+  },
+  {
+   "actor": "LLDC group",
+   "appearances": [
+    {
+     "date": "2026-11-11",
+     "session": "SBI informal consultations, funding Article 6.2 infrastructure, second meeting",
+     "tone": "3_soft_opposition",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-11-a62fund2-lldc"
+    }
+   ],
+   "camps": {
+    "budget": 1
+   },
+   "positions": [
+    {
+     "text": "تفضيل النهج الأول",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-lldc"
+    },
+    {
+     "text": "آلية مستدامة لا تقيم حاجزا",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-lldc"
+    }
+   ],
+   "formulations_en": [
+    {
+     "text": "such a mechanism cannot create a financial barrier or compromise the development aspirations",
+     "date": "2026-11-11",
+     "entry": "2026-11-11-a62fund2-lldc"
+    }
+   ],
+   "tactics": [
+    {
+     "text": "يعمل على مقترحات.",
+     "date": "2026-11-11"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "حليف.",
+     "date": "2026-11-11"
+    }
+   ],
+   "tone_first_last": [
+    "3_soft_opposition",
+    "3_soft_opposition"
+   ],
+   "tone_average": 3.0,
+   "count": 1
+  },
+  {
+   "actor": "Malaysia",
+   "appearances": [
+    {
+     "date": "2026-11-09",
+     "session": "Article 6.2 Ambition Dialogue (authorization)",
+     "tone": "",
+     "tone_note": "تبادل خبرات",
+     "attribution": "named",
+     "entry": "2026-11-09-a62ad-authorization"
+    }
+   ],
+   "camps": {
+    "experience_sharing": 1
+   },
+   "positions": [
+    {
+     "text": "البرازيل: يأذن بنسبة 50% ويحسب الباقي لمساهمته لضمان أثر محايد",
+     "date": "2026-11-09",
+     "entry": "2026-11-09-a62ad-authorization"
+    },
+    {
+     "text": "ماليزيا: الإذن قرار سياسة وطنية يحمي المساهمة الحالية والمقبلة",
+     "date": "2026-11-09",
+     "entry": "2026-11-09-a62ad-authorization"
+    },
+    {
+     "text": "إندونيسيا: الإذن بما يزيد عن حاجة المساهمة فقط، والضمانات شرط قبل الإذن لا بعده",
+     "date": "2026-11-09",
+     "entry": "2026-11-09-a62ad-authorization"
+    },
+    {
+     "text": "دولة جزرية صغيرة: الإذن لما يتجاوز حدود مساهمتها فقط",
+     "date": "2026-11-09",
+     "entry": "2026-11-09-a62ad-authorization"
+    },
+    {
+     "text": "متحدث نام: يجب احترام مبادئ المادة 6.1 وقد ظهرت تناقضات في التقارير الأولية",
+     "date": "2026-11-09",
+     "entry": "2026-11-09-a62ad-authorization"
+    }
+   ],
+   "formulations_en": [
+    {
+     "text": "authorization is not merely an administrative process but an important national policy decision",
+     "date": "2026-11-09",
+     "entry": "2026-11-09-a62ad-authorization"
+    },
+    {
+     "text": "environmental integrity and safeguards should be conditions for authorization, not after",
+     "date": "2026-11-09",
+     "entry": "2026-11-09-a62ad-authorization"
+    },
+    {
+     "text": "Article 6.2 should serve as an accelerator, not a substitute for robust domestic mitigation",
+     "date": "2026-11-09",
+     "entry": "2026-11-09-a62ad-authorization"
+    }
+   ],
+   "tactics": [
+    {
+     "text": "لا تفاوض فيه، وتظهر نماذج وطنية للإذن.",
+     "date": "2026-11-09"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "مرجع لتصميم سياسة الإذن العراقية: نسبة محجوزة للمساهمة، وضمانات قبل الإذن.",
+     "date": "2026-11-09"
+    }
+   ],
+   "tone_first_last": [
+    "",
+    ""
+   ],
+   "tone_average": null,
+   "count": 1
+  },
+  {
+   "actor": "Norway",
+   "appearances": [
+    {
+     "date": "2026-11-10",
+     "session": "SBI informal consultations, funding Article 6.2 infrastructure",
+     "tone": "2_conditional_openness",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-10-a62fund-norway"
+    }
+   ],
+   "camps": {
+    "user_pays_moderate": 1
+   },
+   "positions": [
+    {
+     "text": "تمويل مستقر طويل الأمد",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-norway"
+    },
+    {
+     "text": "تبرع إضافي للسجل الدولي",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-norway"
+    },
+    {
+     "text": "الجمع بين رسوم المستخدمين ورسوم الاستعمال",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-norway"
+    },
+    {
+     "text": "رسوم السجل معقولة بشرط جودة الخدمة",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-norway"
+    },
+    {
+     "text": "تحفظ على رسوم المعاملات لأنها تحد من الإبلاغ",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-norway"
+    },
+    {
+     "text": "رسم مشاركة مسبق يدفعه من يختار المشاركة",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-norway"
+    },
+    {
+     "text": "عناصر النزاهة منفعة عامة من حيث المبدأ لكن ميزانية الأمم المتحدة تحت ضغط",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-norway"
+    }
+   ],
+   "formulations_en": [
+    {
+     "text": "participation is voluntary, choosing to engage should contribute to cover the operational costs of the infrastructure and processes from which it benefits",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-norway"
+    },
+    {
+     "text": "charging fees to use the international registry therefore seems reasonable",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-norway"
+    },
+    {
+     "text": "Norway remains cautious about transaction-based fees, they may create an incentive to limit reporting",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-norway"
+    },
+    {
+     "text": "an upfront participation fee for parties that choose to participate should be considered",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-norway"
+    },
+    {
+     "text": "certain elements support the overall integrity, transparency and credibility of the system and can be viewed as a global good",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-norway"
+    },
+    {
+     "text": "we must also be realistic, the UN budget is already under significant pressure",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-norway"
+    }
+   ],
+   "tactics": [
+    {
+     "text": "يستند إلى مصداقية المانح وتجربة كيوتو، ويعترف بالمنفعة العامة ثم يتراجع عنها بحجة الواقعية.",
+     "date": "2026-11-10"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "اعترافه بأن عناصر النزاهة منفعة عامة يرد عليه بأن المراجعة الفنية من صميم النزاهة. وحجته ضد رسوم المعاملات تنطبق على رسم التقرير الأولي.",
+     "date": "2026-11-10"
+    }
+   ],
+   "tone_first_last": [
+    "2_conditional_openness",
+    "2_conditional_openness"
+   ],
+   "tone_average": 2.0,
+   "count": 1
+  },
+  {
+   "actor": "Philippines",
+   "appearances": [
+    {
+     "date": "2026-11-10",
+     "session": "SBI informal consultations, funding Article 6.2 infrastructure",
+     "tone": "4_strong_opposition",
+     "tone_note": "بصياغة هادئة",
+     "attribution": "named",
+     "entry": "2026-11-10-a62fund-philippines"
+    }
+   ],
+   "camps": {
+    "budget": 1
+   },
+   "positions": [
+    {
+     "text": "الميزانية الأساسية مع التبرعات الأعدل والأثبت",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-philippines"
+    },
+    {
+     "text": "التبرعات تكمل ولا تحل محل التمويل المؤسسي",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-philippines"
+    },
+    {
+     "text": "مخاوف من رسوم الحجم والنهج والمعاملات والسجل",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-philippines"
+    },
+    {
+     "text": "التدرج بحسب الموارد",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-philippines"
+    },
+    {
+     "text": "الأولوية لبناء القدرات والمراجعات الفنية",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-philippines"
+    },
+    {
+     "text": "المراجعة تيسيرية غير تدخلية",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-philippines"
+    }
+   ],
+   "formulations_en": [
+    {
+     "text": "the most equitable, predictable and stable basis for financing",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-philippines"
+    },
+    {
+     "text": "voluntary contributions should complement and not replace predictable institutional funding",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-philippines"
+    },
+    {
+     "text": "recognizes the rationale behind usage-based and user-based approaches, however we remain concerned",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-philippines"
+    },
+    {
+     "text": "risk disincentivizing participation and could inadvertently create barriers to entry",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-philippines"
+    },
+    {
+     "text": "funding arrangements should facilitate rather than constrain broad participation",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-philippines"
+    },
+    {
+     "text": "reviews should remain facilitative, non-intrusive, non-punitive and respectful of national circumstances",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-philippines"
+    },
+    {
+     "text": "no developing country is left behind",
+     "date": "2026-11-10",
+     "entry": "2026-11-10-a62fund-philippines"
+    }
+   ],
+   "tactics": [
+    {
+     "text": "يعترف بمنطق الخصم ثم يعرض المخاوف، ويقترح ترتيب أولويات بدل الرفض المطلق.",
+     "date": "2026-11-10"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "بنية (نعترف بالمنطق، لكن) تصلح لمداخلة عراقية لا تبدو متصلبة.",
+     "date": "2026-11-10"
+    }
+   ],
+   "tone_first_last": [
+    "4_strong_opposition",
+    "4_strong_opposition"
+   ],
+   "tone_average": 4.0,
+   "count": 1
+  },
+  {
+   "actor": "Saudi Arabia",
+   "appearances": [
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(a) informal consultations 17/11 noon",
+     "tone": "",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-17-16a-noon-saudi"
+    }
+   ],
+   "camps": {
+    "ally": 1
+   },
+   "positions": [
+    {
+     "text": "السؤال عن الحاجة إلى فقرة التذكير بنشر تقارير المراجعة",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-noon-saudi"
+    }
+   ],
+   "formulations_en": [],
+   "tactics": [],
+   "use_for_iraq": [],
+   "tone_first_last": [
+    "",
+    ""
+   ],
+   "tone_average": null,
+   "count": 1
+  },
+  {
+   "actor": "Singapore",
+   "appearances": [
+    {
+     "date": "2026-11-17",
+     "session": "CMA 16(a) informal consultations 17/11 noon, second iteration (16/11 23:45)",
+     "tone": "3_soft_opposition",
+     "tone_note": "",
+     "attribution": "named",
+     "entry": "2026-11-17-16a-singapore"
+    }
+   ],
+   "camps": {
+    "bridge": 1
+   },
+   "positions": [
+    {
+     "text": "حذف فقرة استيراد نهج 6.4 لأنها آلية مختلفة",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-singapore"
+    },
+    {
+     "text": "تأييد حوار غير رسمي مع مرونة في الموعد",
+     "date": "2026-11-17",
+     "entry": "2026-11-17-16a-singapore"
+    }
+   ],
+   "formulations_en": [],
+   "tactics": [],
+   "use_for_iraq": [],
+   "tone_first_last": [
+    "3_soft_opposition",
+    "3_soft_opposition"
+   ],
+   "tone_average": 3.0,
+   "count": 1
+  },
+  {
+   "actor": "Tunisia",
+   "appearances": [
+    {
+     "date": "2026-11-13",
+     "session": "Informal interactive dialogue on Article 6 technical expert review",
+     "tone": "",
+     "tone_note": "تبادل خبرات",
+     "attribution": "named",
+     "entry": "2026-11-13-ter-tunisia"
+    }
+   ],
+   "camps": {
+    "experience_sharing": 1
+   },
+   "positions": [
+    {
+     "text": "قدمت تقريرها قبل اكتمال الإذن والتتبع فسجل عليها عدم اتساق جسيم",
+     "date": "2026-11-13",
+     "entry": "2026-11-13-ter-tunisia"
+    },
+    {
+     "text": "المراجعة المتزامنة تثقل البلد المضيف",
+     "date": "2026-11-13",
+     "entry": "2026-11-13-ter-tunisia"
+    },
+    {
+     "text": "الاعتماد على سجل الشريك نقل ثغراته",
+     "date": "2026-11-13",
+     "entry": "2026-11-13-ter-tunisia"
+    }
+   ],
+   "formulations_en": [],
+   "tactics": [
+    {
+     "text": "درس لبلد مضيف نامي.",
+     "date": "2026-11-13"
+    }
+   ],
+   "use_for_iraq": [
+    {
+     "text": "قائمة تحقق لأي تقرير أولي عراقي.",
+     "date": "2026-11-13"
+    }
+   ],
+   "tone_first_last": [
+    "",
+    ""
+   ],
+   "tone_average": null,
+   "count": 1
+  }
+ ]
+}
