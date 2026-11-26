@@ -83,7 +83,7 @@ def prompts(cid):
                     "cron": crons(start - dt.timedelta(days=1), end, *EVENING, tz)},
         "enb_desktop": {"name": f"{cid} حفظ تقارير ENB", "prompt": fill((PROMPTS / "enb_desktop.md").read_text(encoding="utf-8"), c),
                         "cron": crons(start, end + dt.timedelta(days=4), 7, 41, tz),
-                        "where": "Claude desktop app on the user's PC (Cowork scheduled task with Claude in Chrome), not a cloud trigger"},
+                        "where": "Claude desktop app on the user's PC (Cowork scheduled task, browser available to the app; the user browses with Edge), not a cloud trigger"},
         "note": "cron lines repeat every year: disable all tasks at (اختم المؤتمر).",
     }
 
