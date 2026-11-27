@@ -136,7 +136,14 @@
         "name": "LMDC COP31",
         "id": "session_011WPkSrAVyrhEJVmYHEB1SL",
         "scope": "lmdc",
-        "created": "2026-11-16"
+        "created": "2026-11-16",
+        "status": "archived 2026-11-27"
+      },
+      {
+        "name": "تطبيق الأذن الحية",
+        "id": "session_011WPkSskfaMdpaVJQZ6LfW9",
+        "scope": "live_ear_dev",
+        "status": "archived 2026-11-27, knowledge stops at web-2026-11-14f"
       }
     ]
   },
